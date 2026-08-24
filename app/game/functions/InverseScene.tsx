@@ -33,10 +33,12 @@ export function InverseScene({
         wrong && 'wrong',
         solved && 'solved',
       )}
-      aria-label="injective, surjective, and bijective relay classifications"
+      aria-label="intercepted message relay investigation"
     >
       <div className="scene-number">0.2</div>
-      <p className="scene-whisper">classify each relay: one-to-one, onto, or both</p>
+      <p className="scene-whisper">
+        one intercepted fragment, three relay maps: recover its sender and destination
+      </p>
       <div className="function-header">
         <MathTex tex={String.raw`f\colon A\to B`} fallback="f: A → B" className="math-tex" />
       </div>

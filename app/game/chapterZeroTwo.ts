@@ -115,8 +115,10 @@ export const inverseCases: InverseCase[] = [
       ['b', '2'],
     ],
     answer: 'injective',
-    prompt: 'No two inputs share a destination, but one codomain port is never reached.',
-    success: 'Injective: every input has a distinct destination. The relay is one-to-one.',
+    prompt:
+      'Two senders never share a relay port, but one port is silent. Can e identify the sender of this fragment?',
+    success:
+      'Sender identified: injective means one-to-one. No two senders can produce the same relay signature.',
   },
   {
     id: 'surjective',
@@ -128,8 +130,10 @@ export const inverseCases: InverseCase[] = [
       ['c', '2'],
     ],
     answer: 'surjective',
-    prompt: 'Every codomain port is reached, but two inputs merge at one destination.',
-    success: 'Surjective: every codomain target is reached. The relay is onto.',
+    prompt:
+      'Every relay port is lit, but two senders merge at one port. Can e identify which sender spoke?',
+    success:
+      'Coverage confirmed: surjective means onto. Every relay port received a message, but the sender is still ambiguous.',
   },
   {
     id: 'bijective',
@@ -140,8 +144,10 @@ export const inverseCases: InverseCase[] = [
       ['b', '1'],
     ],
     answer: 'bijective',
-    prompt: 'Every target is reached exactly once: no collisions and no gaps.',
-    success: 'Bijective: the relay is one-to-one and onto.',
+    prompt:
+      'Every sender has one port and every port has one sender. The message source and destination are both certain.',
+    success:
+      'Message identified: bijective means one-to-one and onto. The relay is complete and unambiguous.',
   },
 ];
 

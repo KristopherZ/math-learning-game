@@ -53,11 +53,11 @@ The player swaps their order and discovers that `g∘f` means the input travels 
 
 ### 5. Classify the relay — injective, surjective, bijective
 
-Three mappings control how safely a relay can be reversed. The player classifies each mapping:
+The patrol has intercepted one message fragment moving through three relay layouts. The player classifies each mapping to determine what e can recover from its trace:
 
-- An injective map is one-to-one: distinct inputs never collide.
-- A surjective map is onto: every codomain target is reached.
-- A bijection is both one-to-one and onto, so it is invertible.
+- An injective map is one-to-one: distinct senders never collide, so a sender can be identified.
+- A surjective map is onto: every relay port is reached, but a collision can leave the sender ambiguous.
+- A bijection is both one-to-one and onto, so the message source and destination are both identified and the relay is invertible.
 
 Mapping diagrams show unreached codomain values and merged inputs directly. The scene distinguishes recovering every original input from reaching every declared target.
 
