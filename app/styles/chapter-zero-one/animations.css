@@ -39,7 +39,7 @@
 @keyframes spy-acknowledge { 45% { transform: rotate(-2deg); } 68% { transform: rotate(1deg); } }
 @keyframes ending-orbit { to { transform: rotate(18deg) scale(1.08); } }
 @keyframes note-enter { from { opacity: 0; transform: translateY(16px); } }
-@keyframes comic-cut { 0% { transform: skewX(-13deg) translateX(-160%); } 22%,80% { transform: skewX(-13deg) translateX(0); } 100% { transform: skewX(-13deg) translateX(170%); } }
+@keyframes comic-cut { 0% { transform: skewX(-13deg) translate3d(-130vw,0,0); } 22%,80% { transform: skewX(-13deg) translate3d(0,0,0); } 100% { transform: skewX(-13deg) translate3d(130vw,0,0); } }
 @keyframes transition-chase-across { 0% { opacity: 0; transform: translate(-180px,-50%) rotate(-4deg); } 11% { opacity: 1; } 42% { opacity: 1; transform: translate(43vw,calc(-50% - 7px)) rotate(2deg); } 55% { opacity: 1; transform: translate(50vw,calc(-50% - 9px)) rotate(-2deg); } 88% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(100vw + 180px),calc(-50% + 3px)) rotate(3deg); } }
 @keyframes transition-run-bob { from { transform: translateY(2px) rotate(-7deg) scaleY(.97); } to { transform: translateY(-2px) rotate(-5deg) scaleY(.99); } }
 @keyframes transition-case-swing { from { transform: rotate(6deg) translateY(1px); } to { transform: rotate(-5deg) translateY(-1px); } }

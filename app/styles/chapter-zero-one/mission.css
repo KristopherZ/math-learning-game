@@ -131,7 +131,7 @@
 .tiny-note button { grid-column: 2; justify-self: end; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: transparent; font-size: 8px; cursor: pointer; }
 
 .cinematic-cut { position: fixed; inset: 0; z-index: 110; overflow: hidden; pointer-events: none; visibility: hidden; }
-.transition-panel { position: absolute; top: -15%; bottom: -15%; width: 48%; background: var(--ink); transform: skewX(-13deg) translateX(-160%); }
+.transition-panel { position: absolute; top: -15%; bottom: -15%; width: 48%; background: var(--ink); transform: skewX(-13deg) translate3d(-130vw,0,0); backface-visibility: hidden; }
 .transition-panel:nth-child(1) { left: -15%; }
 .transition-panel:nth-child(2) { left: 31%; background: #6d746f; animation-delay: 100ms; }
 .transition-panel:nth-child(3) { right: -15%; background: #939a95; animation-delay: 200ms; }
