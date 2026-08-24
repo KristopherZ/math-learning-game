@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import './styles/chapter-zero-one/base.css';
+import './styles/chapter-zero-one/mission.css';
+import './styles/chapter-zero-one/animations.css';
+import './styles/chapter-zero-one/final-scenes.css';
+import './styles/chapter-zero-one/responsive.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,11 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

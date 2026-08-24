@@ -1,0 +1,11 @@
+node_modules
+.next
+.vinext
+.wrangler
+dist
+out
+build
+public
+docs
+package-lock.json
+app/styles/chapter-zero-one/*.css

@@ -48,7 +48,9 @@ function loadMathJax() {
     }
 
     script.addEventListener('load', finish, { once: true });
-    script.addEventListener('error', () => reject(new Error('MathJax failed to load')), { once: true });
+    script.addEventListener('error', () => reject(new Error('MathJax failed to load')), {
+      once: true,
+    });
     if (!existing) {
       script.id = 'project-proof-mathjax';
       script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js';
@@ -76,7 +78,11 @@ export function plainSetToTex(value: string) {
     .replaceAll('β', '\\beta');
 }
 
-export function MathTex({ tex, fallback, className }: {
+export function MathTex({
+  tex,
+  fallback,
+  className,
+}: {
   tex: string;
   fallback?: string;
   className?: string;
@@ -105,5 +111,9 @@ export function MathTex({ tex, fallback, className }: {
     };
   }, [fallback, tex]);
 
-  return <span ref={rootRef} className={className}>{fallback ?? tex}</span>;
+  return (
+    <span ref={rootRef} className={className}>
+      {fallback ?? tex}
+    </span>
+  );
 }
