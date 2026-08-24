@@ -1,0 +1,10 @@
+{
+  "name": "Project: Proof",
+  "short_name": "Proof",
+  "start_url": "/#mission",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#f5f1e9",
+  "theme_color": "#f5f1e9",
+  "description": "A minimalist interactive math mission through sets and logic."
+}

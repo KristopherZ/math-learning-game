@@ -546,8 +546,22 @@ export default function ChapterZeroOne() {
     void effect.play().catch(() => undefined);
   }
 
+  function requestMobileFullscreen() {
+    if (!window.matchMedia('(pointer: coarse)').matches || document.fullscreenElement) return;
+    const root = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+    const request = root.requestFullscreen?.bind(root) || root.webkitRequestFullscreen?.bind(root);
+    try {
+      void Promise.resolve(request?.()).catch(() => undefined);
+    } catch {
+      // Fullscreen is optional; some mobile browsers reject it even after a gesture.
+    }
+  }
+
   function beginDemo() {
     setStarted(true);
+    requestMobileFullscreen();
     setSoundOn(true);
     void musicRef.current?.play().catch(() => setSoundOn(false));
     playEffect('confirm', true);
