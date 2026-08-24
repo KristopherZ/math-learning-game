@@ -1,5 +1,6 @@
 .minimal-game { --math-font: "Cambria Math","STIX Two Math","Times New Roman",serif; --scene-background: #f4f1ea; min-height: 100svh; height: 100dvh; position: relative; overflow: hidden; background: var(--scene-background); }
 .device-gate { display: grid; place-items: center; }
+.device-gate > * { visibility: visible !important; }
 .device-checking { color: #747a76; font: 500 10px/1 var(--font-geist-mono),monospace; letter-spacing: .08em; }
 .screen-block { width: min(420px,calc(100% - 40px)); display: grid; justify-items: center; gap: 14px; padding: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink); text-align: center; }
 .screen-block-mark { width: 40px; height: 24px; display: grid; place-items: center; color: var(--coral); font: 400 22px/1 var(--math-font); }
