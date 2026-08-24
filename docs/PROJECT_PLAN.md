@@ -540,7 +540,7 @@ Use intrinsic game progress first: visible discovery, increasingly powerful math
 - Verify that mathematical objects follow the true mathematical state throughout animation.
 - Test rapid repeated input, mid-animation reversal, reset, navigation, and window resizing.
 - Keep control response immediate even when secondary world reactions continue.
-- Evaluate choreography on ordinary phones and laptops, not only high-performance development machines.
+- Evaluate choreography across supported computer and tablet browser ratios, not only high-performance development machines.
 - Check that sound, particles, shake, and celebration intensity can be reduced independently if those features are later added.
 
 ### Software quality

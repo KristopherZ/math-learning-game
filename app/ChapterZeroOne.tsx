@@ -22,6 +22,13 @@ import styles from './ChapterZeroOne.module.css';
 
 const SEEN_KEY = 'project-proof-minimal-v1-seen-concepts';
 type AudioCue = 'click' | 'confirm' | 'error' | 'drop';
+type ScreenAccess = 'checking' | 'blocked' | 'supported';
+
+function hasPreferredRatio() {
+  if (typeof window === 'undefined' || !window.innerWidth || !window.innerHeight) return true;
+  const ratio = window.innerWidth / window.innerHeight;
+  return ratio >= 1.25 && ratio <= 2.05;
+}
 
 function cx(...names: Array<string | false | null | undefined>) {
   return names.filter((name): name is string => Boolean(name)).map((name) => styles[name]).join(' ');
@@ -106,6 +113,17 @@ function Prologue({ onBegin }: { onBegin: () => void }) {
         <span>message</span><i /><span>archive</span><i /><span>exchange</span><i /><span>escape</span>
       </div>
       <Agent />
+    </section>
+  );
+}
+
+function ScreenBlock() {
+  return (
+    <section className={cx('screen-block')} aria-label="unsupported browser shape">
+      <span className={cx('screen-block-mark')} aria-hidden="true">↔</span>
+      <span className={cx('screen-block-kicker')}>PROJECT: PROOF</span>
+      <h1>Use a computer or tablet.</h1>
+      <p>Resize the browser window to continue.</p>
     </section>
   );
 }
@@ -403,6 +421,7 @@ function Ending({ onReplay }: { onReplay: () => void }) {
 }
 
 export default function ChapterZeroOne() {
+  const [screenAccess, setScreenAccess] = useState<ScreenAccess>('checking');
   const [started, setStarted] = useState(false);
   const [stage, setStage] = useState(0);
   const [selection, setSelection] = useState<string[]>([]);
@@ -429,6 +448,17 @@ export default function ChapterZeroOne() {
       : stage === 4
         ? 'cartesian'
         : cipherSteps[Math.min(cipherStep, cipherSteps.length - 1)].concept;
+
+  useEffect(() => {
+    const updateScreenAccess = () => setScreenAccess(hasPreferredRatio() ? 'supported' : 'blocked');
+    updateScreenAccess();
+    window.addEventListener('resize', updateScreenAccess);
+    window.addEventListener('orientationchange', updateScreenAccess);
+    return () => {
+      window.removeEventListener('resize', updateScreenAccess);
+      window.removeEventListener('orientationchange', updateScreenAccess);
+    };
+  }, []);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -696,6 +726,10 @@ export default function ChapterZeroOne() {
   }
 
   const progress = useMemo(() => [0, 1, 2, 3, 4, 5], []);
+
+  if (screenAccess !== 'supported') {
+    return <main className={cx('minimal-game', 'device-gate')} aria-live="polite">{screenAccess === 'blocked' ? <ScreenBlock /> : <span className={cx('device-checking')}>checking screen</span>}</main>;
+  }
 
   return (
     <main

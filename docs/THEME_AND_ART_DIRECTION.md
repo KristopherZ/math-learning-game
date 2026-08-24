@@ -310,7 +310,7 @@ The interface should almost disappear.
 - Keep the current result set visible while the player edits it.
 - Provide obvious reset, check, concept-note, and reduced-motion controls.
 - Support keyboard, pointer, and touch interaction.
-- Phone play is landscape-only. Portrait phones show a quiet turn-device prompt; landscape layouts preserve safe-area insets, keep touch targets at least 44 pixels, and recompose every scene for a short, wide viewport.
+- The demo uses a supported wide browser frame rather than a separate phone layout. A width-to-height ratio from 1.25:1 through 2.05:1 is accepted for computer and tablet screens; other shapes show a quiet resize message.
 - On pointer devices, nearby text receives a restrained white halo that follows cursor proximity. This is an optional focus cue, never the sole indication of meaning, and does not replace keyboard focus styling.
 
 ## 13. Audio direction
