@@ -729,7 +729,7 @@
   .cipher-tools button { width: 74px; height: 60px; min-height: 48px; touch-action: manipulation; }
   .cipher-tools strong { width: 28px; height: 28px; font-size: 20px; }
   .cipher-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
-  .cipher-scene .scene-message { left: max(7%,env(safe-area-inset-left)); top: 46%; bottom: auto; width: 28%; transform: none; line-height: 1.35; text-align: left; }
+  .cipher-scene .scene-message { left: 50%; top: 51%; bottom: auto; width: 56%; transform: translateX(-50%); line-height: 1.35; text-align: center; }
 
   .note-shade { padding: max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); }
   .tiny-note { max-height: calc(100dvh - 20px); padding: 14px 18px; }
