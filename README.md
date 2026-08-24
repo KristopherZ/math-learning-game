@@ -1,6 +1,6 @@
 # Project: Proof
 
-Project: Proof is an AI-generated interactive math-learning game. It is intentionally both a playable experiment and a software-design experiment.
+Project: Proof is an AI-generated interactive math-learning game. The mathematical ideas and learning sequence are human-checked; the implementation code is AI-generated and experimental. It is intentionally both a playable experiment and a software-design experiment.
 
 ## Why this project exists
 
@@ -25,4 +25,4 @@ That goal is intentionally larger than the current demo. The project will grow i
 
 ## Project status
 
-This is an experimental demo, not a finished curriculum or production game. Expect the story, mechanics, visual style, and roadmap to evolve.
+This is an experimental demo, not a finished curriculum or production game. Expect the story, mechanics, visual style, and roadmap to evolve. Human review remains essential for the mathematics; the code should be treated as an evolving prototype.
