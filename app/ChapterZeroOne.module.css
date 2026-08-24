@@ -707,7 +707,7 @@
   .operation-difference .result-bowl { left: 50%; right: auto; top: 29%; transform: translateX(-50%) scale(.84); transform-origin: center top; }
   .operation-difference .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 50%; gap: 7px; }
   .operation-difference .tracker-decoy { left: 70%; bottom: 24%; transform: translateY(-65px) scale(.72); }
-  .operation-scene .scene-message { left: max(7%,env(safe-area-inset-left)); top: 46%; bottom: auto; width: 28%; transform: none; line-height: 1.35; text-align: left; }
+  .operation-scene .scene-message { left: 50%; top: 51%; bottom: auto; width: 56%; transform: translateX(-50%); line-height: 1.35; text-align: center; }
   .document-case { right: max(4%,env(safe-area-inset-right)); bottom: 9%; transform: scale(.7); transform-origin: bottom right; }
   .spy-contact { right: max(5%,env(safe-area-inset-right)); bottom: 7%; transform: scale(.72); transform-origin: bottom right; }
   .security-camera { right: max(-1%,calc(env(safe-area-inset-right) - 18px)); top: 5%; transform: scale(.72); transform-origin: top right; }
