@@ -72,7 +72,7 @@ export function MachineScene({
           </div>
         ))}
       </div>
-      <button className="function-check" type="button" onClick={onCheck}>
+      <button className="function-check game-action" type="button" onClick={onCheck}>
         route signal
       </button>
       <Agent crossing={solved} />

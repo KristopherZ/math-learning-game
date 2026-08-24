@@ -85,7 +85,7 @@ export function ExtractionScene({
         <strong>{output}</strong>
       </div>
       <button
-        className="swap-machines"
+        className="swap-machines game-action"
         type="button"
         onClick={() => onChooseOrder(visibleOrder === 'f-g' ? 'g-f' : 'f-g')}
       >
@@ -105,7 +105,7 @@ export function ExtractionScene({
           className="math-tex"
         />
       </div>
-      <button className="function-check" type="button" onClick={onCheck}>
+      <button className="function-check game-action" type="button" onClick={onCheck}>
         extract
       </button>
       <Agent crossing={solved} />

@@ -83,7 +83,12 @@ export function CartesianScene({
       <div className={cx('copy-status', solved && 'complete')} aria-live="polite">
         <span>{solved ? '4 copies complete' : `${selected.length} / 4 paired`}</span>
         {!solved && (
-          <button type="button" onClick={onCheck} disabled={selected.length === 0}>
+          <button
+            className="game-action"
+            type="button"
+            onClick={onCheck}
+            disabled={selected.length === 0}
+          >
             copy
           </button>
         )}

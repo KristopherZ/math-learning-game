@@ -15,11 +15,11 @@ export function FunctionEnding({ onReplay, onBack }: { onReplay: () => void; onB
         fallback="A → B → C"
         className="math-tex"
       />
-      <div className="function-ending-actions">
-        <button type="button" onClick={onReplay}>
+      <div className="ending-actions function-ending-actions">
+        <button className="game-action" type="button" onClick={onReplay}>
           ↻
         </button>
-        <button type="button" onClick={onBack}>
+        <button className="game-action" type="button" onClick={onBack}>
           ← 0.1
         </button>
       </div>

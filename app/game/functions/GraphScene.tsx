@@ -61,7 +61,7 @@ export function GraphScene({
           ariaLabel="editable graph of q"
         />
       </div>
-      <button className="function-check" type="button" onClick={onCheck}>
+      <button className="function-check game-action" type="button" onClick={onCheck}>
         align records
       </button>
       <Agent crossing={solved} />

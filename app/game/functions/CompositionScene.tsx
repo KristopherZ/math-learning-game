@@ -70,13 +70,13 @@ export function CompositionScene({
         <strong>{output}</strong>
       </div>
       <button
-        className="swap-machines"
+        className="swap-machines game-action"
         type="button"
         onClick={() => onChoose(visibleOrder === 'f-g' ? 'g-f' : 'f-g')}
       >
         swap machines
       </button>
-      <button className="function-check" type="button" onClick={onCheck}>
+      <button className="function-check game-action" type="button" onClick={onCheck}>
         send Euler
       </button>
       <div className="search-lanes" aria-hidden="true">

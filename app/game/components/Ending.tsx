@@ -26,14 +26,16 @@ export function Ending({
           className="math-tex"
         />
       </span>
-      <button className="ending-replay" type="button" onClick={onReplay}>
-        ↻
-      </button>
-      {onContinue && (
-        <button className="ending-next" type="button" onClick={onContinue}>
-          0.2 →
+      <div className="ending-actions set-ending-actions">
+        <button className="game-action" type="button" onClick={onReplay}>
+          ↻
         </button>
-      )}
+        {onContinue && (
+          <button className="game-action" type="button" onClick={onContinue}>
+            0.2 →
+          </button>
+        )}
+      </div>
     </section>
   );
 }

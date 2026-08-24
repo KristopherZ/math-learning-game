@@ -18,7 +18,7 @@ export function ConceptNote({ concept, onClose }: { concept: ConceptKey; onClose
         <code>
           <MathTex tex={note.texExample} fallback={note.example} className="math-tex" />
         </code>
-        <button type="button" onClick={onClose} autoFocus>
+        <button className="game-action" type="button" onClick={onClose} autoFocus>
           continue
         </button>
       </section>

@@ -19,10 +19,10 @@ export function FunctionBriefing({ onBegin, onBack }: { onBegin: () => void; onB
         <p>
           Make every input travel deliberately. If one signal splits, the search grid finds Euler.
         </p>
-        <button type="button" onClick={onBegin}>
+        <button className="game-action" type="button" onClick={onBegin}>
           enter relay
         </button>
-        <button className="briefing-back" type="button" onClick={onBack}>
+        <button className="briefing-back game-action" type="button" onClick={onBack}>
           ← 0.1
         </button>
       </div>

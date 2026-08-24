@@ -64,7 +64,7 @@ export function PhoneScene({ selected, message, onToggle, onRead }: PhoneScenePr
           )}
         </div>
         {unlocked && (
-          <button className="read-message" type="button" onClick={onRead}>
+          <button className="read-message game-action" type="button" onClick={onRead}>
             continue
           </button>
         )}

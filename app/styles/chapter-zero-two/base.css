@@ -78,33 +78,12 @@
   line-height: 1.55;
 }
 
-.function-briefing-copy button,
-.function-ending-actions button {
+.function-briefing-copy button {
   margin: 22px 10px 0 0;
-  padding: 9px 14px;
-  border: 1px solid var(--ink);
-  background: rgb(255 255 255 / 34%);
-  font:
-    600 9px/1 var(--font-geist-mono),
-    monospace;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition:
-    background 220ms ease,
-    transform 220ms ease;
 }
 
 .function-briefing-copy .briefing-back {
-  border-color: var(--line);
-}
-
-.function-briefing-copy button:hover,
-.function-briefing-copy button:focus-visible,
-.function-ending-actions button:hover,
-.function-ending-actions button:focus-visible {
-  outline: none;
-  background: white;
-  transform: translateY(-3px);
+  color: #858b87;
 }
 
 .briefing-machine {
@@ -277,15 +256,16 @@
   overflow-x: auto;
 }
 
-.ending-replay {
-  left: calc(50% - 56px);
+.ending-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.ending-next {
-  left: calc(50% + 2px);
-  width: 62px !important;
-  border-radius: 0 !important;
-  font:
-    600 8px/1 var(--font-geist-mono),
-    monospace;
+.set-ending-actions {
+  position: absolute;
+  left: 50%;
+  bottom: 11%;
+  transform: translateX(-50%);
 }

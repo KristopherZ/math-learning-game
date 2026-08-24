@@ -17,7 +17,7 @@ export function Prologue({ onBegin }: { onBegin: () => void }) {
           Guide Euler <em>e</em> through the mission. Math is the tool; every choice changes the
           escape.
         </p>
-        <button type="button" onClick={onBegin}>
+        <button className="game-action" type="button" onClick={onBegin}>
           begin demo
         </button>
       </div>

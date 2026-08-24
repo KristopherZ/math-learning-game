@@ -106,6 +106,7 @@ export function OperationScene({
         </div>
         {!solved && (
           <button
+            className="game-action"
             type="button"
             onClick={onCheck}
             disabled={result.length === 0 || caught || blocked}

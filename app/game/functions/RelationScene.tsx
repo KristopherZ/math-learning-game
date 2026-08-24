@@ -51,7 +51,7 @@ export function RelationScene({
       <div className="manifest-frame">
         <RelationManifest selected={selected} onToggle={onToggle} />
       </div>
-      <button className="function-check" type="button" onClick={onCheck}>
+      <button className="function-check game-action" type="button" onClick={onCheck}>
         test relay
       </button>
       <Agent crossing={solved} />
