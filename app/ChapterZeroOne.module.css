@@ -667,7 +667,7 @@
   .world-scene { min-height: 100svh; height: 100dvh; }
   .scene-number { left: max(15px,env(safe-area-inset-left)); top: max(13px,env(safe-area-inset-top)); font-size: 10px; }
   .scene-whisper { top: max(3%,env(safe-area-inset-top)); width: 44%; font-size: 11px; line-height: 1.35; }
-  .scene-message { bottom: calc(39px + env(safe-area-inset-bottom)); width: 56%; font-size: 10px; white-space: normal; text-align: center; }
+  .scene-message { bottom: calc(16% + env(safe-area-inset-bottom)); width: 56%; font-size: 10px; white-space: normal; text-align: center; }
   .quiet-controls { left: max(12px,env(safe-area-inset-left)); right: max(12px,env(safe-area-inset-right)); bottom: max(4px,env(safe-area-inset-bottom)); }
   .quiet-controls > button { width: 40px; height: 40px; background: rgba(245,241,233,.9); touch-action: manipulation; }
   .quiet-controls > div { gap: 8px; }
@@ -684,7 +684,7 @@
   .phone-set { min-height: 34px; }
   .phone-set .object-mark { width: 31px; height: 31px; transform: scale(.7); }
   .read-message { bottom: 6px; min-width: 58px; min-height: 36px; touch-action: manipulation; }
-  .phone-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 7%; scale: .58; }
+  .phone-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
 
   .operation-sources { left: 50%; right: auto; top: 14%; width: auto; gap: 8px; transform: translateX(-50%) scale(.7); transform-origin: center top; }
   .source-set { flex: none; }
@@ -707,7 +707,7 @@
   .operation-difference .result-bowl { left: 50%; right: auto; top: 29%; transform: translateX(-50%) scale(.84); transform-origin: center top; }
   .operation-difference .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 50%; gap: 7px; }
   .operation-difference .tracker-decoy { left: 70%; bottom: 24%; transform: translateY(-65px) scale(.72); }
-  .operation-scene .scene-message { top: 59%; bottom: auto; width: 54%; line-height: 1.35; }
+  .operation-scene .scene-message { top: 50%; bottom: auto; width: 54%; line-height: 1.35; }
   .document-case { right: max(4%,env(safe-area-inset-right)); bottom: 9%; transform: scale(.7); transform-origin: bottom right; }
   .spy-contact { right: max(5%,env(safe-area-inset-right)); bottom: 7%; transform: scale(.72); transform-origin: bottom right; }
   .security-camera { right: max(-1%,calc(env(safe-area-inset-right) - 18px)); top: 5%; transform: scale(.72); transform-origin: top right; }
@@ -729,7 +729,7 @@
   .cipher-tools button { width: 74px; height: 60px; min-height: 48px; touch-action: manipulation; }
   .cipher-tools strong { width: 28px; height: 28px; font-size: 20px; }
   .cipher-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
-  .cipher-scene .scene-message { top: 58%; bottom: auto; width: 54%; line-height: 1.35; }
+  .cipher-scene .scene-message { top: 50%; bottom: auto; width: 54%; line-height: 1.35; }
 
   .note-shade { padding: max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); }
   .tiny-note { max-height: calc(100dvh - 20px); padding: 14px 18px; }
