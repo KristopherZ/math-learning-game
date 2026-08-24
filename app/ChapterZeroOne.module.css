@@ -579,7 +579,7 @@
   .source-set { gap: 3px; padding-inline: 2px; }
   .world-symbol { font-size: 22px; }
   .result-bowl { left: 50%; right: auto; top: 40%; min-width: 210px; min-height: 90px; padding: 8px; transform: translateX(-50%) scale(.82); }
-  .result-bowl button { min-width: 48px; min-height: 38px; touch-action: manipulation; }
+  .result-bowl button { position: absolute; left: calc(100% + 10px); top: 50%; bottom: auto; min-width: 48px; min-height: 38px; transform: translateY(-50%); white-space: nowrap; touch-action: manipulation; }
   .take-tray { left: 2%; right: 2%; bottom: calc(20% + env(safe-area-inset-bottom)); width: auto; justify-content: center; gap: 0; }
   .take-tray .world-object { min-width: 58px; }
   .operation-scene .minimal-agent { left: 2%; bottom: 16%; scale: .62; }
