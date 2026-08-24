@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Project: Proof — Mathematical Field Operations',
+  title: 'Project: Proof',
   description:
     'Use mathematical tools to transform a serene geometric world. Begin Project: Proof with Chapter 0: Sets & Logic.',
   manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Proof',
+    title: 'Project: Proof',
   },
   other: {
     'mobile-web-app-capable': 'yes',
