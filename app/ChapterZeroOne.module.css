@@ -580,9 +580,9 @@
   .world-symbol { font-size: 22px; }
   .result-bowl { left: 50%; right: auto; top: 40%; min-width: 210px; min-height: 90px; padding: 8px; transform: translateX(-50%) scale(.82); }
   .result-bowl button { min-width: 48px; min-height: 38px; touch-action: manipulation; }
-  .take-tray { left: 2%; right: 2%; bottom: calc(15% + env(safe-area-inset-bottom)); width: auto; justify-content: center; gap: 0; }
+  .take-tray { left: 2%; right: 2%; bottom: calc(20% + env(safe-area-inset-bottom)); width: auto; justify-content: center; gap: 0; }
   .take-tray .world-object { min-width: 58px; }
-  .operation-scene .minimal-agent { left: 2%; bottom: 10%; scale: .62; }
+  .operation-scene .minimal-agent { left: 2%; bottom: 16%; scale: .62; }
   .document-case { right: -5%; bottom: 14%; transform: scale(.68); transform-origin: bottom right; }
   .spy-contact { right: -4%; bottom: 12%; transform: scale(.68); transform-origin: bottom right; }
   .security-camera { right: -8%; top: 8%; transform: scale(.62); transform-origin: top right; }
@@ -595,7 +595,7 @@
   .copy-pair .object-mark { width: 31px; height: 31px; transform: scale(.52); }
   .copy-status { left: 50%; top: auto; bottom: calc(17% + env(safe-area-inset-bottom)); height: 52px; transform: translateX(-50%); }
   .copy-status > button { min-width: 56px; min-height: 38px; touch-action: manipulation; }
-  .cartesian-scene .minimal-agent { left: 2%; bottom: 10%; scale: .62; }
+  .cartesian-scene .minimal-agent { left: 2%; bottom: 16%; scale: .62; }
 
   .cipher-thread { left: 6%; top: 14%; bottom: 34%; }
   .cipher-instruction { left: 11%; top: 13%; width: 76%; }
@@ -610,7 +610,7 @@
   .final-code-line { gap: 16px; }
   .final-code-line code { min-width: 0; font-size: 13px; }
   .final-code-line strong { font-size: 17px; }
-  .cipher-scene .minimal-agent { left: 2%; bottom: 9%; scale: .62; }
+  .cipher-scene .minimal-agent { left: 2%; bottom: 16%; scale: .62; }
 
   .note-shade { padding: max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); }
   .tiny-note { max-height: calc(100dvh - 28px); grid-template-columns: 52px 1fr; gap: 12px; padding: 16px; overflow: auto; }
@@ -695,17 +695,17 @@
   .operation-difference .result-bowl { left: 50%; right: auto; }
   .result-bowl { left: 50%; right: auto; top: 29%; min-width: 220px; transform: translateX(-50%) scale(.84); transform-origin: center top; }
   .result-bowl button { min-width: 52px; min-height: 38px; touch-action: manipulation; }
-  .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 10%; width: 50%; gap: 7px; }
+  .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 50%; gap: 7px; }
   .take-tray .world-object { min-width: 68px; }
-  .operation-scene .minimal-agent { left: max(10%,env(safe-area-inset-left)); bottom: 7%; scale: .58; }
+  .operation-scene .minimal-agent { left: max(10%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
   .operation-intersection .operation-sources { left: 50%; right: auto; top: 14%; transform: translateX(-50%) scale(.7); transform-origin: center top; }
   .operation-intersection .result-bowl { left: 50%; right: auto; top: 29%; transform: translateX(-50%) scale(.84); transform-origin: center top; }
-  .operation-intersection .take-tray { left: max(20%,env(safe-area-inset-left)); right: auto; bottom: 10%; width: 46%; gap: 3px; }
+  .operation-intersection .take-tray { left: max(20%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 46%; gap: 3px; }
   .operation-intersection .take-tray .world-object { min-width: 60px; padding-inline: 2px; }
   .operation-intersection .spy-contact { right: max(3%,env(safe-area-inset-right)); bottom: 7%; transform: scale(.66); transform-origin: bottom right; }
   .operation-difference .operation-sources { left: 50%; right: auto; top: 14%; transform: translateX(-50%) scale(.7); transform-origin: center top; }
   .operation-difference .result-bowl { left: 50%; right: auto; top: 29%; transform: translateX(-50%) scale(.84); transform-origin: center top; }
-  .operation-difference .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 10%; width: 50%; gap: 7px; }
+  .operation-difference .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 50%; gap: 7px; }
   .operation-difference .tracker-decoy { left: 70%; bottom: 24%; transform: translateY(-65px) scale(.72); }
   .operation-scene .scene-message { top: 59%; bottom: auto; width: 54%; line-height: 1.35; }
   .document-case { right: max(4%,env(safe-area-inset-right)); bottom: 9%; transform: scale(.7); transform-origin: bottom right; }
@@ -718,17 +718,17 @@
   .copy-pair { min-height: 44px; touch-action: manipulation; }
   .copy-status { left: 80%; top: 44%; bottom: auto; height: 54px; }
   .copy-status > button { min-width: 58px; min-height: 38px; touch-action: manipulation; }
-  .cartesian-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 7%; scale: .58; }
+  .cartesian-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
 
   .cipher-thread { display: none; }
   .cipher-instruction { left: max(5%,env(safe-area-inset-left)); top: 13%; width: 30%; }
   .cipher-instruction p { font-size: 10px; line-height: 1.4; }
   .cipher-equation { left: 65%; top: 18%; width: 62%; min-height: 76px; gap: 7px; font-size: clamp(10px,1.7vw,14px); }
   .cipher-equation code { min-width: 86px; }
-  .cipher-tools { left: 65%; bottom: 9%; width: 60%; justify-content: center; }
+  .cipher-tools { left: 65%; bottom: 18%; width: 60%; justify-content: center; }
   .cipher-tools button { width: 74px; height: 60px; min-height: 48px; touch-action: manipulation; }
   .cipher-tools strong { width: 28px; height: 28px; font-size: 20px; }
-  .cipher-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 7%; scale: .58; }
+  .cipher-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
   .cipher-scene .scene-message { top: 58%; bottom: auto; width: 54%; line-height: 1.35; }
 
   .note-shade { padding: max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); }
