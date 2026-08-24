@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   archiveObjects,
   cipherSteps,
   conceptNotes,
-  copyChannels,
   copyFiles,
+  copySlots,
   doorNeed,
   doorScenes,
   equalSets,
@@ -17,9 +17,11 @@ import {
   type ObjectKind,
   type WorldObject,
 } from './game/chapterZeroOne';
+import { MathTex, conceptTex, plainSetToTex } from './MathTex';
 import styles from './ChapterZeroOne.module.css';
 
 const SEEN_KEY = 'project-proof-minimal-v1-seen-concepts';
+type AudioCue = 'click' | 'confirm' | 'error' | 'drop';
 
 function cx(...names: Array<string | false | null | undefined>) {
   return names.filter((name): name is string => Boolean(name)).map((name) => styles[name]).join(' ');
@@ -80,12 +82,31 @@ function ConceptNote({ concept, onClose }: { concept: ConceptKey; onClose: () =>
   return (
     <div className={cx('note-shade')}>
       <section className={cx('tiny-note')} role="dialog" aria-modal="true" aria-label={`${concept} concept note`}>
-        <strong>{note.symbol}</strong>
+        <strong><MathTex tex={conceptTex[concept]} fallback={note.symbol} className={cx('math-tex')} /></strong>
         <p>{note.line}</p>
-        <code>{note.example}</code>
+        <code><MathTex tex={note.texExample} fallback={note.example} className={cx('math-tex')} /></code>
         <button type="button" onClick={onClose} autoFocus>continue</button>
       </section>
     </div>
+  );
+}
+
+function Prologue({ onBegin }: { onBegin: () => void }) {
+  return (
+    <section className={cx('world-scene', 'prologue-scene')} aria-label="Project Proof demo briefing">
+      <div className={cx('prologue-grid')} aria-hidden="true"><i /><i /><i /><i /></div>
+      <div className={cx('prologue-copy')}>
+        <span className={cx('prologue-kicker')}>interactive math game · demo</span>
+        <h1>PROJECT: PROOF</h1>
+        <p>A coded transmission has surfaced in the archive.</p>
+        <p>Guide Euler <em>e</em> through the mission. Math is the tool; every choice changes the escape.</p>
+        <button type="button" onClick={onBegin}>begin demo</button>
+      </div>
+      <div className={cx('briefing-route')} aria-hidden="true">
+        <span>message</span><i /><span>archive</span><i /><span>exchange</span><i /><span>escape</span>
+      </div>
+      <Agent />
+    </section>
   );
 }
 
@@ -113,10 +134,10 @@ function PhoneScene({ selected, message, onToggle, onRead }: {
         <span className={cx('phone-speaker')} aria-hidden="true" />
         <div className={cx('phone-screen')} aria-live="polite">
           <div className={cx('phone-set', 'target-set')} aria-label="required set D contains a key and ID card">
-            <span>D = {'{'}</span><ObjectMark kind="key" /><ObjectMark kind="photo" /><span>{'}'}</span>
+            <MathTex tex={'D=\\{'} fallback="D = {" className={cx('math-tex')} /><ObjectMark kind="key" /><ObjectMark kind="photo" /><MathTex tex={'\\}'} fallback="}" className={cx('math-tex')} />
           </div>
           <div className={cx('phone-set', 'chosen-set')} aria-label={`selected set S ${formatSet(unique(chosenKinds).map((kind) => kindLabel[kind]))}`}>
-            <span>S = {'{'}</span>{chosen.map((item) => <ObjectMark key={item.id} kind={item.kind} />)}<span>{'}'}</span>
+            <MathTex tex={'S=\\{'} fallback="S = {" className={cx('math-tex')} />{chosen.map((item) => <ObjectMark key={item.id} kind={item.kind} />)}<MathTex tex={'\\}'} fallback="}" className={cx('math-tex')} />
           </div>
           {duplicate && <small>repeat ignored</small>}
           {unlocked && <><b>message received</b><small>take everything named in either document</small></>}
@@ -160,7 +181,7 @@ function DocumentCase({ ready }: { ready: boolean }) {
       <span className={cx('document-handle')} aria-hidden="true" />
       <span className={cx('document-lid')} aria-hidden="true" />
       <span className={cx('packed-items')} aria-hidden="true"><ObjectMark kind="key" /><ObjectMark kind="photo" /><ObjectMark kind="map" /></span>
-      <span className={cx('document-status')}>{ready ? 'all required' : 'A ∪ B'}</span>
+      <span className={cx('document-status')}>{ready ? 'all required' : <MathTex tex={'A\\mathbin{\\cup}B'} fallback="A ∪ B" className={cx('math-tex')} />}</span>
     </div>
   );
 }
@@ -173,7 +194,7 @@ function SpyContact({ ready }: { ready: boolean }) {
       <span className={cx('spy-body')} aria-hidden="true" />
       <span className={cx('spy-hand')} aria-hidden="true" />
       <span className={cx('exchange-item')} aria-hidden="true"><ObjectMark kind="photo" /></span>
-      <span className={cx('spy-status')}>{ready ? 'exchange' : 'A ∩ B'}</span>
+      <span className={cx('spy-status')}>{ready ? 'exchange' : <MathTex tex={'A\\mathbin{\\cap}B'} fallback="A ∩ B" className={cx('math-tex')} />}</span>
     </div>
   );
 }
@@ -181,9 +202,9 @@ function SpyContact({ ready }: { ready: boolean }) {
 function SourceSet({ label, objects }: { label: string; objects: WorldObject[] }) {
   return (
     <div className={cx('source-set', `source-${label.toLowerCase()}`)} aria-label={`set ${label}: ${objects.map((item) => item.label).join(', ')}`}>
-      <span className={cx('set-notation')}>{label} = {'{'}</span>
+      <MathTex tex={`${label}=\\{`} fallback={`${label} = {`} className={cx('set-notation', 'math-tex')} />
       <div>{objects.map((item) => <ObjectMark key={item.id} kind={item.kind} />)}</div>
-      <span className={cx('set-notation')}>{'}'}</span>
+      <MathTex tex={'\\}'} fallback="}" className={cx('set-notation', 'math-tex')} />
     </div>
   );
 }
@@ -211,7 +232,7 @@ function OperationScene({ stage, result, solved, caught, blocked, message, onTog
       <p className={cx('scene-whisper')}>{scene.prompt}</p>
       <div className={cx('operation-sources')}>
         <SourceSet label="A" objects={scene.left} />
-        <span className={cx('world-symbol')}>{scene.symbol}</span>
+        <MathTex tex={conceptTex[scene.concept]} fallback={scene.symbol} className={cx('world-symbol', 'math-tex', `operator-${scene.concept}`)} />
         <SourceSet label="B" objects={scene.right} />
       </div>
 
@@ -224,9 +245,14 @@ function OperationScene({ stage, result, solved, caught, blocked, message, onTog
 
       <div className={cx('result-bowl')} aria-label={`A ${scene.concept} B equals ${formatSet(result.map((kind) => kindLabel[kind]))}`}>
         <div className={cx('result-equation')}>
-          <span className={cx('set-notation')}>A {scene.symbol} B = {'{'}</span>
+          <MathTex
+            tex={`A\\mathbin{${conceptTex[scene.concept]}}B=`}
+            fallback={`A ${scene.symbol} B =`}
+            className={cx('set-notation', 'result-notation', 'math-tex')}
+          />
+          <MathTex tex={'\\{'} fallback="{" className={cx('set-brace', 'math-tex')} />
           <div className={cx('result-members')}>{result.map((kind) => <ObjectMark key={kind} kind={kind} />)}</div>
-          <span className={cx('set-notation')}>{'}'}</span>
+          <MathTex tex={'\\}'} fallback="}" className={cx('set-brace', 'math-tex')} />
         </div>
         {!solved && <button type="button" onClick={onCheck} disabled={result.length === 0 || caught || blocked}>use</button>}
       </div>
@@ -248,25 +274,26 @@ function CartesianScene({ selected, solved, message, onToggle, onCheck }: {
   onCheck: () => void;
 }) {
   return (
-    <section className={cx('world-scene', 'cartesian-scene', solved && 'solved')} aria-label="Cartesian product relay-copy puzzle">
+    <section className={cx('world-scene', 'cartesian-scene', solved && 'solved')} aria-label="Cartesian product archive-copy puzzle">
       <div className={cx('scene-number')}>0.1</div>
-      <p className={cx('scene-whisper')}>copy every stolen file to every safe satellite channel</p>
-      <div className={cx('relay-arc')} aria-hidden="true"><i /><i /><i /></div>
+      <p className={cx('scene-whisper')}>copy every stolen file into every safe archive slot</p>
 
-      <div className={cx('copy-equation')} aria-label="files Cartesian product safe channels">
-        <span>F = {'{'}</span>
+      <div className={cx('copy-equation')} aria-label="files Cartesian product archive slots">
+        <MathTex tex={'F=\\{'} fallback="F = {" className={cx('math-tex')} />
         <span className={cx('copy-source')}><ObjectMark kind="photo" /><ObjectMark kind="map" /></span>
-        <span>{'}'} &nbsp; × &nbsp; C = {'{'} α, β {'}'}</span>
+        <MathTex tex={'\\}'} fallback="}" className={cx('math-tex')} />
+        <MathTex tex={'\\times'} fallback="×" className={cx('math-tex', 'copy-operator')} />
+        <MathTex tex={'C=\\{\\alpha,\\beta\\}'} fallback="C = { α, β }" className={cx('math-tex')} />
       </div>
 
-      <div className={cx('copy-matrix')} aria-label="ordered file and channel pairs">
-        <span className={cx('matrix-corner')}>F × C</span>
-        {copyChannels.map((channel) => <span key={channel.id} className={cx('matrix-channel')}>{channel.label}</span>)}
+      <div className={cx('copy-matrix')} aria-label="ordered file and archive-slot pairs">
+        <span className={cx('matrix-corner')}><MathTex tex={'F\\mathbin{\\times}C'} fallback="F × C" className={cx('math-tex')} /></span>
+        {copySlots.map((slot) => <span key={slot.id} className={cx('matrix-slot')}><MathTex tex={slot.id === 'alpha' ? '\\alpha' : '\\beta'} fallback={slot.label} className={cx('math-tex')} /></span>)}
         {copyFiles.map((file) => (
           <div className={cx('matrix-row')} key={file.id}>
             <span className={cx('matrix-file')}><ObjectMark kind={file.id === 'id' ? 'photo' : 'map'} />{file.label}</span>
-            {copyChannels.map((channel) => {
-              const pair = `${file.id}:${channel.id}`;
+            {copySlots.map((slot) => {
+              const pair = `${file.id}:${slot.id}`;
               const active = selected.includes(pair);
               return (
                 <button
@@ -274,11 +301,11 @@ function CartesianScene({ selected, solved, message, onToggle, onCheck }: {
                   key={pair}
                   className={cx('copy-pair', active && 'selected')}
                   aria-pressed={active}
-                  aria-label={`${active ? 'Remove' : 'Copy'} ${file.label} to channel ${channel.label}`}
+                  aria-label={`${active ? 'Remove' : 'Copy'} ${file.label} to archive slot ${slot.label}`}
                   disabled={solved}
                   onClick={() => onToggle(pair)}
                 >
-                  <span>(</span><ObjectMark kind={file.id === 'id' ? 'photo' : 'map'} /><span>, {channel.label})</span>
+                  <span>(</span><ObjectMark kind={file.id === 'id' ? 'photo' : 'map'} /><span>, {slot.label})</span>
                 </button>
               );
             })}
@@ -286,10 +313,9 @@ function CartesianScene({ selected, solved, message, onToggle, onCheck }: {
         ))}
       </div>
 
-      <div className={cx('relay-terminal', solved && 'transmitting')} aria-live="polite">
-        <span className={cx('relay-dish')} aria-hidden="true"><i /></span>
-        <span>{solved ? '4 copies sent' : `${selected.length} / 4 paired`}</span>
-        {!solved && <button type="button" onClick={onCheck} disabled={selected.length === 0}>send</button>}
+      <div className={cx('copy-status', solved && 'complete')} aria-live="polite">
+        <span>{solved ? '4 copies complete' : `${selected.length} / 4 paired`}</span>
+        {!solved && <button type="button" onClick={onCheck} disabled={selected.length === 0}>copy</button>}
       </div>
 
       <Agent crossing={solved} />
@@ -298,36 +324,47 @@ function CartesianScene({ selected, solved, message, onToggle, onCheck }: {
   );
 }
 
-const cipherConcepts: ConceptKey[] = ['union', 'intersection', 'difference', 'cartesian', 'equality'];
+const cipherConcepts: ConceptKey[] = ['union', 'intersection', 'difference', 'cartesian'];
 
-function CipherScene({ stepIndex, solved, wrong, message, onChoose }: {
+function CipherScene({ stepIndex, solved, wrong, applied, message, onChoose }: {
   stepIndex: number;
   solved: boolean;
   wrong: boolean;
+  applied: ConceptKey | null;
   message: string;
   onChoose: (concept: ConceptKey) => void;
 }) {
   const step = cipherSteps[Math.min(stepIndex, cipherSteps.length - 1)];
+  const finalStep = stepIndex === cipherSteps.length - 1;
+  const resultVisible = finalStep ? solved : applied === step.concept;
 
   return (
-    <section className={cx('world-scene', 'cipher-scene', solved && 'solved', wrong && 'wrong')} aria-label="combined set-operation secret-code puzzle">
+    <section className={cx('world-scene', 'cipher-scene', solved && 'solved', wrong && 'wrong', applied && 'applying')} aria-label="combined set-operation secret-code puzzle">
       <div className={cx('scene-number')}>0.1</div>
-      <p className={cx('scene-whisper')}>decipher the satellite reply—choose the set tool that performs each instruction</p>
+      <p className={cx('scene-whisper')}>decipher the copied strip—choose the set tool that performs each instruction</p>
       <div className={cx('cipher-thread')} aria-hidden="true">
-        {cipherSteps.map((_, index) => <i key={index} className={cx(index < stepIndex && 'passed', index === stepIndex && 'active')} />)}
+        {cipherSteps.map((_, index) => <i key={index} className={cx(index < stepIndex && 'passed', index === stepIndex && 'active', index === stepIndex && applied && 'resolving')} />)}
       </div>
 
-      <div className={cx('cipher-instruction')}>
+      <div className={cx('cipher-instruction')} key={`instruction-${stepIndex}`}>
         <small>{String(Math.min(stepIndex + 1, 5)).padStart(2, '0')}</small>
         <p>{step.instruction}</p>
       </div>
 
-      <div className={cx('cipher-equation')} aria-live="polite">
-        <span>{step.left}</span>
-        <b className={cx('cipher-gap')}>?</b>
-        <span>{step.right}</span>
-        <i>→</i>
-        <code>{step.result}</code>
+      <div className={cx('cipher-equation')} key={`equation-${stepIndex}`} aria-live="polite">
+        {solved ? (
+          <div className={cx('final-code-line')}>
+            <code><MathTex tex={plainSetToTex(step.result)} fallback={step.result} className={cx('math-tex')} /></code><i>→</i><strong>code 22</strong>
+          </div>
+        ) : (
+          <>
+            <MathTex tex={plainSetToTex(step.left)} fallback={step.left} className={cx('math-tex')} />
+            <b className={cx('cipher-gap')}>{applied ? <MathTex tex={conceptTex[applied]} fallback={conceptNotes[applied].symbol} className={cx('math-tex')} /> : '?'}</b>
+            <MathTex tex={plainSetToTex(step.right)} fallback={step.right} className={cx('math-tex')} />
+            <i>→</i>
+            <code className={cx(!resultVisible && 'cipher-masked')}>{resultVisible ? <MathTex tex={plainSetToTex(step.result)} fallback={step.result} className={cx('math-tex')} /> : '••••'}</code>
+          </>
+        )}
       </div>
 
       <div className={cx('cipher-tools')} aria-label="set tools">
@@ -335,19 +372,15 @@ function CipherScene({ stepIndex, solved, wrong, message, onChoose }: {
           <button
             type="button"
             key={concept}
+            className={cx(applied === concept && 'chosen')}
             aria-label={`use ${concept}`}
-            disabled={solved}
+            disabled={solved || Boolean(applied)}
             onClick={() => onChoose(concept)}
           >
-            <strong>{conceptNotes[concept].symbol}</strong>
+            <strong className={cx(`operator-${concept}`)}><MathTex tex={conceptTex[concept]} fallback={conceptNotes[concept].symbol} className={cx('math-tex')} /></strong>
             <span>{concept}</span>
           </button>
         ))}
-      </div>
-
-      <div className={cx('code-receiver', solved && 'open')} aria-label={solved ? 'secret code 22 deciphered' : 'locked code receiver'}>
-        <span>{solved ? '22' : '··'}</span>
-        <i aria-hidden="true" />
       </div>
 
       <Agent crossing={solved} blocked={wrong} />
@@ -363,13 +396,14 @@ function Ending({ onReplay }: { onReplay: () => void }) {
       <Agent />
       <div className={cx('ending-path')} aria-hidden="true" />
       <p>code delivered</p>
-      <span>= &nbsp; ∪ &nbsp; ∩ &nbsp; ∖ &nbsp; ×</span>
+      <span><MathTex tex={'=\\quad\\cup\\quad\\cap\\quad\\setminus\\quad\\times'} fallback="=   ∪   ∩   ∖   ×" className={cx('math-tex')} /></span>
       <button type="button" onClick={onReplay}>↻</button>
     </section>
   );
 }
 
 export default function ChapterZeroOne() {
+  const [started, setStarted] = useState(false);
   const [stage, setStage] = useState(0);
   const [selection, setSelection] = useState<string[]>([]);
   const [result, setResult] = useState<ObjectKind[]>([]);
@@ -383,6 +417,10 @@ export default function ChapterZeroOne() {
   const [cutting, setCutting] = useState(false);
   const [cipherStep, setCipherStep] = useState(0);
   const [cipherWrong, setCipherWrong] = useState(false);
+  const [cipherApplied, setCipherApplied] = useState<ConceptKey | null>(null);
+  const [soundOn, setSoundOn] = useState(false);
+  const musicRef = useRef<HTMLAudioElement | null>(null);
+  const effectRefs = useRef<Partial<Record<AudioCue, HTMLAudioElement>>>({});
 
   const currentConcept: ConceptKey = stage === 0
     ? 'equality'
@@ -397,9 +435,39 @@ export default function ChapterZeroOne() {
       const stored = new Set<ConceptKey>(JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'));
       setSeen(stored);
       setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-      if (!stored.has('equality')) setNote('equality');
     });
     return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    const music = new Audio('/audio/covert-action.ogg');
+    const restartMusic = () => {
+      music.currentTime = 0;
+      void music.play().catch(() => setSoundOn(false));
+    };
+    music.loop = false;
+    music.volume = 0.14;
+    music.preload = 'auto';
+    music.addEventListener('ended', restartMusic);
+    musicRef.current = music;
+
+    effectRefs.current = {
+      click: new Audio('/audio/ui-click.ogg'),
+      confirm: new Audio('/audio/ui-confirm.ogg'),
+      error: new Audio('/audio/ui-error.ogg'),
+      drop: new Audio('/audio/ui-drop.ogg'),
+    };
+    Object.values(effectRefs.current).forEach((effect) => {
+      if (!effect) return;
+      effect.volume = 0.24;
+      effect.preload = 'auto';
+    });
+
+    return () => {
+      music.removeEventListener('ended', restartMusic);
+      music.pause();
+      Object.values(effectRefs.current).forEach((effect) => effect?.pause());
+    };
   }, []);
 
   useEffect(() => {
@@ -417,10 +485,11 @@ export default function ChapterZeroOne() {
       `.${styles['spy-status']}`,
       `.${styles['camera-status']}`,
       `.${styles['copy-equation']}`,
-      `.${styles['relay-terminal']}`,
+      `.${styles['copy-status']}`,
       `.${styles['cipher-instruction']}`,
       `.${styles['cipher-equation']}`,
-      `.${styles['code-receiver']}`,
+      `.${styles['prologue-copy']}`,
+      `.${styles['briefing-route']}`,
       `.${styles['tiny-note']} p`,
       `.${styles['tiny-note']} code`,
       `.${styles['ending-scene']} > p`,
@@ -468,6 +537,33 @@ export default function ChapterZeroOne() {
     setNote(null);
   }
 
+  function playEffect(cue: AudioCue, force = false) {
+    if (!soundOn && !force) return;
+    const source = effectRefs.current[cue];
+    if (!source) return;
+    const effect = source.cloneNode() as HTMLAudioElement;
+    effect.volume = source.volume;
+    void effect.play().catch(() => undefined);
+  }
+
+  function beginDemo() {
+    setStarted(true);
+    setSoundOn(true);
+    void musicRef.current?.play().catch(() => setSoundOn(false));
+    playEffect('confirm', true);
+    if (!seen.has('equality')) window.setTimeout(() => setNote('equality'), reducedMotion ? 20 : 620);
+  }
+
+  function toggleSound() {
+    const next = !soundOn;
+    setSoundOn(next);
+    if (next) {
+      void musicRef.current?.play().catch(() => setSoundOn(false));
+    } else {
+      musicRef.current?.pause();
+    }
+  }
+
   function moveTo(nextStage: number) {
     setCutting(true);
     window.setTimeout(() => {
@@ -479,6 +575,7 @@ export default function ChapterZeroOne() {
       setBlocked(false);
       setMessage('');
       setCipherWrong(false);
+      setCipherApplied(null);
       if (nextStage > 0 && nextStage < 5) {
         const concept = nextStage === 4 ? 'cartesian' : doorScenes[nextStage - 1].concept;
         if (!seen.has(concept)) setNote(concept);
@@ -505,6 +602,7 @@ export default function ChapterZeroOne() {
     const correct = equalSets(result, scene.expected);
     setSolved(correct);
     if (correct) {
+      playEffect(scene.concept === 'difference' ? 'drop' : 'confirm');
       setCaught(false);
       setBlocked(false);
       setMessage(scene.success);
@@ -513,11 +611,13 @@ export default function ChapterZeroOne() {
     }
     if (scene.concept === 'difference') {
       if (result.includes('tracker')) {
+        playEffect('error');
         setBlocked(false);
         setCaught(true);
         setMessage(`caught — ${scene.caughtHint || scene.hint}`);
         window.setTimeout(() => setCaught(false), reducedMotion ? 120 : 1350);
       } else {
+        playEffect('error');
         setCaught(false);
         setBlocked(true);
         setMessage(`stopped — ${scene.missingHint || scene.hint}`);
@@ -525,6 +625,7 @@ export default function ChapterZeroOne() {
       }
       return;
     }
+    playEffect('error');
     setCaught(false);
     setMessage(scene.hint);
   }
@@ -539,16 +640,20 @@ export default function ChapterZeroOne() {
     const correct = equalSets(selection, requiredCopies);
     setSolved(correct);
     if (!correct) {
-      setMessage('Every file needs one ordered pair with each channel.');
+      playEffect('error');
+      setMessage('Every file needs one ordered pair with each archive slot.');
       return;
     }
-    setMessage('Four paired copies reach the satellite. Its reply arrives as an encrypted code.');
+    playEffect('confirm');
+    setMessage('Four paired copies are complete. The final strip contains an encrypted code.');
     window.setTimeout(() => moveTo(5), reducedMotion ? 150 : 2500);
   }
 
   function chooseCipherTool(concept: ConceptKey) {
+    if (cipherApplied) return;
     const step = cipherSteps[cipherStep];
     if (concept !== step.concept) {
+      playEffect('error');
       setCipherWrong(true);
       setMessage('The strips misalign—match the instruction to the operation.');
       window.setTimeout(() => setCipherWrong(false), reducedMotion ? 100 : 620);
@@ -556,22 +661,44 @@ export default function ChapterZeroOne() {
     }
 
     setCipherWrong(false);
+    playEffect('confirm');
+    setCipherApplied(concept);
     if (cipherStep === cipherSteps.length - 1) {
-      setSolved(true);
-      setMessage('The pair sets match. Code 22 opens the extraction signal.');
-      window.setTimeout(() => moveTo(6), reducedMotion ? 180 : 2800);
+      setMessage('The signatures align. Decoding the final signal…');
+      window.setTimeout(() => {
+        setSolved(true);
+        setMessage('The pair sets match. Code 22 opens the extraction signal.');
+      }, reducedMotion ? 60 : 760);
+      window.setTimeout(() => moveTo(6), reducedMotion ? 220 : 3300);
       return;
     }
 
-    setCipherStep((current) => current + 1);
-    setMessage(`${conceptNotes[concept].symbol} aligned`);
+    setMessage(`${conceptNotes[concept].symbol} routing the signal…`);
+    window.setTimeout(() => {
+      setCipherStep((current) => current + 1);
+      setCipherApplied(null);
+      setMessage('');
+    }, reducedMotion ? 70 : 720);
   }
 
   const progress = useMemo(() => [0, 1, 2, 3, 4, 5], []);
 
   return (
-    <main className={cx('minimal-game', reducedMotion && 'reduce-motion')}>
-      {stage === 0 && (
+    <main
+      className={cx('minimal-game', reducedMotion && 'reduce-motion')}
+      onPointerDown={(event) => {
+        if (started && soundOn && (event.target as HTMLElement).closest('button')) playEffect('click');
+      }}
+    >
+      <div className={cx('rotate-prompt')} role="status" aria-live="polite">
+        <span className={cx('rotate-device')} aria-hidden="true"><i /></span>
+        <p>turn your phone sideways</p>
+        <small>Project: Proof plays in landscape.</small>
+      </div>
+
+      {!started && <Prologue onBegin={beginDemo} />}
+
+      {started && stage === 0 && (
         <PhoneScene
           selected={selection}
           message={message}
@@ -579,7 +706,7 @@ export default function ChapterZeroOne() {
           onRead={() => moveTo(1)}
         />
       )}
-      {stage > 0 && stage < 4 && (
+      {started && stage > 0 && stage < 4 && (
         <OperationScene
           stage={stage}
           result={result}
@@ -591,7 +718,7 @@ export default function ChapterZeroOne() {
           onCheck={checkResult}
         />
       )}
-      {stage === 4 && (
+      {started && stage === 4 && (
         <CartesianScene
           selected={selection}
           solved={solved}
@@ -600,23 +727,29 @@ export default function ChapterZeroOne() {
           onCheck={checkCopies}
         />
       )}
-      {stage === 5 && (
+      {started && stage === 5 && (
         <CipherScene
           stepIndex={cipherStep}
           solved={solved}
           wrong={cipherWrong}
+          applied={cipherApplied}
           message={message}
           onChoose={chooseCipherTool}
         />
       )}
-      {stage === 6 && <Ending onReplay={() => { setCipherStep(0); moveTo(0); }} />}
+      {started && stage === 6 && <Ending onReplay={() => { setCipherStep(0); moveTo(0); }} />}
 
-      <div className={cx('quiet-controls')}>
+      <span className={cx('demo-mark')}>demo</span>
+      {started && <button className={cx('sound-toggle')} type="button" onClick={toggleSound} aria-label={soundOn ? 'mute sound' : 'turn sound on'} aria-pressed={soundOn}>
+        <i /><i /><i />
+      </button>}
+
+      {started && <div className={cx('quiet-controls')}>
         <button type="button" onClick={() => setNote(currentConcept)} aria-label="show concept note">?</button>
         <div aria-label={`scene ${Math.min(stage, 5) + 1} of 6`}>
           {progress.map((step) => <i key={step} className={cx(step === Math.min(stage, 5) && 'active', step < stage && 'passed')} />)}
         </div>
-      </div>
+      </div>}
 
       <div className={cx('cinematic-cut', cutting && 'play')} aria-hidden="true"><i /><i /><i /></div>
       {note && <ConceptNote concept={note} onClose={closeNote} />}

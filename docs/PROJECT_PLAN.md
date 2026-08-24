@@ -91,21 +91,26 @@ New puzzles should usually be assembled from existing mechanics, activity types,
 
 ### First implementation slice: Chapter 0.1, The Archive Set
 
-The first coded experiment should be a short playable foundations mission introducing sets through direct manipulation. The player selects a key and ID card to construct phone-authentication set S and must make it equal to required set D. The mission then uses union in a document room, intersection during a spy exchange, difference while abandoning a tracker, a Cartesian product to copy every stolen file to every safe relay channel, and a cumulative decoder that turns the operations into one secret extraction code.
+The first coded experiment should be a short playable foundations mission introducing sets through direct manipulation. The player selects a key and ID card to construct phone-authentication set S and must make it equal to required set D. The mission then uses union in a document room, intersection during a spy exchange, difference while abandoning a tracker, a Cartesian product to copy every stolen file into every safe archive slot, and a cumulative decoder that turns the operations into one secret extraction code.
+
+This release is explicitly a **demo**, not a finished course or full game. A short opening briefing names the prototype, introduces Euler **e**, establishes the archive mission, and sets expectations before the first concept note appears. The demo label remains visible but quiet during play.
 
 It should include:
 
+- A brief animated story opening with a single `begin demo` action.
 - A first-time concept note defining a set and equality of sets.
 - A field phone that displays `D = { key, ID card }` and updates `S` as the player takes a key, ID card, tracker, or duplicate key.
 - Explicit behavior showing that order and repeated elements do not change a set.
 - A document-room union where the player takes every item named in either of two documents.
 - A spy intersection exchange where the player takes only the item named by both lists.
 - A difference escape where the player leaves the flagged tracker behind and slips past one surveillance camera.
-- A Cartesian-product relay where the player constructs every ordered file-channel pair to create complete backups.
-- A cumulative code scene where union recovers all digits, intersection keeps verified digits, difference removes compromised digits, Cartesian product assigns the clean digit to code positions, and equality confirms the assembled signature.
+- A Cartesian-product copy room where the player constructs every ordered file-slot pair to create complete backups.
+- A cumulative code scene where union recovers all digits, intersection keeps verified digits, difference removes a compromised digit, Cartesian product assigns the clean digit to code positions, and a final difference removes the burned pair so `{ (2,2) }` translates to code `22`.
 - A first-time concept note before each operation's first use, with manual review afterward.
 - A composed scene sequence in which correct mathematical results transform the architecture and let the agent proceed.
 - Keyboard, touch, reduced-motion, and non-color alternatives.
+- User-started, muteable background music and interaction feedback sourced from documented CC0 libraries; no puzzle state may depend on sound.
+- A hybrid equation layer: pinned CDN-hosted MathJax renders symbolic LaTeX, while React/CSS continues to render interactive sets containing game objects.
 
 ### Next calculus vertical slice: derivatives as local change
 
@@ -567,7 +572,7 @@ Deliverables:
 
 - A one-page definition of the initial learner and learning objective.
 - A one-page player fantasy and direct-math-tool loop.
-- A storyboard for field-phone equality, document-room union, spy intersection exchange, tracker difference escape, Cartesian relay copying, and the cumulative code decoder.
+- A storyboard for field-phone equality, document-room union, spy intersection exchange, tracker difference escape, Cartesian archive copying, and the cumulative code decoder.
 - A misconception list covering membership, equality, duplicates, union, intersection, difference, Cartesian products, and ordered pairs.
 - A playable Chapter 0.1 scene sequence.
 - First-time concept notes with local seen-state and manual replay.
@@ -629,8 +634,8 @@ Exit condition: the second subject reuses the platform's core systems and reveal
 
 ### Must have for the first vertical slice
 
-- Precise learning objectives for set membership, equality, union, intersection, and difference.
-- A four-scene game loop: satisfy the field phone through set equality, take the union of two document lists, take their intersection to a spy, then leave the tracker through set difference to distract one surveillance camera.
+- Precise learning objectives for set membership, equality, union, intersection, difference, Cartesian products, and ordered pairs.
+- A six-scene game loop: satisfy the field phone through set equality, take the union of two document lists, take their intersection to a spy, leave the tracker through set difference, copy files into archive slots with a Cartesian product, then decode the final strip through a short operation chain.
 - Direct element-selection and operation tools with no tile or multiple-choice dependency.
 - Synchronized inline set equations, tool state, and architectural consequences. Each set uses exactly one normal-sized brace pair; ellipses, enlarged decorative braces, and duplicated brace notation are not used.
 - Larger readable objects and notation, sparse structural linework, distinct layouts for each operation, operation-specific completion choreography, and an optional cursor-proximity text highlight.
@@ -724,7 +729,7 @@ Do not optimize a single metric in isolation. For example, faster completion can
 When the project moves from planning to implementation, begin in this order:
 
 1. Write Chapter 0.1's measurable set objectives and quiet architectural player fantasy.
-2. Sketch field-phone equality, document-room union, spy intersection exchange, tracker difference escape, relay copying, and code decoding as one scene sequence.
+2. Sketch field-phone equality, document-room union, spy intersection exchange, tracker difference escape, archive copying, and code decoding as one scene sequence.
 3. Define reference sets, common misconceptions, valid strategies, and likely guessing behavior.
 4. Storyboard player actions, mathematical tool states, semantic game events, and architectural motion beats.
 5. Prototype the field-phone authentication set and one operation tool before adding decorative architecture.
@@ -744,7 +749,7 @@ The Chapter 0.1 foundations experiment is complete when:
 - Six connected scenes form a satisfying equality, union, intersection, difference, Cartesian-product, and cumulative-decoder mission arc.
 - The player makes phone set `S` equal `D = { key, ID card }` and receives a concise document-room mission; selecting both physical keys demonstrates that duplicates do not alter the set.
 - Union packs everything named in either document; intersection selects the shared object for the spy; difference leaves the flagged tracker behind.
-- Cartesian product creates all four ordered file-channel pairs, and the finale uses every learned operation to derive and confirm code `22`.
+- Cartesian product creates all four ordered file-slot pairs, and the finale uses union, intersection, Cartesian product, and two meaningful differences to leave `{ (2,2) }` and reveal code `22`.
 - In the final scene, the result set is exactly what **e** carries. Selecting the tracker keeps it on **e** and causes the camera to catch the character. Leaving the tracker out but omitting the key or ID card stops the escape because the mission gear is incomplete. Only `{ key, ID card }` drops the tracker, turns the single camera toward the decoy, and lets **e** escape through its blind side.
 - Repeated elements and different ordering are handled according to set equality.
 - The player constructs operation results with math tools instead of choosing among fixed answers.

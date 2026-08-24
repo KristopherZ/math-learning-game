@@ -59,11 +59,13 @@ Build the world in the browser as a two-dimensional composition using page eleme
 - Suggest depth only when it makes an object relationship clearer.
 - Keep every puzzle readable as a diagram when the decorative depth is ignored.
 - Use generous negative space and one central architectural composition per scene.
+- Use one uninterrupted warm-ivory background across the prologue and every puzzle scene; do not divide scenes with tinted horizontal bands.
 - Prefer large meaningful forms over environmental props.
 - Integrate axes, curves, braces, set expressions, and labels into the architecture.
 - Keep only lines that establish a floor, boundary, route, or mathematical consequence; remove ornamental crossing lines and repeated construction guides.
 - Scale objects, notation, and short prompts for comfortable recognition instead of making minimalism depend on tiny elements.
 - Avoid textures, detailed materials, realistic interiors, and heavy interface chrome.
+- Render purely symbolic mathematics with pinned CDN-hosted MathJax and LaTeX. Keep icon-bearing or interactive sets as native scene elements so notation never breaks object manipulation or motion continuity.
 
 ### Camera and scene framing
 
@@ -197,7 +199,11 @@ Failure must be reversible, quick, and visually informative.
 
 ### Premise
 
-The agent enters a quiet records building carrying a locked field phone. The phone message begins the mission: collect every required item from the document room, exchange the shared item with a spy, abandon the tracker before the surveillance camera finds **e**, copy the stolen files through a safe relay, and decipher the satellite's extraction code.
+The agent enters a quiet records building carrying a locked field phone. The phone message begins the mission: collect every required item from the document room, exchange the shared item with a spy, abandon the tracker before the surveillance camera finds **e**, copy the stolen files into safe archive slots, and decipher the hidden extraction code.
+
+### Opening: Demo Briefing
+
+Before Scene 1, a sparse animated briefing makes clear that this build is an interactive math-game **demo**. It introduces Project: Proof, Euler **e**, the intercepted archive transmission, and the mission path in two short paragraphs. This opening is the only title-forward screen; puzzle scenes still avoid banners and lengthy exposition. Selecting `begin demo` starts the optional soundtrack and then reveals the first concept note.
 
 ### Scene 1: The Field Phone
 
@@ -221,31 +227,31 @@ Only this final scene introduces a visible threat: one spare, unlabeled wall-mou
 
 The result set represents what **e** carries. If it still includes the tracker, the camera snaps toward **e** and displays “caught.” If the tracker is gone but either the key or ID card is missing, **e** is stopped because the mission gear is incomplete; this is not a camera capture. Both failures return control with a targeted hint and no slow restart.
 
-### Scene 5: Cartesian Relay Copy
+### Scene 5: Cartesian Archive Copy
 
-Beyond the camera is a spare satellite relay. The stolen set `F = { ID, map }` must reach both safe channels `C = { α, β }`. The player constructs `F × C` by selecting every ordered file-channel pair: `(ID, α)`, `(ID, β)`, `(map, α)`, and `(map, β)`.
+Beyond the camera is a quiet copy room. The stolen set `F = { ID, map }` must be duplicated into both safe archive slots `C = { α, β }`. The player constructs `F × C` by selecting every ordered file-slot pair: `(ID, α)`, `(ID, β)`, `(map, α)`, and `(map, β)`.
 
-The interaction is a physical copying grid rather than a detached enumeration exercise. Selecting a pair connects one file row to one channel column. When all four pairs exist, the copies pulse outward together and the dish transmits them. The satellite replies with an encrypted extraction sequence.
+The interaction is a physical copying grid rather than a detached enumeration exercise. Selecting a pair connects one file row to one archive-slot column. When all four pairs exist, the copies pulse into place together. A hidden strip in the completed copies contains an encrypted extraction sequence. There is no dish, radio cone, satellite, or other transmission decoration in this scene.
 
 ### Scene 6: The Set Decoder
 
-The reply arrives as torn digit strips, a verifier list, a compromised-digit list, two code positions, and a lock signature. The player chooses the mathematical tool that performs each in-world instruction:
+The hidden strip contains torn digit sets, a verifier list, a compromised-digit list, two code positions, and one burned ordered pair. The player chooses the mathematical tool that performs each in-world instruction:
 
 1. Union recovers every digit on either torn strip.
 2. Intersection keeps only verifier-confirmed digits.
 3. Difference removes the compromised digit.
 4. Cartesian product pairs the clean digit with both code positions.
-5. Equality confirms that the resulting ordered-pair set matches the lock signature even though its display order differs.
+5. Difference removes the pair assigned to burned position `1`, leaving `{ (2,2) }`.
 
-Each correct choice advances one point along a visible signal thread and transforms the displayed data. A wrong tool briefly misaligns the strips without erasing completed work. The final equality reveals code `22` and opens the extraction signal.
+Each correct choice animates its operation into the missing tool slot, advances one point along a visible signal thread, and transforms the displayed data before the next instruction arrives. A wrong tool briefly misaligns the strips without erasing completed work. The code remains masked throughout the sequence; only after the final difference leaves `{ (2,2) }` does the scene translate that pair into `code 22` and open the extraction signal. Equality remains the completed authentication idea from Scene 1 and is not repeated as a decoder tool.
 
 ### Animation causality
 
-Every scene must show cause before consequence. Phone equality reveals the message without making **e** leave. Union visibly packs the complete result into the document case before escape. Intersection moves the shared ID card into the spy's hand before escape. Difference distinguishes carrying the tracker from forgetting required gear; only a complete tracker-free carry set drops the decoy, redirects the camera, and opens the escape. Cartesian product connects every file-channel pair before the dish transmits. The decoder advances only when the chosen operation performs the stated transformation. Scene cuts swap locations while the panels cover the frame, never after they have already passed.
+Every scene must show cause before consequence. Phone equality reveals the message without making **e** leave. Union visibly packs the complete result into the document case before escape. Intersection moves the shared ID card into the spy's hand before escape. Difference distinguishes carrying the tracker from forgetting required gear; only a complete tracker-free carry set drops the decoy, redirects the camera, and opens the escape. Cartesian product fills every file-slot pair before the hidden code strip appears. The decoder advances only when the chosen operation performs the stated transformation. Scene cuts swap locations while the panels cover the frame, never after they have already passed.
 
 ### Completion
 
-The six scenes contract into one mission path: phone equality, document-room union, spy intersection, tracker difference, Cartesian relay copying, and a cumulative set decoder. The debrief previews statements, truth values, and logical connectives as the next operation.
+The six scenes contract into one mission path: phone equality, document-room union, spy intersection, tracker difference, Cartesian archive copying, and a cumulative set decoder. The debrief previews statements, truth values, and logical connectives as the next operation.
 
 ## 10. First-time concept notes
 
@@ -304,17 +310,20 @@ The interface should almost disappear.
 - Keep the current result set visible while the player edits it.
 - Provide obvious reset, check, concept-note, and reduced-motion controls.
 - Support keyboard, pointer, and touch interaction.
+- Phone play is landscape-only. Portrait phones show a quiet turn-device prompt; landscape layouts preserve safe-area insets, keep touch targets at least 44 pixels, and recompose every scene for a short, wide viewport.
 - On pointer devices, nearby text receives a restrained white halo that follows cursor proximity. This is an optional focus cue, never the sole indication of meaning, and does not replace keyboard focus styling.
 
 ## 13. Audio direction
 
-Audio is optional for the prototype. If added later:
+The demo uses optional, low-volume audio sourced from CC0 libraries. Playback starts only after the player selects `begin demo`, can be muted at any time, and is never required to understand correctness or story state. Asset names, authors, licenses, and source URLs live beside the files in `public/audio/LICENSES.md`.
 
 - Use soft wooden, ceramic, paper, bell, and airy tonal sounds.
 - Let successful operations resolve a small musical interval.
 - Use quiet rhythmic movement rather than action-film tension.
 - Give each mathematical tool a consistent sonic identity.
 - Never make audio the only carrier of state or correctness.
+- Pause music when the player mutes it and resume only after another direct player action.
+- Keep effects short enough that repeated experimentation never becomes noisy.
 
 ## 14. Accessibility
 

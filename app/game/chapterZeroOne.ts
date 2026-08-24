@@ -12,6 +12,7 @@ export type ConceptNote = {
   symbol: string;
   line: string;
   example: string;
+  texExample: string;
 };
 
 export type DoorScene = {
@@ -40,26 +41,31 @@ export const conceptNotes: Record<ConceptKey, ConceptNote> = {
     symbol: '=',
     line: 'Two sets match when the same kinds of things are inside. Order and repeats do not matter.',
     example: '{ key, ID card } = { ID card, key, key }',
+    texExample: '\\{\\text{key},\\text{ID card}\\}=\\{\\text{ID card},\\text{key},\\text{key}\\}',
   },
   union: {
     symbol: '∪',
     line: 'Union packs everything found in A or B, keeping one of each kind.',
     example: '{ key, ID card } ∪ { ID card, map } = { key, ID card, map }',
+    texExample: '\\{\\text{key},\\text{ID card}\\}\\cup\\{\\text{ID card},\\text{map}\\}=\\{\\text{key},\\text{ID card},\\text{map}\\}',
   },
   intersection: {
     symbol: '∩',
     line: 'Intersection keeps only the things found in both A and B.',
     example: '{ key, ID card } ∩ { ID card, ticket } = { ID card }',
+    texExample: '\\{\\text{key},\\text{ID card}\\}\\cap\\{\\text{ID card},\\text{ticket}\\}=\\{\\text{ID card}\\}',
   },
   difference: {
     symbol: '∖',
     line: 'Difference starts with A and leaves behind anything marked in B.',
     example: '{ key, ID card, tracker } ∖ { tracker } = { key, ID card }',
+    texExample: '\\{\\text{key},\\text{ID card},\\text{tracker}\\}\\setminus\\{\\text{tracker}\\}=\\{\\text{key},\\text{ID card}\\}',
   },
   cartesian: {
     symbol: '×',
     line: 'A Cartesian product pairs every member of the first set with every member of the second. Pair order matters.',
     example: '{ ID, map } × { α, β } = { (ID, α), (ID, β), (map, α), (map, β) }',
+    texExample: '\\{\\text{ID},\\text{map}\\}\\times\\{\\alpha,\\beta\\}=\\{(\\text{ID},\\alpha),(\\text{ID},\\beta),(\\text{map},\\alpha),(\\text{map},\\beta)\\}',
   },
 };
 
@@ -102,7 +108,7 @@ export const doorScenes: DoorScene[] = [
     left: [object('a-key', 'key', 'key'), object('a-photo', 'photo', 'ID card'), object('a-tracker', 'tracker', 'tracker')],
     right: [object('b-tracker', 'tracker', 'tracker')],
     expected: ['key', 'photo'],
-    success: 'The camera turns toward the abandoned tracker. e slips through its blind side into the relay room.',
+    success: 'The camera turns toward the abandoned tracker. e slips through its blind side into the copy room.',
     hint: 'Start with the carry set and leave every flagged tracker behind.',
     caughtHint: 'the tracker is still in the carry set.',
     missingHint: 'e still needs both the key and ID card.',
@@ -114,13 +120,13 @@ export const copyFiles = [
   { id: 'map', label: 'map' },
 ] as const;
 
-export const copyChannels = [
+export const copySlots = [
   { id: 'alpha', label: 'α' },
   { id: 'beta', label: 'β' },
 ] as const;
 
 export const requiredCopies = copyFiles.flatMap((file) =>
-  copyChannels.map((channel) => `${file.id}:${channel.id}`),
+  copySlots.map((slot) => `${file.id}:${slot.id}`),
 );
 
 export const cipherSteps: CipherStep[] = [
@@ -153,11 +159,11 @@ export const cipherSteps: CipherStep[] = [
     result: '{ (2,1), (2,2) }',
   },
   {
-    concept: 'equality',
-    instruction: 'confirm the assembled pairs match the lock signature',
+    concept: 'difference',
+    instruction: 'discard the pair assigned to the burned position',
     left: '{ (2,1), (2,2) }',
-    right: '{ (2,2), (2,1) }',
-    result: 'code 22',
+    right: '{ (2,1) }',
+    result: '{ (2,2) }',
   },
 ];
 
