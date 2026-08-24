@@ -82,26 +82,13 @@
 .world-object:disabled { cursor: default; }
 
 .object-mark { width: 42px; height: 42px; position: relative; display: block; flex: none; color: var(--ink); }
-.mark-key::before { content: ''; position: absolute; left: 1px; top: 4px; width: 15px; height: 15px; border: 2px solid currentColor; border-radius: 50%; }
-.mark-key::after { content: ''; position: absolute; left: 15px; top: 18px; width: 24px; height: 2px; background: currentColor; transform: rotate(34deg); transform-origin: left; }
-.mark-key i::before, .mark-key i::after { content: ''; position: absolute; width: 2px; height: 7px; background: currentColor; transform: rotate(34deg); }
-.mark-key i::before { right: 6px; bottom: 4px; } .mark-key i::after { right: 12px; bottom: 8px; }
-.mark-photo { border: 1px solid currentColor; }
-.mark-photo::before { content: ''; position: absolute; left: 50%; top: 7px; width: 9px; height: 9px; border: 1px solid currentColor; border-radius: 50%; transform: translateX(-50%); }
-.mark-photo::after { content: ''; position: absolute; left: 8px; right: 8px; bottom: 6px; height: 12px; border: 1px solid currentColor; border-bottom: 0; border-radius: 14px 14px 0 0; }
-.mark-map { border: 1px solid currentColor; transform: skewY(-7deg); }
-.mark-map::before, .mark-map::after { content: ''; position: absolute; top: 0; bottom: 0; width: 1px; background: currentColor; }
-.mark-map::before { left: 33%; } .mark-map::after { right: 33%; }
-.mark-map i { position: absolute; left: 6px; right: 6px; top: 50%; height: 1px; background: currentColor; transform: rotate(-25deg); }
-.mark-seal { border: 1px solid currentColor; border-radius: 50%; box-shadow: inset 0 0 0 7px var(--paper); background: currentColor; }
-.mark-ticket { width: 42px; height: 42px; top: 0; border: 0; }
-.mark-ticket i { position: absolute; left: 0; top: 7px; width: 42px; height: 28px; border: 1px solid currentColor; }
-.mark-ticket::before, .mark-ticket::after { content: ''; position: absolute; top: 50%; width: 7px; height: 7px; border: 1px solid currentColor; border-radius: 50%; background: var(--paper); transform: translateY(-50%); }
-.mark-ticket::before { left: -4px; } .mark-ticket::after { right: -4px; }
-.mark-tracker { width: 31px; height: 39px; margin: 1px 5px; border: 1px solid currentColor; border-radius: 4px; background: rgba(255,253,248,.45); }
-.mark-tracker::before { content: ''; position: absolute; left: 50%; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); transform: translateX(-50%); }
-.mark-tracker::after { content: ''; position: absolute; left: 50%; bottom: 7px; width: 13px; height: 1px; background: currentColor; transform: translateX(-50%); }
-.mark-tracker i { position: absolute; left: 50%; top: 16px; width: 15px; height: 9px; border: 1px solid currentColor; border-width: 1px 0; transform: translateX(-50%); }
+.mark-key,.mark-photo,.mark-map,.mark-seal,.mark-ticket,.mark-tracker { background-position: center; background-repeat: no-repeat; background-size: contain; }
+.mark-key { background-image: url('/objects/key.svg'); }
+.mark-photo { background-image: url('/objects/id-card.svg'); }
+.mark-map { background-image: url('/objects/map.svg'); }
+.mark-seal { background-image: url('/objects/seal.svg'); }
+.mark-ticket { background-image: url('/objects/ticket.svg'); }
+.mark-tracker { background-image: url('/objects/tracker.svg'); }
 
 .set-case { position: absolute; left: 49%; bottom: 12%; width: 250px; min-height: 126px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; padding: 25px 16px 14px; border: 1px solid var(--ink); background: rgba(245,241,233,.9); transform: translateX(-50%); }
 .case-loop { position: absolute; left: 50%; top: -24px; width: 72px; height: 24px; border: 1px solid var(--ink); border-bottom: 0; border-radius: 40px 40px 0 0; transform: translateX(-50%); }

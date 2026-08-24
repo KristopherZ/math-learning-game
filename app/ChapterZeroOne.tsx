@@ -21,7 +21,7 @@ import { useGamePreferences } from './game/hooks/useGamePreferences';
 import { useProximityHighlight } from './game/hooks/useProximityHighlight';
 import { requestMobileFullscreen, useScreenAccess } from './game/hooks/useScreenAccess';
 
-export default function ChapterZeroOne() {
+export default function ChapterZeroOne({ onContinue }: { onContinue?: () => void }) {
   const screenAccess = useScreenAccess();
   const preferences = useGamePreferences();
   const audio = useGameAudio();
@@ -105,7 +105,9 @@ export default function ChapterZeroOne() {
           onChoose={game.chooseCipherTool}
         />
       )}
-      {game.started && game.stage === 6 && <Ending onReplay={game.replay} />}
+      {game.started && game.stage === 6 && (
+        <Ending onReplay={game.replay} onContinue={onContinue} />
+      )}
 
       <span className="demo-mark">demo</span>
       {game.started && <SoundToggle soundOn={audio.soundOn} onToggle={audio.toggleSound} />}

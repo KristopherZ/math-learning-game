@@ -6,6 +6,10 @@ import './styles/chapter-zero-one/mission.css';
 import './styles/chapter-zero-one/animations.css';
 import './styles/chapter-zero-one/final-scenes.css';
 import './styles/chapter-zero-one/responsive.css';
+import './styles/chapter-zero-two/base.css';
+import './styles/chapter-zero-two/scenes.css';
+import './styles/chapter-zero-two/animations.css';
+import './styles/chapter-zero-two/responsive.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

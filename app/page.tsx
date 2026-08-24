@@ -1,5 +1,5 @@
-import ChapterZeroOne from './ChapterZeroOne';
+import GameRouter from './GameRouter';
 
 export default function Home() {
-  return <ChapterZeroOne />;
+  return <GameRouter />;
 }

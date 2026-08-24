@@ -23,6 +23,12 @@ const HIGHLIGHT_SELECTOR = [
   '.tiny-note code',
   '.ending-scene > p',
   '.ending-scene > span',
+  '.function-header',
+  '.function-legend',
+  '.inverse-prompt',
+  '.composition-notation',
+  '.function-briefing-copy',
+  '.function-ending > p',
 ].join(',');
 
 export function useProximityHighlight(stage: number, noteOpen: boolean) {

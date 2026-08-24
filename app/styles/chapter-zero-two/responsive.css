@@ -1,0 +1,208 @@
+@media (max-width: 1050px) {
+  .function-briefing-copy {
+    left: 9%;
+  }
+  .briefing-machine {
+    right: 10%;
+    transform: scale(0.86);
+    transform-origin: top right;
+  }
+  .function-briefing .minimal-agent {
+    right: 13%;
+  }
+  .machine-console {
+    width: 76vw;
+  }
+  .graph-frame {
+    width: 60vw;
+  }
+  .mapping-frame {
+    width: 46vw;
+  }
+  .inverse-tools button {
+    width: 132px;
+  }
+}
+
+@media (max-height: 720px) {
+  .function-header {
+    top: 13%;
+  }
+  .function-legend {
+    top: 19%;
+  }
+  .relation-legend {
+    top: 16%;
+  }
+  .machine-console {
+    top: 29%;
+    gap: 9px;
+  }
+  .machine-wire-row {
+    min-height: 50px;
+  }
+  .graph-frame {
+    top: 27%;
+    width: min(560px, 55vw);
+  }
+  .manifest-frame {
+    top: 25%;
+    width: min(650px, 62vw);
+  }
+  .graph-table {
+    top: 31%;
+  }
+  .composition-notation {
+    top: 22%;
+  }
+  .composition-pipeline,
+  .extraction-pipeline {
+    top: 35%;
+  }
+  .swap-machines {
+    top: 54%;
+  }
+  .inverse-prompt {
+    top: 23%;
+  }
+  .mapping-frame {
+    top: 28%;
+    width: min(390px, 40vw);
+  }
+  .inverse-tools {
+    top: 60%;
+  }
+  .domain-shutter {
+    top: 21%;
+  }
+  .extraction-scene .swap-machines {
+    top: 52%;
+  }
+  .inverse-proof {
+    top: 59%;
+  }
+  .function-check {
+    bottom: 16%;
+  }
+  .function-scene .scene-message {
+    bottom: 8%;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .function-briefing-copy {
+    top: 13%;
+    width: 50vw;
+  }
+  .function-briefing-copy h1 {
+    margin: 12px 0 18px;
+  }
+  .function-briefing-copy p {
+    font-size: 11px;
+  }
+  .function-briefing-copy button {
+    margin-top: 13px;
+  }
+  .briefing-machine {
+    top: 15%;
+    right: 7%;
+    scale: 0.72;
+  }
+  .function-briefing .minimal-agent {
+    right: 11%;
+    bottom: 10%;
+    scale: 1.35;
+  }
+  .scene-whisper {
+    top: 5%;
+    font-size: 11px;
+  }
+  .function-header {
+    top: 13%;
+    font-size: 17px;
+  }
+  .function-legend {
+    top: 19%;
+    gap: 18px;
+  }
+  .relation-legend {
+    top: 16%;
+  }
+  .function-legend span {
+    font-size: 10px;
+  }
+  .machine-console {
+    top: 28%;
+    width: 78vw;
+    gap: 6px;
+  }
+  .machine-wire-row {
+    min-height: 45px;
+    grid-template-columns: 28px 1fr 70px 1fr auto;
+  }
+  .machine-wire-row > strong,
+  .machine-wire-row button {
+    width: 27px;
+    height: 27px;
+  }
+  .function-machine {
+    width: 70px;
+    height: 42px;
+  }
+  .graph-frame {
+    top: 26%;
+    width: 55vw;
+  }
+  .graph-table {
+    left: 9%;
+    top: 31%;
+  }
+  .manifest-frame {
+    top: 24%;
+    width: 59vw;
+  }
+  .composition-pipeline,
+  .extraction-pipeline {
+    width: 74vw;
+    grid-template-columns: 36px 1fr 105px 1fr 105px 1fr 36px;
+  }
+  .composition-pipeline span,
+  .extraction-pipeline span {
+    height: 58px;
+  }
+  .mapping-frame {
+    width: 41vw;
+  }
+  .inverse-tools {
+    gap: 8px;
+  }
+  .inverse-tools button {
+    width: 118px;
+    min-height: 49px;
+  }
+  .domain-shutter {
+    top: 20%;
+  }
+  .domain-shutter button {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  .function-check {
+    bottom: 14%;
+  }
+  .function-scene .scene-message {
+    bottom: 7%;
+    font-size: 10px;
+  }
+  .function-scene .minimal-agent {
+    left: 4%;
+    bottom: 10%;
+    scale: 1.05;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .functions-game * {
+    scroll-behavior: auto;
+  }
+}

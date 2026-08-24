@@ -1,0 +1,241 @@
+.function-briefing-lines i {
+  animation: function-line-in 1200ms cubic-bezier(0.18, 0.8, 0.18, 1) both;
+}
+.function-briefing-lines i:nth-child(2) {
+  animation-delay: 120ms;
+}
+.function-briefing-lines i:nth-child(3) {
+  animation-delay: 220ms;
+}
+.briefing-machine {
+  animation: machine-arrive 900ms cubic-bezier(0.18, 0.8, 0.18, 1.1) 180ms both;
+}
+.briefing-machine i {
+  animation: machine-heartbeat 2.8s ease-in-out 1.2s infinite;
+}
+.function-briefing .minimal-agent {
+  animation: briefing-agent 1000ms cubic-bezier(0.18, 0.8, 0.18, 1.2) 300ms both;
+}
+
+.machine-wire-row {
+  animation: relay-row-in 620ms cubic-bezier(0.18, 0.8, 0.18, 1) both;
+}
+.machine-wire-row:nth-child(2) {
+  animation-delay: 90ms;
+}
+.machine-wire-row:nth-child(3) {
+  animation-delay: 180ms;
+}
+.machine-wire-row button.selected {
+  animation: port-lock 360ms cubic-bezier(0.18, 0.8, 0.18, 1.25) both;
+}
+.machine-scene.solved .machine-wire-row > i {
+  animation: wire-signal 650ms ease-in-out 2 alternate;
+}
+
+.graph-point.active circle {
+  transition:
+    cy 420ms cubic-bezier(0.18, 0.8, 0.18, 1.2),
+    fill 180ms ease;
+}
+.manifest-route.active .manifest-route-line {
+  animation: manifest-route-draw 580ms cubic-bezier(0.18, 0.8, 0.18, 1) both;
+}
+.relation-scene.solved .manifest-route-switch {
+  animation: port-lock 360ms cubic-bezier(0.18, 0.8, 0.18, 1.25) both;
+}
+
+.composition-pipeline span,
+.extraction-pipeline span {
+  transition: transform 420ms cubic-bezier(0.18, 0.8, 0.18, 1.12);
+}
+.composition-pipeline span:first-of-type,
+.extraction-pipeline span:first-of-type {
+  animation: machine-slot-left 520ms cubic-bezier(0.18, 0.8, 0.18, 1.12) both;
+}
+.composition-pipeline span:last-of-type,
+.extraction-pipeline span:last-of-type {
+  animation: machine-slot-right 520ms cubic-bezier(0.18, 0.8, 0.18, 1.12) both;
+}
+.composition-scene.solved .composition-pipeline > i,
+.extraction-scene.solved .extraction-pipeline > i {
+  animation: wire-signal 620ms ease-in-out 3 alternate;
+}
+.search-lanes i {
+  animation: search-line 3.6s ease-in-out infinite alternate;
+}
+.search-lanes i:nth-child(2) {
+  animation-delay: -1.7s;
+}
+
+.mapping-frame {
+  animation: mapping-arrive 520ms cubic-bezier(0.18, 0.8, 0.18, 1) both;
+}
+.mapping-arrow {
+  stroke-dasharray: 300;
+  animation: mapping-draw 700ms ease both;
+}
+.inverse-scene.wrong .mapping-frame {
+  animation: inverse-denied 420ms ease both;
+}
+.inverse-progress i.active {
+  animation: progress-search 1s ease-in-out infinite alternate;
+}
+.function-ending-lines i:nth-child(2) {
+  animation: ending-orbit 4s ease-in-out infinite alternate;
+}
+.function-scene.solved .minimal-agent.crossing {
+  animation: function-agent-exit-right 1.45s cubic-bezier(0.3, 0.02, 0.18, 1) 320ms both;
+}
+.function-scene.solved .minimal-agent.crossing .e-leg-left {
+  animation: transition-leg-left 320ms ease-in-out infinite alternate;
+}
+.function-scene.solved .minimal-agent.crossing .e-leg-right {
+  animation: transition-leg-right 320ms ease-in-out infinite alternate;
+}
+.function-scene.solved .minimal-agent.crossing .e-briefcase {
+  animation: transition-case-swing 430ms ease-in-out infinite alternate;
+}
+
+@keyframes function-line-in {
+  from {
+    opacity: 0;
+    scale: 0 1;
+  }
+}
+@keyframes machine-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(34px) rotate(3deg);
+  }
+}
+@keyframes machine-heartbeat {
+  50% {
+    color: var(--ink);
+    transform: scale(0.96);
+  }
+}
+@keyframes relay-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-25px);
+  }
+}
+@keyframes port-lock {
+  45% {
+    transform: scale(1.22);
+  }
+}
+@keyframes wire-signal {
+  from {
+    background: var(--line);
+  }
+  to {
+    background: var(--coral);
+    box-shadow: 0 0 9px white;
+  }
+}
+@keyframes manifest-route-draw {
+  from {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+  }
+}
+@keyframes machine-slot-left {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+}
+@keyframes machine-slot-right {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+}
+@keyframes search-line {
+  from {
+    opacity: 0.25;
+    transform: translateX(-20px) rotate(-13deg);
+  }
+  to {
+    opacity: 0.75;
+    transform: translateX(35px) rotate(-13deg);
+  }
+}
+@keyframes mapping-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.92);
+  }
+}
+@keyframes mapping-draw {
+  from {
+    stroke-dashoffset: 300;
+  }
+}
+@keyframes inverse-denied {
+  25% {
+    transform: translateX(calc(-50% - 9px));
+  }
+  50% {
+    transform: translateX(calc(-50% + 8px));
+  }
+  75% {
+    transform: translateX(calc(-50% - 4px));
+  }
+}
+@keyframes progress-search {
+  to {
+    box-shadow: 0 0 0 6px rgb(217 130 120 / 12%);
+  }
+}
+@keyframes function-agent-exit-right {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-3deg);
+  }
+  12% {
+    transform: translateX(2vw) translateY(-7px) rotate(4deg);
+  }
+  34% {
+    transform: translateX(22vw) translateY(0) rotate(-3deg);
+  }
+  58% {
+    transform: translateX(48vw) translateY(-7px) rotate(4deg);
+  }
+  82% {
+    opacity: 1;
+    transform: translateX(76vw) translateY(0) rotate(-3deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(101vw) translateY(-6px) rotate(3deg);
+  }
+}
+
+.reduce-motion .function-briefing-lines i,
+.reduce-motion .briefing-machine,
+.reduce-motion .briefing-machine i,
+.reduce-motion .machine-wire-row,
+.reduce-motion .machine-wire-row button.selected,
+.reduce-motion .manifest-route-line,
+.reduce-motion .composition-pipeline span,
+.reduce-motion .extraction-pipeline span,
+.reduce-motion .search-lanes i,
+.reduce-motion .mapping-frame,
+.reduce-motion .mapping-arrow,
+.reduce-motion .inverse-progress i,
+.reduce-motion .function-ending-lines i {
+  animation: none !important;
+}
+
+.reduce-motion .function-scene.solved .minimal-agent.crossing {
+  animation: function-agent-exit-right-reduced 360ms ease both !important;
+}
+
+@keyframes function-agent-exit-right-reduced {
+  to {
+    opacity: 0;
+    transform: translateX(28vw);
+  }
+}

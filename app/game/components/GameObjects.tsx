@@ -11,11 +11,7 @@ export const kindLabel: Record<ObjectKind, string> = {
 };
 
 export function ObjectMark({ kind }: { kind: ObjectKind }) {
-  return (
-    <span className={cx('object-mark', `mark-${kind}`)} aria-hidden="true">
-      <i />
-    </span>
-  );
+  return <span className={cx('object-mark', `mark-${kind}`)} aria-hidden="true" />;
 }
 
 type ObjectButtonProps = {

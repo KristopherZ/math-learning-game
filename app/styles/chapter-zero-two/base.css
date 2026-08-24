@@ -1,0 +1,291 @@
+.functions-game {
+  --function-panel: rgb(255 253 248 / 58%);
+  --function-shadow: rgb(77 83 80 / 8%);
+}
+
+.function-briefing {
+  background: var(--scene-background);
+}
+
+.function-briefing-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.function-briefing-lines i {
+  position: absolute;
+  display: block;
+  background: var(--faint);
+  transform-origin: left center;
+}
+
+.function-briefing-lines i:nth-child(1) {
+  left: 5%;
+  top: 21%;
+  width: 87%;
+  height: 1px;
+  transform: rotate(-4deg);
+}
+
+.function-briefing-lines i:nth-child(2) {
+  left: 64%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.function-briefing-lines i:nth-child(3) {
+  left: 11%;
+  top: 69%;
+  width: 70%;
+  height: 1px;
+  transform: rotate(6deg);
+}
+
+.function-briefing-copy {
+  position: absolute;
+  left: 12%;
+  top: 17%;
+  z-index: 4;
+  width: min(480px, 48vw);
+}
+
+.function-briefing-copy > span {
+  color: var(--coral);
+  font:
+    600 10px/1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.function-briefing-copy h1 {
+  margin: 18px 0 26px;
+  font:
+    500 clamp(42px, 6vw, 82px) / 0.86 var(--font-geist-sans),
+    sans-serif;
+  letter-spacing: -0.07em;
+}
+
+.function-briefing-copy p {
+  max-width: 440px;
+  margin: 0 0 10px;
+  color: #6f7571;
+  font-size: clamp(12px, 1.3vw, 16px);
+  line-height: 1.55;
+}
+
+.function-briefing-copy button,
+.function-ending-actions button {
+  margin: 22px 10px 0 0;
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  background: rgb(255 255 255 / 34%);
+  font:
+    600 9px/1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    background 220ms ease,
+    transform 220ms ease;
+}
+
+.function-briefing-copy .briefing-back {
+  border-color: var(--line);
+}
+
+.function-briefing-copy button:hover,
+.function-briefing-copy button:focus-visible,
+.function-ending-actions button:hover,
+.function-ending-actions button:focus-visible {
+  outline: none;
+  background: white;
+  transform: translateY(-3px);
+}
+
+.briefing-machine {
+  position: absolute;
+  right: 13%;
+  top: 18%;
+  width: 250px;
+  height: 190px;
+  border: 1px solid var(--line);
+  background: rgb(255 253 248 / 28%);
+}
+
+.briefing-machine::before,
+.briefing-machine::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 82px;
+  height: 1px;
+  background: var(--line);
+}
+
+.briefing-machine::before {
+  right: 100%;
+}
+
+.briefing-machine::after {
+  left: 100%;
+}
+
+.briefing-machine i {
+  position: absolute;
+  inset: 35px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ink);
+  color: var(--coral);
+  font:
+    italic 700 68px/1 Georgia,
+    serif;
+}
+
+.briefing-machine span,
+.briefing-machine b {
+  position: absolute;
+  top: calc(50% - 4px);
+  color: #747a76;
+  font:
+    500 8px/1 var(--font-geist-mono),
+    monospace;
+}
+
+.briefing-machine span {
+  right: calc(100% + 88px);
+}
+
+.briefing-machine b {
+  left: calc(100% + 88px);
+  font-weight: 500;
+}
+
+.function-briefing .minimal-agent {
+  left: auto;
+  right: 15%;
+  bottom: 13%;
+  scale: 1.7;
+}
+
+.function-scene {
+  background: var(--scene-background);
+}
+
+.function-header {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  z-index: 5;
+  min-height: 32px;
+  transform: translateX(-50%);
+  font: 500 clamp(18px, 2vw, 25px) / 1 var(--math-font);
+  white-space: nowrap;
+}
+
+.function-legend {
+  position: absolute;
+  left: 50%;
+  top: 21%;
+  z-index: 4;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 62px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.function-legend span {
+  display: grid;
+  gap: 7px;
+  color: var(--ink);
+  font: 500 13px/1 var(--math-font);
+  text-align: center;
+}
+
+.function-legend small,
+.domain-shutter small,
+.inverse-proof small,
+.composition-notation small {
+  color: #858b87;
+  font:
+    500 8px/1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.function-check,
+.swap-machines {
+  position: absolute;
+  z-index: 12;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--ink);
+  color: #676d69;
+  font:
+    600 9px/1 var(--font-geist-mono),
+    monospace;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.function-check {
+  left: 50%;
+  bottom: 18%;
+  transform: translateX(-50%);
+}
+
+.function-check:hover,
+.function-check:focus-visible,
+.swap-machines:hover,
+.swap-machines:focus-visible {
+  outline: none;
+  background: white;
+}
+
+.function-scene .scene-message {
+  bottom: 9%;
+  max-width: 70vw;
+  text-align: center;
+  white-space: normal;
+}
+
+.function-scene .minimal-agent {
+  left: 7%;
+  bottom: 11%;
+  scale: 1.24;
+}
+
+.function-note {
+  width: min(620px, 100%);
+  grid-template-columns: 125px 1fr;
+}
+
+.function-note > strong {
+  font-size: 25px;
+}
+
+.function-note code {
+  overflow-x: auto;
+}
+
+.ending-replay {
+  left: calc(50% - 56px);
+}
+
+.ending-next {
+  left: calc(50% + 2px);
+  width: 62px !important;
+  border-radius: 0 !important;
+  font:
+    600 8px/1 var(--font-geist-mono),
+    monospace;
+}
