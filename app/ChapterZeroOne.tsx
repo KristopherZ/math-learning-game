@@ -2,430 +2,428 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import {
-  archiveItems,
-  conceptBriefings,
+  archiveObjects,
+  conceptNotes,
+  doorNeed,
+  doorScenes,
   equalSets,
   formatSet,
-  obstacles,
-  targetManifest,
   unique,
   type ConceptKey,
+  type ObjectKind,
+  type WorldObject,
 } from './game/chapterZeroOne';
 
-const SEEN_KEY = 'project-proof-seen-concepts';
-const MOTION_KEY = 'project-proof-reduced-motion';
+const SEEN_KEY = 'project-proof-minimal-v1-seen-concepts';
+const kindLabel: Record<ObjectKind, string> = {
+  key: 'key',
+  photo: 'ID card',
+  map: 'map',
+  seal: 'seal',
+  ticket: 'ticket',
+  tracker: 'tracker',
+};
 
-function Agent({ state = 'ready' }: { state?: 'ready' | 'moving' | 'success' }) {
+function ObjectMark({ kind }: { kind: ObjectKind }) {
+  return <span className={`object-mark mark-${kind}`} aria-hidden="true"><i /></span>;
+}
+
+function ObjectButton({ item, selected, onClick, disabled = false }: {
+  item: WorldObject;
+  selected: boolean;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
   return (
-    <div className={`agent agent-${state}`} aria-label={`Agent Delta is ${state}`}>
-      <span className="agent-shadow" />
-      <span className="agent-head"><i /></span>
-      <span className="agent-scarf">Δ</span>
-      <span className="agent-body" />
-      <span className="agent-arm left" /><span className="agent-arm right" />
-      <span className="agent-leg left" /><span className="agent-leg right" />
+    <button
+      className={`world-object ${selected ? 'selected' : ''}`}
+      type="button"
+      aria-pressed={selected}
+      aria-label={`${selected ? 'Remove' : 'Take'} ${item.label}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <ObjectMark kind={item.kind} />
+      <span>{item.label}</span>
+    </button>
+  );
+}
+
+function Agent({ crossing = false, caught = false, blocked = false }: { crossing?: boolean; caught?: boolean; blocked?: boolean }) {
+  return (
+    <div className={`minimal-agent ${crossing ? 'crossing' : ''} ${caught ? 'caught' : ''} ${blocked ? 'blocked' : ''}`} role="img" aria-label="Euler e, the main character, wearing a cowboy hat">
+      <span className="e-hat" aria-hidden="true" />
+      <span className="e-arm e-arm-left" aria-hidden="true" />
+      <span className="e-arm e-arm-right" aria-hidden="true" />
+      <span className="e-glyph" aria-hidden="true">
+        e
+        <span className="e-eyes"><i /><i /></span>
+      </span>
+      <span className="e-leg e-leg-left" aria-hidden="true" />
+      <span className="e-leg e-leg-right" aria-hidden="true" />
     </div>
   );
 }
 
-function SetLine({ values, label }: { values: string[]; label?: string }) {
+function ConceptNote({ concept, onClose }: { concept: ConceptKey; onClose: () => void }) {
+  const note = conceptNotes[concept];
   return (
-    <span className="set-line">
-      {label && <b>{label} =</b>}
-      <span aria-label={`set containing ${values.join(', ')}`}>{formatSet(values)}</span>
-    </span>
-  );
-}
-
-function ConceptModal({ concept, onClose }: { concept: ConceptKey; onClose: () => void }) {
-  const note = conceptBriefings[concept];
-  return (
-    <div className="modal-backdrop" role="presentation">
-      <section className="concept-modal" role="dialog" aria-modal="true" aria-labelledby="concept-title">
-        <div className="modal-symbol" aria-hidden="true">{note.symbol}</div>
-        <div className="modal-copy">
-          <p className="eyebrow">{note.eyebrow} · CONCEPT BRIEFING</p>
-          <h2 id="concept-title">{note.title}</h2>
-          <p>{note.explanation}</p>
-          <div className="concept-rule"><span>FIELD RULE</span><strong>{note.rule}</strong></div>
-          <code>{note.example}</code>
-          <p className="concept-insight"><i /> {note.insight}</p>
-        </div>
-        <button className="primary-action modal-action" type="button" onClick={onClose} autoFocus>
-          Understood <span aria-hidden="true">→</span>
-        </button>
+    <div className="note-shade">
+      <section className="tiny-note" role="dialog" aria-modal="true" aria-label={`${concept} concept note`}>
+        <strong>{note.symbol}</strong>
+        <p>{note.line}</p>
+        <code>{note.example}</code>
+        <button type="button" onClick={onClose} autoFocus>continue</button>
       </section>
     </div>
   );
 }
 
-function BriefingButtons({ onOpen }: { onOpen: (key: ConceptKey) => void }) {
+function PhoneScene({ selected, message, onToggle, onRead }: {
+  selected: string[];
+  message: string;
+  onToggle: (id: string) => void;
+  onRead: () => void;
+}) {
+  const chosen = archiveObjects.filter((item) => selected.includes(item.id));
+  const chosenKinds = chosen.map((item) => item.kind);
+  const unlocked = equalSets(chosenKinds, doorNeed);
+  const duplicate = chosenKinds.length !== unique(chosenKinds).length;
+
   return (
-    <div className="field-notes" aria-label="Concept field notes">
-      <span>FIELD NOTES</span>
-      <div>
-        {(Object.keys(conceptBriefings) as ConceptKey[]).map((key) => (
-          <button type="button" key={key} onClick={() => onOpen(key)} title={`Review ${key}`}>
-            {conceptBriefings[key].symbol}
-          </button>
+    <section className={`world-scene phone-scene ${unlocked ? 'unlocked' : ''}`} aria-label="encrypted field phone">
+      <div className="scene-number">0.1</div>
+      <p className="scene-whisper">take the key and ID card required by the phone</p>
+      <div className="phone-items" aria-label="objects available for phone authentication">
+        {archiveObjects.map((item) => (
+          <ObjectButton key={item.id} item={item} selected={selected.includes(item.id)} onClick={() => onToggle(item.id)} />
         ))}
       </div>
+      <div className="field-phone">
+        <span className="phone-speaker" aria-hidden="true" />
+        <div className="phone-screen" aria-live="polite">
+          <div className="phone-set target-set" aria-label="required set D contains a key and ID card">
+            <span>D = {'{'}</span><ObjectMark kind="key" /><ObjectMark kind="photo" /><span>{'}'}</span>
+          </div>
+          <div className="phone-set chosen-set" aria-label={`selected set S ${formatSet(unique(chosenKinds).map((kind) => kindLabel[kind]))}`}>
+            <span>S = {'{'}</span>{chosen.map((item) => <ObjectMark key={item.id} kind={item.kind} />)}<span>{'}'}</span>
+          </div>
+          {duplicate && <small>repeat ignored</small>}
+          {unlocked && <><b>message received</b><small>take everything named in either document</small></>}
+        </div>
+        {unlocked && <button className="read-message" type="button" onClick={onRead}>continue</button>}
+      </div>
+      <Agent />
+      <p className="scene-message" aria-live="polite">{message}</p>
+    </section>
+  );
+}
+
+function SecurityCamera({ ready, caught }: {
+  ready: boolean;
+  caught: boolean;
+}) {
+  return (
+    <div className={`security-camera ${ready ? 'decoyed' : ''} ${caught ? 'caught' : ''}`} aria-label={caught ? 'the security camera catches e' : ready ? 'the security camera follows the abandoned tracker' : 'one security camera searching'}>
+      <span className="camera-bracket" aria-hidden="true" />
+      <span className="camera-aim" aria-hidden="true">
+        <span className="camera-field" />
+        <span className="camera-head"><i /></span>
+      </span>
+      <span className="camera-status">{caught ? 'caught' : ready ? 'decoy found' : 'searching'}</span>
     </div>
   );
 }
 
-function PackingScene({
-  selected,
-  onToggle,
-  onSeal,
-  onBriefing,
-  feedback,
-  duplicateNotice,
-}: {
-  selected: string[];
-  onToggle: (id: string) => void;
-  onSeal: () => void;
-  onBriefing: () => void;
-  feedback: string;
-  duplicateNotice: boolean;
-}) {
-  const selectedItems = archiveItems.filter((item) => selected.includes(item.id));
-  const selectedLabels = selectedItems.map((item) => item.label);
-  const suitcaseSet = unique(selectedLabels);
-  const ready = equalSets(suitcaseSet, targetManifest);
-
+function TrackerDecoy({ active }: { active: boolean }) {
   return (
-    <section className="mission-layout" id="mission">
-      <aside className="brief-panel">
-        <p className="eyebrow">MISSION 0.1 · DOCUMENT ROOM</p>
-        <h1>Pack the right set.</h1>
-        <p className="mission-copy">The suitcase will unlock only when its contents equal the extraction manifest.</p>
-        <div className="target-card">
-          <div className="target-heading"><span>Target set M</span><span className="classified">CLASSIFIED</span></div>
-          <SetLine values={targetManifest.map((item) => item.toLowerCase())} label="M" />
-          <p className="target-note">Order does not matter. Contents do.</p>
-        </div>
-        <button className="briefing-button" type="button" onClick={onBriefing}>
-          <span className="button-icon">i</span>Review set equality<span aria-hidden="true">→</span>
-        </button>
-        <div className="handler-note">
-          <span className="handler-avatar">H</span>
-          <p><strong>Handler</strong>Select documents until suitcase set S equals M.</p>
-        </div>
-      </aside>
-
-      <section className={`document-room ${ready ? 'room-ready' : ''}`} aria-label="Geometric document room puzzle">
-        <div className="room-grid" aria-hidden="true" />
-        <div className="room-title"><span>ARCHIVE 07</span><strong>SELECT DOCUMENTS</strong></div>
-        <div className="archive-wall" aria-hidden="true">
-          <span className="cabinet cabinet-a" /><span className="cabinet cabinet-b" />
-          <span className="cabinet cabinet-c" /><span className="scanner-ring" />
-        </div>
-
-        <div className="document-tray" aria-label="Available documents">
-          {archiveItems.map((item) => {
-            const packed = selected.includes(item.id);
-            return (
-              <button
-                className={`document-card ${item.tone} ${packed ? 'packed' : ''}`}
-                type="button"
-                key={item.id}
-                aria-pressed={packed}
-                onClick={() => onToggle(item.id)}
-              >
-                <span className="document-symbol" aria-hidden="true">{item.symbol}</span>
-                <span>{item.label}</span><small>{packed ? 'Packed · tap to remove' : 'Tap to pack'}</small>
-              </button>
-            );
-          })}
-        </div>
-
-        <Agent state={ready ? 'success' : 'ready'} />
-
-        <div className="suitcase-zone">
-          <div className="case-label"><span>SUITCASE SET</span><strong>S = {formatSet(suitcaseSet.map((item) => item.toLowerCase()))}</strong></div>
-          <div className={`suitcase ${ready ? 'case-ready' : ''}`} aria-label={`Suitcase set ${formatSet(suitcaseSet)}`}>
-            <span className="case-handle" /><span className="case-latch left" /><span className="case-latch right" />
-            <div className="packed-items">
-              {selectedItems.length === 0 ? <span className="empty-case">Select a document</span> : selectedItems.map((item) => (
-                <span className={`packed-item ${item.tone}`} key={item.id}>{item.symbol}</span>
-              ))}
-            </div>
-            {duplicateNotice && <span className="duplicate-note">Duplicate detected — S is unchanged</span>}
-          </div>
-          <button className="primary-action seal-action" type="button" onClick={onSeal} disabled={!ready}>
-            {ready ? 'Seal suitcase & leave' : 'Match M to unlock'} <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-        <div className={`exit-door ${ready ? 'door-ready' : ''}`} aria-hidden="true">
-          <span className="door-light" /><span className="door-line" /><strong>{ready ? 'OPEN' : 'EXIT'}</strong>
-        </div>
-        <p className="room-feedback" aria-live="polite">{feedback}</p>
-      </section>
-    </section>
+    <div className={`tracker-decoy ${active ? 'active' : ''}`} aria-label={active ? 'tracker left behind as a decoy' : 'tracker carried by e'}>
+      <ObjectMark kind="tracker" />
+      <i aria-hidden="true" />
+    </div>
   );
 }
 
-function ObstacleScene({
-  index,
-  result,
-  solved,
-  feedback,
-  onToggle,
-  onCheck,
-  onContinue,
-  onBriefing,
-}: {
-  index: number;
-  result: string[];
+function DocumentCase({ ready }: { ready: boolean }) {
+  return (
+    <div className={`document-case ${ready ? 'packed' : ''}`} aria-label={ready ? 'document-room case packed with every required item' : 'empty document-room case'}>
+      <span className="document-handle" aria-hidden="true" />
+      <span className="document-lid" aria-hidden="true" />
+      <span className="packed-items" aria-hidden="true"><ObjectMark kind="key" /><ObjectMark kind="photo" /><ObjectMark kind="map" /></span>
+      <span className="document-status">{ready ? 'all required' : 'A ∪ B'}</span>
+    </div>
+  );
+}
+
+function SpyContact({ ready }: { ready: boolean }) {
+  return (
+    <div className={`spy-contact ${ready ? 'exchange-ready' : ''}`} aria-label={ready ? 'spy accepts the shared item' : 'spy waiting for the shared item'}>
+      <span className="spy-hat" aria-hidden="true" />
+      <span className="spy-head" aria-hidden="true"><i /><i /></span>
+      <span className="spy-body" aria-hidden="true" />
+      <span className="spy-hand" aria-hidden="true" />
+      <span className="exchange-item" aria-hidden="true"><ObjectMark kind="photo" /></span>
+      <span className="spy-status">{ready ? 'exchange' : 'A ∩ B'}</span>
+    </div>
+  );
+}
+
+function SourceSet({ label, objects }: { label: string; objects: WorldObject[] }) {
+  return (
+    <div className={`source-set source-${label.toLowerCase()}`} aria-label={`set ${label}: ${objects.map((item) => item.label).join(', ')}`}>
+      <span className="set-notation">{label} = {'{'}</span>
+      <div>{objects.map((item) => <ObjectMark key={item.id} kind={item.kind} />)}</div>
+      <span className="set-notation">{'}'}</span>
+    </div>
+  );
+}
+
+function OperationScene({ stage, result, solved, caught, blocked, message, onToggle, onCheck }: {
+  stage: number;
+  result: ObjectKind[];
   solved: boolean;
-  feedback: string;
-  onToggle: (element: string) => void;
+  caught: boolean;
+  blocked: boolean;
+  message: string;
+  onToggle: (kind: ObjectKind) => void;
   onCheck: () => void;
-  onContinue: () => void;
-  onBriefing: () => void;
 }) {
-  const obstacle = obstacles[index];
-  const availableElements = unique([...obstacle.left, ...obstacle.right]);
+  const scene = doorScenes[stage - 1];
+  const candidates = unique([...scene.left, ...scene.right].map((item) => item.kind));
+
   return (
-    <section className="mission-layout obstacle-layout" id="mission">
-      <aside className="brief-panel obstacle-brief">
-        <p className="eyebrow">ESCAPE ROUTE · GATE 0{index + 1}</p>
-        <h1>{obstacle.title}</h1>
-        <p className="mission-copy">{obstacle.instruction}</p>
-        <div className="target-card operation-card">
-          <div className="target-heading"><span>Required operation</span><span className="classified">{obstacle.codename}</span></div>
-          <strong className="operation-symbol">{obstacle.expression}</strong>
-          <p className="target-note">Use the operation lens to construct the result.</p>
-        </div>
-        <button className="briefing-button" type="button" onClick={onBriefing}>
-          <span className="button-icon">i</span>Review {obstacle.concept}<span aria-hidden="true">→</span>
-        </button>
-      </aside>
+    <section className={`world-scene operation-scene operation-${scene.concept} ${solved ? 'solved' : ''} ${caught ? 'caught' : ''}`} aria-label={`${scene.concept} enemy-evasion puzzle`}>
+      <div className="scene-number">0.{stage + 1}</div>
+      <div className="sky-lines" aria-hidden="true"><i /><i /><i /></div>
+      <div className="operation-architecture" aria-hidden="true"><i /><i /><i /></div>
+      <div className="floor-path" aria-hidden="true" />
 
-      <section className={`escape-room ${solved ? 'gate-solved' : ''}`} aria-label={`${obstacle.codename} set operation test`}>
-        <div className="room-grid" aria-hidden="true" />
-        <div className="corridor-lines" aria-hidden="true"><i /><i /><i /></div>
-        <div className="gate-heading"><span>{obstacle.codename}</span><strong>{solved ? 'ACCESS VERIFIED' : 'ACCESS BLOCKED'}</strong></div>
-        <div className="set-display" aria-label="Input sets">
-          <div className="venn-set set-a"><b>{obstacle.leftLabel}</b>{obstacle.left.map((item) => <span key={item}>{item}</span>)}</div>
-          <div className="venn-set set-b"><b>{obstacle.rightLabel}</b>{obstacle.right.map((item) => <span key={item}>{item}</span>)}</div>
-        </div>
-        <div className="equation-beam"><span>{obstacle.expression}</span><i /></div>
+      <p className="scene-whisper">{scene.prompt}</p>
+      <div className="operation-sources">
+        <SourceSet label="A" objects={scene.left} />
+        <span className="world-symbol">{scene.symbol}</span>
+        <SourceSet label="B" objects={scene.right} />
+      </div>
 
-        <div className="math-tool" aria-label={`${obstacle.concept} operation lens`}>
-          <div className="tool-heading"><span>OPERATION LENS</span><strong>{obstacle.expression}</strong></div>
-          <p>Activate every element that belongs in the result set.</p>
-          <div className="element-tools" role="group" aria-label="Elements available for the result set">
-            {availableElements.map((element) => (
-              <button
-                type="button"
-                key={element}
-                className={result.includes(element) ? 'selected' : ''}
-                onClick={() => onToggle(element)}
-                disabled={solved}
-                aria-pressed={result.includes(element)}
-              >
-                <i />{element}
-              </button>
-            ))}
-          </div>
-          <div className="constructed-set"><span>RESULT</span><strong>{formatSet(result)}</strong></div>
-          <button className="tool-check" type="button" onClick={onCheck} disabled={solved || result.length === 0}>
-            Run operation
-          </button>
-        </div>
+      <div className="take-tray" aria-label="things available to place in the result set">
+        {candidates.map((kind) => {
+          const item: WorldObject = { id: `tool-${kind}`, kind, label: kindLabel[kind] };
+          return <ObjectButton key={kind} item={item} selected={result.includes(kind)} onClick={() => onToggle(kind)} disabled={solved} />;
+        })}
+      </div>
 
-        <div className="gate-assembly" aria-hidden="true">
-          <span className="gate-panel left" /><span className="gate-panel right" /><span className="gate-core">{obstacle.expression}</span>
+      <div className="result-bowl" aria-label={`A ${scene.concept} B equals ${formatSet(result.map((kind) => kindLabel[kind]))}`}>
+        <div className="result-equation">
+          <span className="set-notation">A {scene.symbol} B = {'{'}</span>
+          <div className="result-members">{result.map((kind) => <ObjectMark key={kind} kind={kind} />)}</div>
+          <span className="set-notation">{'}'}</span>
         </div>
-        <Agent state={solved ? 'moving' : 'ready'} />
+        {!solved && <button type="button" onClick={onCheck} disabled={result.length === 0 || caught || blocked}>use</button>}
+      </div>
 
-        <div className={`answer-feedback ${feedback ? solved ? 'success' : 'retry' : ''}`} aria-live="polite">
-          <i /> <span>{feedback || 'Build the result set with the operation lens.'}</span>
-        </div>
-        {solved && (
-          <button className="primary-action continue-action" type="button" onClick={onContinue}>
-            {index === obstacles.length - 1 ? 'Complete extraction' : 'Cross the gate'} <span aria-hidden="true">→</span>
-          </button>
-        )}
-      </section>
+      <Agent crossing={solved} caught={caught} blocked={blocked} />
+      {scene.concept === 'union' && <DocumentCase ready={solved} />}
+      {scene.concept === 'intersection' && <SpyContact ready={solved} />}
+      {scene.concept === 'difference' && <><TrackerDecoy active={solved} /><SecurityCamera ready={solved} caught={caught} /></>}
+      <p className="scene-message" aria-live="polite">{message}</p>
     </section>
   );
 }
 
-function MissionComplete({ onReplay }: { onReplay: () => void }) {
+function Ending({ onReplay }: { onReplay: () => void }) {
   return (
-    <section className="complete-screen" id="mission">
-      <div className="complete-orbit" aria-hidden="true"><i /><i /><i /></div>
-      <Agent state="success" />
-      <p className="eyebrow">MISSION 0.1 · EXTRACTION COMPLETE</p>
-      <h1>Document room cleared.</h1>
-      <p>You matched equal sets and escaped using union, intersection, and difference.</p>
-      <div className="concept-badges">
-        <span><b>=</b> Equality</span><span><b>∪</b> Union</span><span><b>∩</b> Intersection</span><span><b>∖</b> Difference</span>
-      </div>
-      <div className="debrief-card">
-        <span>FIELD ASSESSMENT</span><strong>4 concepts secured</strong><p>Next operation: statements, truth values, and logical connectives.</p>
-      </div>
-      <button className="primary-action replay-action" type="button" onClick={onReplay}>Replay mission <span aria-hidden="true">↻</span></button>
+    <section className="world-scene ending-scene" aria-label="chapter complete">
+      <div className="ending-rings" aria-hidden="true"><i /><i /><i /><i /></div>
+      <Agent />
+      <div className="ending-path" aria-hidden="true" />
+      <p>sets secured</p>
+      <span>= &nbsp; ∪ &nbsp; ∩ &nbsp; ∖</span>
+      <button type="button" onClick={onReplay}>↻</button>
     </section>
   );
 }
 
 export default function ChapterZeroOne() {
   const [stage, setStage] = useState(0);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [result, setResult] = useState<string[]>([]);
+  const [selection, setSelection] = useState<string[]>([]);
+  const [result, setResult] = useState<ObjectKind[]>([]);
   const [solved, setSolved] = useState(false);
-  const [feedback, setFeedback] = useState('Build suitcase set S to match target set M.');
-  const [modal, setModal] = useState<ConceptKey | null>(null);
+  const [caught, setCaught] = useState(false);
+  const [blocked, setBlocked] = useState(false);
+  const [message, setMessage] = useState('');
+  const [note, setNote] = useState<ConceptKey | null>(null);
   const [seen, setSeen] = useState<Set<ConceptKey>>(new Set());
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [cutting, setCutting] = useState(false);
 
-  const selectedLabels = useMemo(
-    () => archiveItems.filter((item) => selected.includes(item.id)).map((item) => item.label),
-    [selected],
-  );
-  const duplicateNotice = selectedLabels.length !== unique(selectedLabels).length;
+  const currentConcept: ConceptKey = stage === 0 ? 'equality' : doorScenes[Math.min(stage - 1, 2)]?.concept || 'difference';
 
   useEffect(() => {
-    const storedSeen = new Set<ConceptKey>(JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'));
-    setSeen(storedSeen);
-    const storedMotion = localStorage.getItem(MOTION_KEY);
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setReducedMotion(storedMotion === null ? prefersReduced : storedMotion === 'true');
-    if (!storedSeen.has('equality')) setModal('equality');
+    const frame = window.requestAnimationFrame(() => {
+      const stored = new Set<ConceptKey>(JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'));
+      setSeen(stored);
+      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      if (!stored.has('equality')) setNote('equality');
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  function openConcept(key: ConceptKey, force = false) {
-    if (force || !seen.has(key)) setModal(key);
-  }
+  useEffect(() => {
+    const textNodes = Array.from(document.querySelectorAll<HTMLElement>([
+      '.scene-number',
+      '.scene-whisper',
+      '.scene-message',
+      '.door-need',
+      '.set-case small',
+      '.world-object > span:last-child',
+      '.set-notation',
+      '.world-symbol',
+      '.phone-screen',
+      '.document-status',
+      '.spy-status',
+      '.camera-status',
+      '.tiny-note p',
+      '.tiny-note code',
+      '.ending-scene > p',
+      '.ending-scene > span',
+    ].join(',')));
+    let frame = 0;
+    let pointerX = -1000;
+    let pointerY = -1000;
 
-  function closeConcept() {
-    if (!modal) return;
-    const next = new Set(seen).add(modal);
+    const paint = () => {
+      textNodes.forEach((node) => {
+        const rect = node.getBoundingClientRect();
+        const dx = Math.max(rect.left - pointerX, 0, pointerX - rect.right);
+        const dy = Math.max(rect.top - pointerY, 0, pointerY - rect.bottom);
+        const proximity = Math.max(0, 1 - Math.hypot(dx, dy) / 170);
+        node.style.setProperty('--near', proximity.toFixed(3));
+      });
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(paint);
+    };
+
+    const reset = () => {
+      textNodes.forEach((node) => node.style.setProperty('--near', '0'));
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('blur', reset);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('blur', reset);
+    };
+  }, [stage, note]);
+
+  function closeNote() {
+    if (!note) return;
+    const next = new Set(seen).add(note);
     setSeen(next);
     localStorage.setItem(SEEN_KEY, JSON.stringify([...next]));
-    setModal(null);
+    setNote(null);
   }
 
-  function toggleDocument(id: string) {
-    setSelected((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
-    setFeedback('Suitcase set updated. Compare its distinct members with M.');
+  function moveTo(nextStage: number) {
+    setCutting(true);
+    window.setTimeout(() => {
+      setStage(nextStage);
+      setSelection([]);
+      setResult([]);
+      setSolved(false);
+      setCaught(false);
+      setBlocked(false);
+      setMessage('');
+      if (nextStage > 0 && nextStage < 4) {
+        const concept = doorScenes[nextStage - 1].concept;
+        if (!seen.has(concept)) setNote(concept);
+      }
+    }, reducedMotion ? 15 : 350);
+    window.setTimeout(() => setCutting(false), reducedMotion ? 30 : 760);
   }
 
-  function enterObstacle(nextStage: number) {
-    setStage(nextStage);
-    setResult([]);
+  function togglePhoneItem(id: string) {
+    setSelection((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
+    setMessage('');
+  }
+
+  function toggleResult(kind: ObjectKind) {
+    setResult((current) => current.includes(kind) ? current.filter((item) => item !== kind) : [...current, kind]);
     setSolved(false);
-    setFeedback('');
-    const nextConcept = obstacles[nextStage - 1]?.concept;
-    if (nextConcept) openConcept(nextConcept);
-  }
-
-  function sealSuitcase() {
-    if (!equalSets(selectedLabels, targetManifest)) return;
-    setFeedback('Set equality verified. Exit route unlocked.');
-    window.setTimeout(() => enterObstacle(1), reducedMotion ? 80 : 650);
-  }
-
-  function toggleResult(element: string) {
-    setResult((current) => current.includes(element) ? current.filter((item) => item !== element) : [...current, element]);
-    setSolved(false);
-    setFeedback('');
+    setCaught(false);
+    setBlocked(false);
+    setMessage('');
   }
 
   function checkResult() {
-    const obstacle = obstacles[stage - 1];
-    const expected = obstacle.options[obstacle.correct];
-    const isCorrect = equalSets(result, expected);
-    setSolved(isCorrect);
-    setFeedback(isCorrect ? obstacle.success : obstacle.retry);
-  }
-
-  function continueMission() {
-    if (stage === obstacles.length) {
-      setStage(4);
-      setResult([]);
-      setSolved(false);
+    const scene = doorScenes[stage - 1];
+    const correct = equalSets(result, scene.expected);
+    setSolved(correct);
+    if (correct) {
+      setCaught(false);
+      setBlocked(false);
+      setMessage(scene.success);
+      window.setTimeout(() => moveTo(stage + 1), reducedMotion ? 150 : 2400);
       return;
     }
-    enterObstacle(stage + 1);
+    if (scene.concept === 'difference') {
+      if (result.includes('tracker')) {
+        setBlocked(false);
+        setCaught(true);
+        setMessage(`caught — ${scene.caughtHint || scene.hint}`);
+        window.setTimeout(() => setCaught(false), reducedMotion ? 120 : 1350);
+      } else {
+        setCaught(false);
+        setBlocked(true);
+        setMessage(`stopped — ${scene.missingHint || scene.hint}`);
+        window.setTimeout(() => setBlocked(false), reducedMotion ? 80 : 650);
+      }
+      return;
+    }
+    setCaught(false);
+    setMessage(scene.hint);
   }
 
-  function replayMission() {
-    setStage(0);
-    setSelected([]);
-    setResult([]);
-    setSolved(false);
-    setFeedback('Build suitcase set S to match target set M.');
-  }
-
-  function toggleMotion() {
-    const next = !reducedMotion;
-    setReducedMotion(next);
-    localStorage.setItem(MOTION_KEY, String(next));
-  }
-
-  const progressStage = Math.min(stage, 3);
-  const activeConcept = stage === 0 ? 'equality' : obstacles[Math.min(stage - 1, 2)]?.concept;
+  const progress = useMemo(() => [0, 1, 2, 3], []);
 
   return (
-    <main className={`game-shell ${reducedMotion ? 'reduce-motion' : ''}`}>
-      <header className="mission-bar">
-        <a className="brand" href="#mission" aria-label="Project Proof current mission">
-          <span className="brand-mark">Δ</span>
-          <span><strong>PROJECT: PROOF</strong><small>The Continuum · Field Operations</small></span>
-        </a>
-        <div className="chapter-chip" aria-label="Current chapter"><span>CHAPTER 0</span><strong>Sets &amp; Logic</strong></div>
-        <div className="header-actions">
-          <div className="mission-progress" aria-label={`Mission progress, step ${progressStage + 1} of 4`}>
-            {[0, 1, 2, 3].map((node) => (
-              <span key={node} className="progress-part">
-                {node > 0 && <span className={`progress-line ${node <= progressStage ? 'complete' : ''}`} />}
-                <span className={`progress-node ${node === progressStage ? 'active' : node < progressStage || stage === 4 ? 'complete' : ''}`} />
-              </span>
-            ))}
-          </div>
-          <button className="motion-toggle" type="button" onClick={toggleMotion} aria-pressed={reducedMotion}>
-            {reducedMotion ? 'Motion: calm' : 'Motion: full'}
-          </button>
-        </div>
-      </header>
-
+    <main className={`minimal-game ${reducedMotion ? 'reduce-motion' : ''}`}>
       {stage === 0 && (
-        <PackingScene
-          selected={selected}
-          onToggle={toggleDocument}
-          onSeal={sealSuitcase}
-          onBriefing={() => openConcept('equality', true)}
-          feedback={feedback}
-          duplicateNotice={duplicateNotice}
+        <PhoneScene
+          selected={selection}
+          message={message}
+          onToggle={togglePhoneItem}
+          onRead={() => moveTo(1)}
         />
       )}
       {stage > 0 && stage < 4 && (
-        <ObstacleScene
-          index={stage - 1}
+        <OperationScene
+          stage={stage}
           result={result}
           solved={solved}
-          feedback={feedback}
+          caught={caught}
+          blocked={blocked}
+          message={message}
           onToggle={toggleResult}
           onCheck={checkResult}
-          onContinue={continueMission}
-          onBriefing={() => activeConcept && openConcept(activeConcept, true)}
         />
       )}
-      {stage === 4 && <MissionComplete onReplay={replayMission} />}
+      {stage === 4 && <Ending onReplay={() => moveTo(0)} />}
 
-      <footer className="status-strip">
-        <BriefingButtons onOpen={(key) => openConcept(key, true)} />
-        <span className="status-message"><i className={solved || stage === 4 ? 'ok' : ''} /> {stage === 0 ? 'Suitcase manifest active' : stage === 4 ? 'Extraction complete' : `Gate ${stage} operation test`}</span>
-        <span>{String(progressStage + 1).padStart(2, '0')} / 04</span>
-      </footer>
+      <div className="quiet-controls">
+        <button type="button" onClick={() => setNote(currentConcept)} aria-label="show concept note">?</button>
+        <div aria-label={`scene ${Math.min(stage, 3) + 1} of 4`}>
+          {progress.map((step) => <i key={step} className={step === Math.min(stage, 3) ? 'active' : step < stage ? 'passed' : ''} />)}
+        </div>
+      </div>
 
-      {modal && <ConceptModal concept={modal} onClose={closeConcept} />}
+      <div className={`cinematic-cut ${cutting ? 'play' : ''}`} aria-hidden="true"><i /><i /><i /></div>
+      {note && <ConceptNote concept={note} onClose={closeNote} />}
     </main>
   );
 }
