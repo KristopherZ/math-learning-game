@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   description:
     'Use mathematical tools to transform a serene geometric world. Begin Project: Proof with Chapter 0: Sets & Logic.',
   manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Proof',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 };
 
 export const viewport: Viewport = {
