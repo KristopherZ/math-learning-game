@@ -689,6 +689,7 @@
   .operation-sources { left: 50%; right: auto; top: 14%; width: auto; gap: 8px; transform: translateX(-50%) scale(.7); transform-origin: center top; }
   .source-set { flex: none; }
   .source-set > div { flex: none; flex-wrap: nowrap; }
+  .world-object.selected { transform: translateY(7px) scale(.94); }
   .world-symbol { font-size: 22px; }
   .world-symbol:is(.operator-union,.operator-intersection) { font-size: 23px; transform: translateY(1px); }
   .world-symbol.operator-difference { font-size: 21px; transform: none; }
