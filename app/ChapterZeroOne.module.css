@@ -707,7 +707,7 @@
   .operation-difference .result-bowl { left: 50%; right: auto; top: 29%; transform: translateX(-50%) scale(.84); transform-origin: center top; }
   .operation-difference .take-tray { left: max(24%,env(safe-area-inset-left)); right: auto; bottom: 18%; width: 50%; gap: 7px; }
   .operation-difference .tracker-decoy { left: 70%; bottom: 24%; transform: translateY(-65px) scale(.72); }
-  .operation-scene .scene-message { top: 50%; bottom: auto; width: 54%; line-height: 1.35; }
+  .operation-scene .scene-message { left: max(7%,env(safe-area-inset-left)); top: 46%; bottom: auto; width: 28%; transform: none; line-height: 1.35; text-align: left; }
   .document-case { right: max(4%,env(safe-area-inset-right)); bottom: 9%; transform: scale(.7); transform-origin: bottom right; }
   .spy-contact { right: max(5%,env(safe-area-inset-right)); bottom: 7%; transform: scale(.72); transform-origin: bottom right; }
   .security-camera { right: max(-1%,calc(env(safe-area-inset-right) - 18px)); top: 5%; transform: scale(.72); transform-origin: top right; }
@@ -729,7 +729,7 @@
   .cipher-tools button { width: 74px; height: 60px; min-height: 48px; touch-action: manipulation; }
   .cipher-tools strong { width: 28px; height: 28px; font-size: 20px; }
   .cipher-scene .minimal-agent { left: max(8%,env(safe-area-inset-left)); bottom: 16%; scale: .58; }
-  .cipher-scene .scene-message { top: 50%; bottom: auto; width: 54%; line-height: 1.35; }
+  .cipher-scene .scene-message { left: max(7%,env(safe-area-inset-left)); top: 46%; bottom: auto; width: 28%; transform: none; line-height: 1.35; text-align: left; }
 
   .note-shade { padding: max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left)); }
   .tiny-note { max-height: calc(100dvh - 20px); padding: 14px 18px; }
