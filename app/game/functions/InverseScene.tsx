@@ -48,8 +48,18 @@ export function InverseScene({
         ))}
       </div>
       <p className="inverse-prompt">{mapping.prompt}</p>
-      <div className="mapping-frame" key={mapping.id}>
-        <MappingDiagram mapping={mapping} />
+      <div className={cx('mapping-frame', solved && 'revealed')} key={mapping.id}>
+        {solved ? (
+          <MappingDiagram mapping={mapping} />
+        ) : (
+          <div
+            className="mapping-sealed"
+            aria-label="relay diagram sealed until the correct classification"
+          >
+            relay sealed
+            <small>choose the report that matches the trace</small>
+          </div>
+        )}
       </div>
       <div className="inverse-tools">
         {inverseChoices.map((choice) => (

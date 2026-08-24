@@ -396,6 +396,29 @@
   transform: translateX(-50%);
 }
 
+.mapping-sealed {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  min-height: 190px;
+  border: 1px dashed var(--line);
+  color: #747a76;
+  font:
+    500 10px/1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mapping-sealed small {
+  color: #9a9f9c;
+  font:
+    10px/1.4 var(--font-geist-sans),
+    sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .mapping-diagram {
   width: 100%;
   height: auto;

@@ -116,9 +116,8 @@ export const inverseCases: InverseCase[] = [
     ],
     answer: 'injective',
     prompt:
-      'Two senders never share a relay port, but one port is silent. Can e identify the sender of this fragment?',
-    success:
-      'Sender identified: injective means one-to-one. No two senders can produce the same relay signature.',
+      'Case report: the sender can be identified because no two senders can produce the same relay signal.',
+    success: 'Sender identified. Injective means one-to-one: distinct senders never collide.',
   },
   {
     id: 'surjective',
@@ -131,9 +130,9 @@ export const inverseCases: InverseCase[] = [
     ],
     answer: 'surjective',
     prompt:
-      'Every relay port is lit, but two senders merge at one port. Can e identify which sender spoke?',
+      'Case report: everyone receives a message, even though some senders may share one relay port.',
     success:
-      'Coverage confirmed: surjective means onto. Every relay port received a message, but the sender is still ambiguous.',
+      'Delivery confirmed. Surjective means onto: every relay port is reached, even if a sender is ambiguous.',
   },
   {
     id: 'bijective',
@@ -145,9 +144,9 @@ export const inverseCases: InverseCase[] = [
     ],
     answer: 'bijective',
     prompt:
-      'Every sender has one port and every port has one sender. The message source and destination are both certain.',
+      'Case report: the sender is identifiable and everyone receives a message — no collisions and no gaps.',
     success:
-      'Message identified: bijective means one-to-one and onto. The relay is complete and unambiguous.',
+      'Message identified. Bijective means one-to-one and onto: the relay is complete and unambiguous.',
   },
 ];
 
