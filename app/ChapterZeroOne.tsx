@@ -27,7 +27,8 @@ type ScreenAccess = 'checking' | 'blocked' | 'supported';
 function hasPreferredRatio() {
   if (typeof window === 'undefined' || !window.innerWidth || !window.innerHeight) return true;
   const ratio = window.innerWidth / window.innerHeight;
-  return ratio >= 1.25 && ratio <= 2.05;
+  const hasPlayableHeight = window.innerHeight >= 600;
+  return ratio >= 1.25 && (hasPlayableHeight || ratio <= 2.05);
 }
 
 function cx(...names: Array<string | false | null | undefined>) {

@@ -310,7 +310,7 @@ The interface should almost disappear.
 - Keep the current result set visible while the player edits it.
 - Provide obvious reset, check, concept-note, and reduced-motion controls.
 - Support keyboard, pointer, and touch interaction.
-- The demo uses a supported wide browser frame rather than a separate phone layout. A width-to-height ratio from 1.25:1 through 2.05:1 is accepted for computer and tablet screens; other shapes show a quiet resize message.
+- The demo uses a supported wide browser frame rather than a separate phone layout. A width-to-height ratio of at least 1.25:1 is accepted when the viewport is at least 600px tall; shorter frames use a 2.05:1 upper bound and other shapes show a quiet resize message.
 - On pointer devices, nearby text receives a restrained white halo that follows cursor proximity. This is an optional focus cue, never the sole indication of meaning, and does not replace keyboard focus styling.
 
 ## 13. Audio direction
