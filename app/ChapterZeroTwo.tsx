@@ -24,7 +24,13 @@ import { useGameAudio } from './game/hooks/useGameAudio';
 import { useProximityHighlight } from './game/hooks/useProximityHighlight';
 import { requestMobileFullscreen, useScreenAccess } from './game/hooks/useScreenAccess';
 
-export default function ChapterZeroTwo({ onBack }: { onBack: () => void }) {
+export default function ChapterZeroTwo({
+  onBack,
+  startAtStage = null,
+}: {
+  onBack: () => void;
+  startAtStage?: number | null;
+}) {
   const screenAccess = useScreenAccess();
   const preferences = useFunctionPreferences();
   const audio = useGameAudio();
@@ -33,6 +39,7 @@ export default function ChapterZeroTwo({ onBack }: { onBack: () => void }) {
     reducedMotion: preferences.reducedMotion,
     playEffect: audio.playEffect,
     showNote: preferences.showNote,
+    startAtStage,
   });
 
   useProximityHighlight(game.stage, Boolean(preferences.note));
@@ -106,6 +113,7 @@ export default function ChapterZeroTwo({ onBack }: { onBack: () => void }) {
         <InverseScene
           step={game.inverseStep}
           solved={game.solved}
+          revealed={game.inverseRevealed}
           wrong={game.inverseWrong}
           message={game.message}
           onChoose={game.chooseInverse}

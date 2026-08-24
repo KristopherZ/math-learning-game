@@ -12,6 +12,13 @@ function chapterFromLocation(fallback: Chapter): Chapter {
   return fallback;
 }
 
+function functionStageFromLocation(): number | null {
+  const params = new URLSearchParams(window.location.search);
+  if (!['relay', 'skip'].includes(params.get('cheat') ?? '')) return null;
+  const value = Number(params.get('scene') ?? params.get('stage'));
+  return Number.isInteger(value) && value >= 0 && value <= 6 ? value : null;
+}
+
 export default function GameRouter({
   initialChapter = '0.1',
   startAtChapterBriefing = false,
@@ -23,11 +30,15 @@ export default function GameRouter({
   const [chapterOneBriefing, setChapterOneBriefing] = useState(
     initialChapter === '0.1' && startAtChapterBriefing,
   );
+  const [functionStageOverride, setFunctionStageOverride] = useState<number | null>(null);
 
   useEffect(() => {
     const syncChapter = () => {
       setChapter(chapterFromLocation(initialChapter));
       setChapterOneBriefing(initialChapter === '0.1' && startAtChapterBriefing);
+      setFunctionStageOverride(
+        chapterFromLocation(initialChapter) === '0.2' ? functionStageFromLocation() : null,
+      );
     };
     syncChapter();
     window.addEventListener('popstate', syncChapter);
@@ -45,7 +56,11 @@ export default function GameRouter({
   }
 
   return chapter === '0.2' ? (
-    <ChapterZeroTwo onBack={() => openChapter('0.1', { chapterOneBriefing: true })} />
+    <ChapterZeroTwo
+      key={`functions-${functionStageOverride ?? 'normal'}`}
+      startAtStage={functionStageOverride}
+      onBack={() => openChapter('0.1', { chapterOneBriefing: true })}
+    />
   ) : (
     <ChapterZeroOne startAtBriefing={chapterOneBriefing} onContinue={() => openChapter('0.2')} />
   );

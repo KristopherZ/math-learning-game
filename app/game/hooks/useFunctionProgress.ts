@@ -16,6 +16,7 @@ type ProgressOptions = {
   reducedMotion: boolean;
   playEffect: (cue: AudioCue, force?: boolean) => void;
   showNote: (concept: FunctionConceptKey | null) => void;
+  startAtStage?: number | null;
 };
 
 export type MachineLinks = Record<number, number[]>;
@@ -28,9 +29,11 @@ export function useFunctionProgress({
   reducedMotion,
   playEffect,
   showNote,
+  startAtStage = null,
 }: ProgressOptions) {
-  const [started, setStarted] = useState(false);
-  const [stage, setStage] = useState(0);
+  const hasStartStage = startAtStage !== null && startAtStage !== undefined;
+  const [started, setStarted] = useState(hasStartStage);
+  const [stage, setStage] = useState(startAtStage ?? 0);
   const [cutting, setCutting] = useState(false);
   const [solved, setSolved] = useState(false);
   const [message, setMessage] = useState('');
@@ -42,6 +45,7 @@ export function useFunctionProgress({
   const [compositionOrder, setCompositionOrder] = useState<CompositionOrder | null>(null);
   const [inverseStep, setInverseStep] = useState(0);
   const [inverseWrong, setInverseWrong] = useState(false);
+  const [inverseRevealed, setInverseRevealed] = useState(false);
   const [domainRestricted, setDomainRestricted] = useState(false);
 
   const currentConcept = functionConceptOrder[Math.min(stage, functionConceptOrder.length - 1)];
@@ -169,14 +173,16 @@ export function useFunctionProgress({
     }
 
     playEffect('confirm');
+    setInverseRevealed(true);
     setMessage(currentCase.success);
     if (inverseStep < inverseCases.length - 1) {
       window.setTimeout(
         () => {
           setInverseStep((value) => value + 1);
+          setInverseRevealed(false);
           setMessage('');
         },
-        reducedMotion ? 100 : 900,
+        reducedMotion ? 100 : 2200,
       );
       return;
     }
@@ -221,6 +227,7 @@ export function useFunctionProgress({
     setCompositionOrder(null);
     setInverseStep(0);
     setInverseWrong(false);
+    setInverseRevealed(false);
     setDomainRestricted(false);
     moveTo(0);
   }
@@ -238,6 +245,7 @@ export function useFunctionProgress({
     compositionOrder,
     inverseStep,
     inverseWrong,
+    inverseRevealed,
     domainRestricted,
     begin,
     moveTo,

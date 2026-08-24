@@ -13,12 +13,14 @@ const inverseChoices: Array<{ kind: InverseKind; label: string; tex: string }> =
 export function InverseScene({
   step,
   solved,
+  revealed,
   wrong,
   message,
   onChoose,
 }: {
   step: number;
   solved: boolean;
+  revealed: boolean;
   wrong: boolean;
   message: string;
   onChoose: (kind: InverseKind) => void;
@@ -48,8 +50,8 @@ export function InverseScene({
         ))}
       </div>
       <p className="inverse-prompt">{mapping.prompt}</p>
-      <div className={cx('mapping-frame', solved && 'revealed')} key={mapping.id}>
-        {solved ? (
+      <div className={cx('mapping-frame', revealed && 'revealed')} key={mapping.id}>
+        {revealed ? (
           <MappingDiagram mapping={mapping} />
         ) : (
           <div

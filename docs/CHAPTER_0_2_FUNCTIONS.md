@@ -71,6 +71,7 @@ The player must send `2` to `5` through an invertible route. Restricting the dom
 
 - Every scene exposes the mathematical state before asking for a commit.
 - Domain, codomain, and range remain named rather than appearing only in a definition card.
+- For quick demonstrations, append `?cheat=relay&scene=4` to the `/0.2` URL to open the inverse classification scene directly. Scenes are numbered `0` through `6`; `stage` is accepted as an alias for `scene`.
 - The graph editor supports pointer dragging and arrow-key movement.
 - Incorrect feedback identifies the violated function property or transformation order.
 - Solving a scene makes Euler run to the right before the shared cinematic transition begins.
