@@ -11,7 +11,7 @@ The player should leave knowing that:
 - A formula, table, mapping diagram, and graph can represent the same function.
 - A relation is not necessarily a function.
 - In `g ∘ f`, `f` acts first.
-- Left, right, and two-sided inverses guarantee different kinds of return.
+- Injective, surjective, and bijective maps describe different guarantees for reversing a route.
 - Restricting a domain can make a non-invertible rule invertible.
 
 ## Story
@@ -51,21 +51,21 @@ Euler must enter safe channel `4` using input `1`. Two conversion machines are a
 
 The player swaps their order and discovers that `g∘f` means the input travels through `f` first and `g` second. The correct route sends `1↦2↦4`; the other order sends `1↦2↦3` and alerts the search lanes.
 
-### 5. Fit return cables — inverses
+### 5. Classify the relay — injective, surjective, bijective
 
-Three mappings control possible return tunnels. The player chooses the weakest inverse guarantee that fits each mapping:
+Three mappings control how safely a relay can be reversed. The player classifies each mapping:
 
-- An injective but non-surjective map has a left inverse.
-- A surjective but non-injective map has a right inverse.
-- A bijection has a two-sided inverse.
+- An injective map is one-to-one: distinct inputs never collide.
+- A surjective map is onto: every codomain target is reached.
+- A bijection is both one-to-one and onto, so it is invertible.
 
 Mapping diagrams show unreached codomain values and merged inputs directly. The scene distinguishes recovering every original input from reaching every declared target.
 
-### 6. Build the reversible extraction — restriction and synthesis
+### 6. Build the invertible extraction — restriction and synthesis
 
-The final route begins with `q(x)=x²`, which is not reversible on `{-3,-2,-1,0,1,2,3}` because opposite inputs share outputs.
+The final route begins with `q(x)=x²`, which is not injective—and therefore not invertible—on `{-3,-2,-1,0,1,2,3}` because opposite inputs share outputs.
 
-The player must send `2` to `5` through a reversible route. Restricting the domain to `{0,1,2,3}` makes both machine orders invertible: `q` followed by the shift `s(x)=x+1` sends `2↦4↦5` and returns by `5↦4↦2`; `s` followed by `q` sends `2↦3↦9` and returns by `9↦3↦2`. The first composition completes the mission because it reaches the required output, while the second receives mathematically accurate feedback that it is reversible but reaches `9` instead of `5`.
+The player must send `2` to `5` through an invertible route. Restricting the domain to `{0,1,2,3}` makes `q` injective—and, onto `{0,1,4,9}`, bijective. Both machine orders are then invertible: `q` followed by the shift `s(x)=x+1` sends `2↦4↦5` and returns by `5↦4↦2`; `s` followed by `q` sends `2↦3↦9` and returns by `9↦3↦2`. The first composition completes the mission because it reaches the required output, while the second receives mathematically accurate feedback that it is invertible but reaches `9` instead of `5`.
 
 ## Interaction and feedback rules
 

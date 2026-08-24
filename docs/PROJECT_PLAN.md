@@ -114,7 +114,7 @@ It should include:
 
 ### Next calculus vertical slice: derivatives as local change
 
-Before the derivative slice, Chapter 0.2 implements the required function bridge as a six-scene relay mission. It covers function machines, domain/codomain/range, linked representations, the function condition for relations, composition order, left/right/two-sided inverses, and domain restriction. Its complete scene and learning specification is documented in [Chapter 0.2 — Relay Logic](CHAPTER_0_2_FUNCTIONS.md).
+Before the derivative slice, Chapter 0.2 implements the required function bridge as a six-scene relay mission. It covers function machines, domain/codomain/range, linked representations, the function condition for relations, composition order, injective/surjective/bijective maps, invertibility, and domain restriction. Its complete scene and learning specification is documented in [Chapter 0.2 — Relay Logic](CHAPTER_0_2_FUNCTIONS.md).
 
 After Chapter 0 proves the game runtime and art direction, build a small calculus chapter connecting average rate of change, secant lines, tangent lines, instantaneous rate of change, and the derivative graph.
 

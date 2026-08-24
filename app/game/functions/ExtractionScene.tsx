@@ -26,11 +26,11 @@ export function ExtractionScene({
   return (
     <section
       className={cx('world-scene', 'function-scene', 'extraction-scene', solved && 'solved')}
-      aria-label="reversible function extraction"
+      aria-label="injective and invertible function extraction"
     >
       <div className="scene-number">0.2</div>
       <p className="scene-whisper">
-        send 2 to 5 through a reversible route, then prove the route can return
+        make the route injective, send 2 to 5, then prove it is invertible
       </p>
       <div className="function-header">
         <MathTex
@@ -92,7 +92,7 @@ export function ExtractionScene({
         swap machines
       </button>
       <div className="inverse-proof">
-        <small>return check</small>
+        <small>invertibility check</small>
         <MathTex
           tex={
             restricted

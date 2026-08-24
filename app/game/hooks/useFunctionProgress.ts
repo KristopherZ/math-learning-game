@@ -158,11 +158,11 @@ export function useFunctionProgress({
       playEffect('error');
       setInverseWrong(true);
       setMessage(
-        kind === 'left'
-          ? 'A left inverse needs every input to remain distinguishable.'
-          : kind === 'right'
-            ? 'A right inverse needs every codomain target to be reached.'
-            : 'A two-sided inverse needs both: exactly one route to every target.',
+        kind === 'injective'
+          ? 'Injective means no two inputs collide: every input keeps a distinct destination.'
+          : kind === 'surjective'
+            ? 'Surjective means every codomain target is reached at least once.'
+            : 'Bijective needs both: no collisions and no unreachable codomain targets.',
       );
       window.setTimeout(() => setInverseWrong(false), reducedMotion ? 80 : 620);
       return;
@@ -187,17 +187,23 @@ export function useFunctionProgress({
   function checkExtraction() {
     if (!domainRestricted) {
       playEffect('error');
-      setMessage('−2 and 2 both become 4. Restrict the domain so the route can be reversed.');
+      setMessage(
+        '−2 and 2 both become 4: q is not injective, so it is not invertible. Restrict the domain.',
+      );
       return;
     }
     if (compositionOrder !== 'f-g') {
       playEffect('error');
-      setMessage('This route is reversible too: 2 ↦ 3 ↦ 9 and back. But we need 2 ↦ 5.');
+      setMessage(
+        'This route is invertible too: it is injective on the restricted domain, but it reaches 9 instead of 5.',
+      );
       return;
     }
     playEffect('confirm');
     setSolved(true);
-    setMessage('2 ↦ 4 ↦ 5, and the inverse route returns 5 ↦ 4 ↦ 2. Extraction clear.');
+    setMessage(
+      '2 ↦ 4 ↦ 5. The restricted route is injective and invertible, with return 5 ↦ 4 ↦ 2. Extraction clear.',
+    );
     window.setTimeout(() => moveTo(6), reducedMotion ? 180 : 3000);
   }
 

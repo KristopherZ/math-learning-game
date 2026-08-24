@@ -15,7 +15,7 @@ export type GraphPoint = {
   y: number;
 };
 
-export type InverseKind = 'left' | 'right' | 'total';
+export type InverseKind = 'injective' | 'surjective' | 'bijective';
 
 export type InverseCase = {
   id: string;
@@ -59,9 +59,9 @@ export const functionConcepts: Record<FunctionConceptKey, FunctionConceptNote> =
   inverse: {
     symbol: 'f⁻¹',
     texSymbol: String.raw`f^{-1}`,
-    line: 'A left inverse recovers every input, a right inverse reaches every codomain value, and a two-sided inverse does both.',
-    example: 'ℓ∘f=id_domain,  f∘r=id_codomain',
-    texExample: String.raw`\ell\circ f=\operatorname{id}_{A},\qquad f\circ r=\operatorname{id}_{B}`,
+    line: 'A function is injective when inputs never collide, surjective when every codomain value is reached, and bijective when both hold.',
+    example: 'injective = one-to-one; surjective = onto; bijective = both',
+    texExample: String.raw`\text{injective}=\text{one-to-one},\qquad \text{surjective}=\text{onto}`,
   },
   restriction: {
     symbol: 'f|D',
@@ -114,9 +114,9 @@ export const inverseCases: InverseCase[] = [
       ['a', '1'],
       ['b', '2'],
     ],
-    answer: 'left',
-    prompt: 'Every input can be recovered, but one codomain port is never reached.',
-    success: 'Left return cable locked: the original input can always be recovered.',
+    answer: 'injective',
+    prompt: 'No two inputs share a destination, but one codomain port is never reached.',
+    success: 'Injective: every input has a distinct destination. The relay is one-to-one.',
   },
   {
     id: 'surjective',
@@ -127,9 +127,9 @@ export const inverseCases: InverseCase[] = [
       ['b', '1'],
       ['c', '2'],
     ],
-    answer: 'right',
-    prompt: 'Every codomain port is reached, but two inputs merge.',
-    success: 'Right return cable locked: every target has a chosen route back.',
+    answer: 'surjective',
+    prompt: 'Every codomain port is reached, but two inputs merge at one destination.',
+    success: 'Surjective: every codomain target is reached. The relay is onto.',
   },
   {
     id: 'bijective',
@@ -139,9 +139,9 @@ export const inverseCases: InverseCase[] = [
       ['a', '2'],
       ['b', '1'],
     ],
-    answer: 'total',
-    prompt: 'Every target is reached exactly once.',
-    success: 'Two-sided inverse locked: the passage is perfectly reversible.',
+    answer: 'bijective',
+    prompt: 'Every target is reached exactly once: no collisions and no gaps.',
+    success: 'Bijective: the relay is one-to-one and onto.',
   },
 ];
 

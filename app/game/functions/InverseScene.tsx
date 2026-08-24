@@ -5,9 +5,9 @@ import { Agent } from '../components/Agent';
 import { MappingDiagram } from './MappingDiagram';
 
 const inverseChoices: Array<{ kind: InverseKind; label: string; tex: string }> = [
-  { kind: 'left', label: 'left inverse', tex: String.raw`\ell\circ f=\mathrm{id}_{A}` },
-  { kind: 'right', label: 'right inverse', tex: String.raw`f\circ r=\mathrm{id}_{B}` },
-  { kind: 'total', label: 'two-sided', tex: 'f^{-1}' },
+  { kind: 'injective', label: 'injective · one-to-one', tex: String.raw`f(a)=f(b)\Rightarrow a=b` },
+  { kind: 'surjective', label: 'surjective · onto', tex: String.raw`\operatorname{im}(f)=B` },
+  { kind: 'bijective', label: 'bijective · both', tex: String.raw`f:A\xrightarrow{\sim}B` },
 ];
 
 export function InverseScene({
@@ -33,16 +33,14 @@ export function InverseScene({
         wrong && 'wrong',
         solved && 'solved',
       )}
-      aria-label="inverse return tunnels"
+      aria-label="injective, surjective, and bijective relay classifications"
     >
       <div className="scene-number">0.2</div>
-      <p className="scene-whisper">
-        fit the weakest return cable that guarantees the stated recovery
-      </p>
+      <p className="scene-whisper">classify each relay: one-to-one, onto, or both</p>
       <div className="function-header">
         <MathTex tex={String.raw`f\colon A\to B`} fallback="f: A → B" className="math-tex" />
       </div>
-      <div className="inverse-progress" aria-label={`return tunnel ${step + 1} of 3`}>
+      <div className="inverse-progress" aria-label={`relay classification ${step + 1} of 3`}>
         {[0, 1, 2].map((index) => (
           <i key={index} className={cx(index < step && 'passed', index === step && 'active')} />
         ))}
