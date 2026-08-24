@@ -197,7 +197,7 @@ Failure must be reversible, quick, and visually informative.
 
 ### Premise
 
-The agent enters a quiet records building carrying a locked field phone. The phone message begins the mission: collect every required item from the document room, exchange the shared item with a spy, and abandon the tracker before the surveillance camera finds **e**.
+The agent enters a quiet records building carrying a locked field phone. The phone message begins the mission: collect every required item from the document room, exchange the shared item with a spy, abandon the tracker before the surveillance camera finds **e**, copy the stolen files through a safe relay, and decipher the satellite's extraction code.
 
 ### Scene 1: The Field Phone
 
@@ -221,13 +221,31 @@ Only this final scene introduces a visible threat: one spare, unlabeled wall-mou
 
 The result set represents what **e** carries. If it still includes the tracker, the camera snaps toward **e** and displays “caught.” If the tracker is gone but either the key or ID card is missing, **e** is stopped because the mission gear is incomplete; this is not a camera capture. Both failures return control with a targeted hint and no slow restart.
 
+### Scene 5: Cartesian Relay Copy
+
+Beyond the camera is a spare satellite relay. The stolen set `F = { ID, map }` must reach both safe channels `C = { α, β }`. The player constructs `F × C` by selecting every ordered file-channel pair: `(ID, α)`, `(ID, β)`, `(map, α)`, and `(map, β)`.
+
+The interaction is a physical copying grid rather than a detached enumeration exercise. Selecting a pair connects one file row to one channel column. When all four pairs exist, the copies pulse outward together and the dish transmits them. The satellite replies with an encrypted extraction sequence.
+
+### Scene 6: The Set Decoder
+
+The reply arrives as torn digit strips, a verifier list, a compromised-digit list, two code positions, and a lock signature. The player chooses the mathematical tool that performs each in-world instruction:
+
+1. Union recovers every digit on either torn strip.
+2. Intersection keeps only verifier-confirmed digits.
+3. Difference removes the compromised digit.
+4. Cartesian product pairs the clean digit with both code positions.
+5. Equality confirms that the resulting ordered-pair set matches the lock signature even though its display order differs.
+
+Each correct choice advances one point along a visible signal thread and transforms the displayed data. A wrong tool briefly misaligns the strips without erasing completed work. The final equality reveals code `22` and opens the extraction signal.
+
 ### Animation causality
 
-Every scene must show cause before consequence. Phone equality reveals the message without making **e** leave. Union visibly packs the complete result into the document case before escape. Intersection moves the shared ID card into the spy's hand before escape. Difference distinguishes carrying the tracker from forgetting required gear; only a complete tracker-free carry set drops the decoy, redirects the camera, and opens the escape. Scene cuts swap locations while the panels cover the frame, never after they have already passed.
+Every scene must show cause before consequence. Phone equality reveals the message without making **e** leave. Union visibly packs the complete result into the document case before escape. Intersection moves the shared ID card into the spy's hand before escape. Difference distinguishes carrying the tracker from forgetting required gear; only a complete tracker-free carry set drops the decoy, redirects the camera, and opens the escape. Cartesian product connects every file-channel pair before the dish transmits. The decoder advances only when the chosen operation performs the stated transformation. Scene cuts swap locations while the panels cover the frame, never after they have already passed.
 
 ### Completion
 
-The four scenes contract into one mission path: phone equality, document-room union, spy intersection, and tracker difference. The debrief previews statements, truth values, and logical connectives as the next operation.
+The six scenes contract into one mission path: phone equality, document-room union, spy intersection, tracker difference, Cartesian relay copying, and a cumulative set decoder. The debrief previews statements, truth values, and logical connectives as the next operation.
 
 ## 10. First-time concept notes
 
@@ -281,7 +299,7 @@ The interface should almost disappear.
 - Do not use a persistent top banner, brand header, chapter title, or side briefing panel during play.
 - Use one short sentence in the scene only when the objects cannot communicate the goal alone.
 - Place mathematical notation directly on the door, container, registry, or path it controls.
-- Keep progress to four quiet dots and concept review to one small control.
+- Keep progress to six quiet dots and concept review to one small control.
 - Avoid dense dashboards, cards, option grids, tactical screens, metallic controls, and faux machinery.
 - Keep the current result set visible while the player edits it.
 - Provide obvious reset, check, concept-note, and reduced-motion controls.

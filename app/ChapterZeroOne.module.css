@@ -333,3 +333,153 @@
 @media (prefers-reduced-motion: reduce) {
   .minimal-game *, .minimal-game *::before, .minimal-game *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Scene 5 — every file is paired with every safe relay channel. */
+.cartesian-scene {
+  background: linear-gradient(180deg,#f7f4ee 0%,#f1eee8 64%,#e8ece7 64%,#efede6 100%);
+  animation-name: cartesian-enter;
+}
+
+.copy-equation {
+  position: absolute; left: 50%; top: 16%; display: flex; align-items: center; gap: 8px;
+  transform: translateX(-50%); color: var(--ink); font: 500 14px/1 var(--font-geist-mono),monospace; white-space: nowrap;
+}
+
+.copy-source { display: inline-flex; align-items: center; gap: 3px; }
+.copy-source .object-mark { width: 33px; height: 33px; transform: scale(.78); }
+
+.copy-matrix {
+  position: absolute; left: 14%; top: 29%; width: min(53vw,620px); display: grid;
+  grid-template-columns: 112px repeat(2,minmax(130px,1fr)); grid-auto-rows: 72px;
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+}
+
+.matrix-row { display: contents; }
+.matrix-corner,.matrix-channel,.matrix-file {
+  display: flex; align-items: center; justify-content: center; color: #747a76;
+  border-right: 1px solid var(--faint); border-bottom: 1px solid var(--faint);
+  font: 500 11px/1 var(--font-geist-mono),monospace;
+}
+
+.matrix-channel { color: #8d83a7; font-size: 16px; }
+.matrix-file { gap: 3px; color: #799a8d; }
+.matrix-file .object-mark { transform: scale(.64); }
+
+.copy-pair {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 1px;
+  border: 0; border-right: 1px solid var(--faint); border-bottom: 1px solid var(--faint);
+  background: rgba(255,253,248,.26); color: #7b817d; font: 500 11px/1 var(--font-geist-mono),monospace;
+  cursor: pointer; transition: background 180ms ease,color 180ms ease,transform 180ms ease;
+}
+
+.copy-pair:hover,.copy-pair:focus-visible { background: rgba(255,255,255,.74); outline: 1px solid var(--line); outline-offset: -3px; }
+.copy-pair.selected { background: rgba(119,184,172,.12); color: var(--ink); }
+.copy-pair.selected::after { content: ''; position: absolute; inset: 9px; border: 1px solid var(--sage); animation: pair-lock 380ms cubic-bezier(.18,.8,.18,1.2) both; }
+.copy-pair .object-mark { width: 34px; height: 34px; transform: scale(.7); }
+
+.relay-arc { position: absolute; right: 7%; top: 22%; width: 180px; height: 180px; opacity: .64; }
+.relay-arc i { position: absolute; right: 0; bottom: 0; border: 1px solid var(--line); border-left-color: transparent; border-bottom-color: transparent; border-radius: 50%; transform: rotate(-18deg); }
+.relay-arc i:nth-child(1) { width: 56px; height: 56px; }
+.relay-arc i:nth-child(2) { width: 108px; height: 108px; }
+.relay-arc i:nth-child(3) { width: 166px; height: 166px; }
+
+.relay-terminal { position: absolute; right: 9%; bottom: 14%; width: 160px; height: 116px; display: grid; place-items: center; color: #747a76; font: 500 10px/1 var(--font-geist-mono),monospace; }
+.relay-terminal > button { position: absolute; bottom: 0; padding: 5px 10px; border: 0; border-bottom: 1px solid var(--ink); background: transparent; font-size: 10px; cursor: pointer; }
+.relay-terminal > button:disabled { opacity: .3; }
+.relay-dish { position: absolute; left: 50%; top: 0; width: 65px; height: 40px; border-bottom: 2px solid var(--ink); border-radius: 0 0 50% 50%; transform: translateX(-50%) rotate(-12deg); }
+.relay-dish::before { content: ''; position: absolute; left: 31px; top: 28px; width: 1px; height: 30px; background: var(--ink); }
+.relay-dish::after { content: ''; position: absolute; left: 25px; top: 9px; width: 8px; height: 8px; border: 1px solid var(--coral); border-radius: 50%; background: var(--paper); }
+.relay-dish i { position: absolute; left: 47px; top: -15px; width: 30px; height: 30px; border: 1px solid var(--line); border-left-color: transparent; border-bottom-color: transparent; border-radius: 50%; }
+.relay-terminal.transmitting .relay-dish { animation: dish-send 840ms cubic-bezier(.18,.8,.18,1.15) both; }
+.cartesian-scene.solved .copy-pair { animation: copies-launch 900ms cubic-bezier(.18,.8,.18,1.1) both; }
+.cartesian-scene.solved .minimal-agent.crossing { animation: e-escape 1050ms cubic-bezier(.3,.02,.18,1) 1450ms both; }
+
+/* Scene 6 — the operations become one physical decoding chain. */
+.cipher-scene {
+  background: linear-gradient(180deg,#f5f2ec 0%,#efede7 59%,#e7e9e4 59%,#efede6 100%);
+  animation-name: cipher-enter;
+}
+
+.cipher-thread { position: absolute; left: 8%; top: 20%; bottom: 27%; width: 1px; background: var(--faint); }
+.cipher-thread i { position: absolute; left: -5px; width: 11px; height: 11px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); }
+.cipher-thread i:nth-child(1) { top: 0; }
+.cipher-thread i:nth-child(2) { top: 25%; }
+.cipher-thread i:nth-child(3) { top: 50%; }
+.cipher-thread i:nth-child(4) { top: 75%; }
+.cipher-thread i:nth-child(5) { top: 100%; }
+.cipher-thread i.passed { border-color: var(--sage); background: var(--sage); }
+.cipher-thread i.active { border-color: var(--coral); box-shadow: 0 0 0 5px rgba(231,140,130,.12); }
+
+.cipher-instruction { position: absolute; left: 12%; top: 20%; width: 260px; color: #747a76; }
+.cipher-instruction small { color: var(--coral); font: 500 10px/1 var(--font-geist-mono),monospace; }
+.cipher-instruction p { margin: 9px 0 0; font-size: 13px; line-height: 1.5; }
+
+.cipher-equation {
+  position: absolute; left: 50%; top: 36%; width: min(76vw,780px); min-height: 110px;
+  display: flex; align-items: center; justify-content: center; gap: clamp(9px,2vw,26px);
+  border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint);
+  transform: translateX(-50%); color: var(--ink); font: 500 clamp(12px,1.4vw,17px)/1.3 var(--font-geist-mono),monospace;
+}
+.cipher-equation i { color: var(--line); font-style: normal; }
+.cipher-equation code { color: #799a8d; font: inherit; }
+.cipher-gap { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--coral); color: var(--coral); font-weight: 400; }
+.cipher-scene.wrong .cipher-equation { animation: decoder-reject 520ms cubic-bezier(.18,.8,.18,1.2) both; }
+
+.cipher-tools { position: absolute; left: 50%; bottom: 20%; display: flex; gap: clamp(5px,1.2vw,15px); transform: translateX(-50%); }
+.cipher-tools button { width: 82px; height: 68px; display: grid; place-items: center; align-content: center; gap: 6px; border: 1px solid var(--faint); background: rgba(255,253,248,.34); color: #747a76; cursor: pointer; }
+.cipher-tools button:hover,.cipher-tools button:focus-visible { border-color: var(--ink); background: rgba(255,255,255,.82); outline: none; transform: translateY(-3px); }
+.cipher-tools button:disabled { opacity: .28; cursor: default; transform: none; }
+.cipher-tools strong { color: var(--ink); font: 400 22px/1 var(--font-geist-mono),monospace; }
+.cipher-tools span { font-size: 8px; letter-spacing: .06em; }
+
+.code-receiver { position: absolute; right: 8%; top: 18%; width: 100px; height: 68px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--line); background: rgba(255,253,248,.32); }
+.code-receiver span { font: 500 22px/1 var(--font-geist-mono),monospace; letter-spacing: .2em; }
+.code-receiver i { position: absolute; left: 50%; bottom: -26px; width: 1px; height: 26px; background: var(--line); }
+.code-receiver.open { border-color: var(--sage); color: var(--ink); animation: receiver-open 900ms cubic-bezier(.18,.8,.18,1.15) both; }
+.cipher-scene.solved .cipher-gap { color: var(--sage); border-color: var(--sage); }
+.cipher-scene.solved .minimal-agent.crossing { animation: e-escape 1100ms cubic-bezier(.3,.02,.18,1) 1450ms both; }
+
+:is(.copy-equation,.relay-terminal,.cipher-instruction,.cipher-equation,.code-receiver) {
+  --near: 0;
+  text-shadow: 0 0 calc(14px * var(--near)) rgb(255 255 255 / calc(.92 * var(--near)));
+  transition: text-shadow 90ms linear,opacity 180ms ease;
+}
+
+@keyframes cartesian-enter { from { opacity: 0; clip-path: inset(50% 50% 50% 50%); } to { clip-path: inset(0); } }
+@keyframes cipher-enter { from { opacity: 0; clip-path: polygon(0 0,100% 0,100% 0,0 0); } to { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); } }
+@keyframes pair-lock { from { opacity: 0; transform: scale(.55) rotate(-4deg); } }
+@keyframes copies-launch { 35% { background: rgba(119,184,172,.22); transform: translateY(-5px); } 70% { transform: translateY(2px); } }
+@keyframes dish-send { 35% { transform: translateX(-50%) rotate(8deg); } 62% { transform: translateX(-50%) rotate(-17deg) scale(1.08); } }
+@keyframes decoder-reject { 25% { transform: translateX(calc(-50% - 12px)); } 48% { transform: translateX(calc(-50% + 10px)); } 72% { transform: translateX(calc(-50% - 5px)); } }
+@keyframes receiver-open { 35% { transform: translateY(-8px) rotate(2deg); background: rgba(119,184,172,.2); } 70% { transform: translateY(1px) rotate(-1deg); } }
+
+@media (max-width: 820px) {
+  .copy-matrix { left: 7%; width: 61vw; grid-template-columns: 90px repeat(2,minmax(100px,1fr)); }
+  .relay-arc { right: 1%; transform: scale(.76); transform-origin: right top; }
+  .relay-terminal { right: 3%; transform: scale(.86); transform-origin: right bottom; }
+  .cipher-instruction { left: 12%; width: 220px; }
+  .cipher-tools button { width: 68px; }
+  .code-receiver { right: 4%; }
+}
+
+@media (max-width: 560px) {
+  .copy-equation { top: 13%; transform: translateX(-50%) scale(.74); }
+  .copy-matrix { left: 5%; right: 5%; top: 23%; width: auto; grid-template-columns: 72px repeat(2,1fr); grid-auto-rows: 62px; }
+  .matrix-file { font-size: 8px; }
+  .copy-pair { font-size: 8px; }
+  .copy-pair .object-mark { transform: scale(.52); }
+  .relay-arc { display: none; }
+  .relay-terminal { right: 3%; bottom: 14%; transform: scale(.72); }
+  .cartesian-scene .minimal-agent { bottom: 12%; }
+  .cipher-thread { left: 6%; top: 17%; bottom: 32%; }
+  .cipher-instruction { left: 11%; top: 15%; width: 70%; }
+  .cipher-instruction p { font-size: 10px; }
+  .cipher-equation { top: 32%; width: 92%; min-height: 90px; gap: 5px; font-size: 8px; }
+  .cipher-gap { width: 24px; height: 24px; }
+  .cipher-tools { bottom: 22%; width: 94%; justify-content: center; gap: 3px; }
+  .cipher-tools button { width: 19%; height: 58px; }
+  .cipher-tools strong { font-size: 17px; }
+  .cipher-tools span { display: none; }
+  .code-receiver { right: 4%; top: 17%; width: 70px; height: 48px; transform: scale(.72); transform-origin: top right; }
+  .cipher-scene .minimal-agent { bottom: 11%; }
+}

@@ -1,4 +1,4 @@
-export type ConceptKey = 'equality' | 'union' | 'intersection' | 'difference';
+export type ConceptKey = 'equality' | 'union' | 'intersection' | 'difference' | 'cartesian';
 
 export type ObjectKind = 'key' | 'photo' | 'map' | 'seal' | 'ticket' | 'tracker';
 
@@ -27,6 +27,14 @@ export type DoorScene = {
   missingHint?: string;
 };
 
+export type CipherStep = {
+  concept: ConceptKey;
+  instruction: string;
+  left: string;
+  right: string;
+  result: string;
+};
+
 export const conceptNotes: Record<ConceptKey, ConceptNote> = {
   equality: {
     symbol: '=',
@@ -47,6 +55,11 @@ export const conceptNotes: Record<ConceptKey, ConceptNote> = {
     symbol: '∖',
     line: 'Difference starts with A and leaves behind anything marked in B.',
     example: '{ key, ID card, tracker } ∖ { tracker } = { key, ID card }',
+  },
+  cartesian: {
+    symbol: '×',
+    line: 'A Cartesian product pairs every member of the first set with every member of the second. Pair order matters.',
+    example: '{ ID, map } × { α, β } = { (ID, α), (ID, β), (map, α), (map, β) }',
   },
 };
 
@@ -89,10 +102,62 @@ export const doorScenes: DoorScene[] = [
     left: [object('a-key', 'key', 'key'), object('a-photo', 'photo', 'ID card'), object('a-tracker', 'tracker', 'tracker')],
     right: [object('b-tracker', 'tracker', 'tracker')],
     expected: ['key', 'photo'],
-    success: 'The camera turns toward the abandoned tracker. e escapes through its blind side.',
+    success: 'The camera turns toward the abandoned tracker. e slips through its blind side into the relay room.',
     hint: 'Start with the carry set and leave every flagged tracker behind.',
     caughtHint: 'the tracker is still in the carry set.',
     missingHint: 'e still needs both the key and ID card.',
+  },
+];
+
+export const copyFiles = [
+  { id: 'id', label: 'ID' },
+  { id: 'map', label: 'map' },
+] as const;
+
+export const copyChannels = [
+  { id: 'alpha', label: 'α' },
+  { id: 'beta', label: 'β' },
+] as const;
+
+export const requiredCopies = copyFiles.flatMap((file) =>
+  copyChannels.map((channel) => `${file.id}:${channel.id}`),
+);
+
+export const cipherSteps: CipherStep[] = [
+  {
+    concept: 'union',
+    instruction: 'recover every digit found on either torn strip',
+    left: '{ 2, 7 }',
+    right: '{ 7, 9 }',
+    result: '{ 2, 7, 9 }',
+  },
+  {
+    concept: 'intersection',
+    instruction: 'keep only digits confirmed by the verifier',
+    left: '{ 2, 7, 9 }',
+    right: '{ 2, 7, 4 }',
+    result: '{ 2, 7 }',
+  },
+  {
+    concept: 'difference',
+    instruction: 'remove the compromised digit',
+    left: '{ 2, 7 }',
+    right: '{ 7 }',
+    result: '{ 2 }',
+  },
+  {
+    concept: 'cartesian',
+    instruction: 'pair the clean digit with both code positions',
+    left: '{ 2 }',
+    right: '{ 1, 2 }',
+    result: '{ (2,1), (2,2) }',
+  },
+  {
+    concept: 'equality',
+    instruction: 'confirm the assembled pairs match the lock signature',
+    left: '{ (2,1), (2,2) }',
+    right: '{ (2,2), (2,1) }',
+    result: 'code 22',
   },
 ];
 

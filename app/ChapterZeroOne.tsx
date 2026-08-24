@@ -3,11 +3,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   archiveObjects,
+  cipherSteps,
   conceptNotes,
+  copyChannels,
+  copyFiles,
   doorNeed,
   doorScenes,
   equalSets,
   formatSet,
+  requiredCopies,
   unique,
   type ConceptKey,
   type ObjectKind,
@@ -236,14 +240,130 @@ function OperationScene({ stage, result, solved, caught, blocked, message, onTog
   );
 }
 
+function CartesianScene({ selected, solved, message, onToggle, onCheck }: {
+  selected: string[];
+  solved: boolean;
+  message: string;
+  onToggle: (pair: string) => void;
+  onCheck: () => void;
+}) {
+  return (
+    <section className={cx('world-scene', 'cartesian-scene', solved && 'solved')} aria-label="Cartesian product relay-copy puzzle">
+      <div className={cx('scene-number')}>0.1</div>
+      <p className={cx('scene-whisper')}>copy every stolen file to every safe satellite channel</p>
+      <div className={cx('relay-arc')} aria-hidden="true"><i /><i /><i /></div>
+
+      <div className={cx('copy-equation')} aria-label="files Cartesian product safe channels">
+        <span>F = {'{'}</span>
+        <span className={cx('copy-source')}><ObjectMark kind="photo" /><ObjectMark kind="map" /></span>
+        <span>{'}'} &nbsp; × &nbsp; C = {'{'} α, β {'}'}</span>
+      </div>
+
+      <div className={cx('copy-matrix')} aria-label="ordered file and channel pairs">
+        <span className={cx('matrix-corner')}>F × C</span>
+        {copyChannels.map((channel) => <span key={channel.id} className={cx('matrix-channel')}>{channel.label}</span>)}
+        {copyFiles.map((file) => (
+          <div className={cx('matrix-row')} key={file.id}>
+            <span className={cx('matrix-file')}><ObjectMark kind={file.id === 'id' ? 'photo' : 'map'} />{file.label}</span>
+            {copyChannels.map((channel) => {
+              const pair = `${file.id}:${channel.id}`;
+              const active = selected.includes(pair);
+              return (
+                <button
+                  type="button"
+                  key={pair}
+                  className={cx('copy-pair', active && 'selected')}
+                  aria-pressed={active}
+                  aria-label={`${active ? 'Remove' : 'Copy'} ${file.label} to channel ${channel.label}`}
+                  disabled={solved}
+                  onClick={() => onToggle(pair)}
+                >
+                  <span>(</span><ObjectMark kind={file.id === 'id' ? 'photo' : 'map'} /><span>, {channel.label})</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      <div className={cx('relay-terminal', solved && 'transmitting')} aria-live="polite">
+        <span className={cx('relay-dish')} aria-hidden="true"><i /></span>
+        <span>{solved ? '4 copies sent' : `${selected.length} / 4 paired`}</span>
+        {!solved && <button type="button" onClick={onCheck} disabled={selected.length === 0}>send</button>}
+      </div>
+
+      <Agent crossing={solved} />
+      <p className={cx('scene-message')} aria-live="polite">{message}</p>
+    </section>
+  );
+}
+
+const cipherConcepts: ConceptKey[] = ['union', 'intersection', 'difference', 'cartesian', 'equality'];
+
+function CipherScene({ stepIndex, solved, wrong, message, onChoose }: {
+  stepIndex: number;
+  solved: boolean;
+  wrong: boolean;
+  message: string;
+  onChoose: (concept: ConceptKey) => void;
+}) {
+  const step = cipherSteps[Math.min(stepIndex, cipherSteps.length - 1)];
+
+  return (
+    <section className={cx('world-scene', 'cipher-scene', solved && 'solved', wrong && 'wrong')} aria-label="combined set-operation secret-code puzzle">
+      <div className={cx('scene-number')}>0.1</div>
+      <p className={cx('scene-whisper')}>decipher the satellite reply—choose the set tool that performs each instruction</p>
+      <div className={cx('cipher-thread')} aria-hidden="true">
+        {cipherSteps.map((_, index) => <i key={index} className={cx(index < stepIndex && 'passed', index === stepIndex && 'active')} />)}
+      </div>
+
+      <div className={cx('cipher-instruction')}>
+        <small>{String(Math.min(stepIndex + 1, 5)).padStart(2, '0')}</small>
+        <p>{step.instruction}</p>
+      </div>
+
+      <div className={cx('cipher-equation')} aria-live="polite">
+        <span>{step.left}</span>
+        <b className={cx('cipher-gap')}>?</b>
+        <span>{step.right}</span>
+        <i>→</i>
+        <code>{step.result}</code>
+      </div>
+
+      <div className={cx('cipher-tools')} aria-label="set tools">
+        {cipherConcepts.map((concept) => (
+          <button
+            type="button"
+            key={concept}
+            aria-label={`use ${concept}`}
+            disabled={solved}
+            onClick={() => onChoose(concept)}
+          >
+            <strong>{conceptNotes[concept].symbol}</strong>
+            <span>{concept}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className={cx('code-receiver', solved && 'open')} aria-label={solved ? 'secret code 22 deciphered' : 'locked code receiver'}>
+        <span>{solved ? '22' : '··'}</span>
+        <i aria-hidden="true" />
+      </div>
+
+      <Agent crossing={solved} blocked={wrong} />
+      <p className={cx('scene-message')} aria-live="polite">{message}</p>
+    </section>
+  );
+}
+
 function Ending({ onReplay }: { onReplay: () => void }) {
   return (
     <section className={cx('world-scene', 'ending-scene')} aria-label="chapter complete">
       <div className={cx('ending-rings')} aria-hidden="true"><i /><i /><i /><i /></div>
       <Agent />
       <div className={cx('ending-path')} aria-hidden="true" />
-      <p>sets secured</p>
-      <span>= &nbsp; ∪ &nbsp; ∩ &nbsp; ∖</span>
+      <p>code delivered</p>
+      <span>= &nbsp; ∪ &nbsp; ∩ &nbsp; ∖ &nbsp; ×</span>
       <button type="button" onClick={onReplay}>↻</button>
     </section>
   );
@@ -261,8 +381,16 @@ export default function ChapterZeroOne() {
   const [seen, setSeen] = useState<Set<ConceptKey>>(new Set());
   const [reducedMotion, setReducedMotion] = useState(false);
   const [cutting, setCutting] = useState(false);
+  const [cipherStep, setCipherStep] = useState(0);
+  const [cipherWrong, setCipherWrong] = useState(false);
 
-  const currentConcept: ConceptKey = stage === 0 ? 'equality' : doorScenes[Math.min(stage - 1, 2)]?.concept || 'difference';
+  const currentConcept: ConceptKey = stage === 0
+    ? 'equality'
+    : stage < 4
+      ? doorScenes[stage - 1].concept
+      : stage === 4
+        ? 'cartesian'
+        : cipherSteps[Math.min(cipherStep, cipherSteps.length - 1)].concept;
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -288,6 +416,11 @@ export default function ChapterZeroOne() {
       `.${styles['document-status']}`,
       `.${styles['spy-status']}`,
       `.${styles['camera-status']}`,
+      `.${styles['copy-equation']}`,
+      `.${styles['relay-terminal']}`,
+      `.${styles['cipher-instruction']}`,
+      `.${styles['cipher-equation']}`,
+      `.${styles['code-receiver']}`,
       `.${styles['tiny-note']} p`,
       `.${styles['tiny-note']} code`,
       `.${styles['ending-scene']} > p`,
@@ -345,8 +478,9 @@ export default function ChapterZeroOne() {
       setCaught(false);
       setBlocked(false);
       setMessage('');
-      if (nextStage > 0 && nextStage < 4) {
-        const concept = doorScenes[nextStage - 1].concept;
+      setCipherWrong(false);
+      if (nextStage > 0 && nextStage < 5) {
+        const concept = nextStage === 4 ? 'cartesian' : doorScenes[nextStage - 1].concept;
         if (!seen.has(concept)) setNote(concept);
       }
     }, reducedMotion ? 15 : 350);
@@ -395,7 +529,45 @@ export default function ChapterZeroOne() {
     setMessage(scene.hint);
   }
 
-  const progress = useMemo(() => [0, 1, 2, 3], []);
+  function toggleCopy(pair: string) {
+    setSelection((current) => current.includes(pair) ? current.filter((item) => item !== pair) : [...current, pair]);
+    setSolved(false);
+    setMessage('');
+  }
+
+  function checkCopies() {
+    const correct = equalSets(selection, requiredCopies);
+    setSolved(correct);
+    if (!correct) {
+      setMessage('Every file needs one ordered pair with each channel.');
+      return;
+    }
+    setMessage('Four paired copies reach the satellite. Its reply arrives as an encrypted code.');
+    window.setTimeout(() => moveTo(5), reducedMotion ? 150 : 2500);
+  }
+
+  function chooseCipherTool(concept: ConceptKey) {
+    const step = cipherSteps[cipherStep];
+    if (concept !== step.concept) {
+      setCipherWrong(true);
+      setMessage('The strips misalign—match the instruction to the operation.');
+      window.setTimeout(() => setCipherWrong(false), reducedMotion ? 100 : 620);
+      return;
+    }
+
+    setCipherWrong(false);
+    if (cipherStep === cipherSteps.length - 1) {
+      setSolved(true);
+      setMessage('The pair sets match. Code 22 opens the extraction signal.');
+      window.setTimeout(() => moveTo(6), reducedMotion ? 180 : 2800);
+      return;
+    }
+
+    setCipherStep((current) => current + 1);
+    setMessage(`${conceptNotes[concept].symbol} aligned`);
+  }
+
+  const progress = useMemo(() => [0, 1, 2, 3, 4, 5], []);
 
   return (
     <main className={cx('minimal-game', reducedMotion && 'reduce-motion')}>
@@ -419,12 +591,30 @@ export default function ChapterZeroOne() {
           onCheck={checkResult}
         />
       )}
-      {stage === 4 && <Ending onReplay={() => moveTo(0)} />}
+      {stage === 4 && (
+        <CartesianScene
+          selected={selection}
+          solved={solved}
+          message={message}
+          onToggle={toggleCopy}
+          onCheck={checkCopies}
+        />
+      )}
+      {stage === 5 && (
+        <CipherScene
+          stepIndex={cipherStep}
+          solved={solved}
+          wrong={cipherWrong}
+          message={message}
+          onChoose={chooseCipherTool}
+        />
+      )}
+      {stage === 6 && <Ending onReplay={() => { setCipherStep(0); moveTo(0); }} />}
 
       <div className={cx('quiet-controls')}>
         <button type="button" onClick={() => setNote(currentConcept)} aria-label="show concept note">?</button>
-        <div aria-label={`scene ${Math.min(stage, 3) + 1} of 4`}>
-          {progress.map((step) => <i key={step} className={cx(step === Math.min(stage, 3) && 'active', step < stage && 'passed')} />)}
+        <div aria-label={`scene ${Math.min(stage, 5) + 1} of 6`}>
+          {progress.map((step) => <i key={step} className={cx(step === Math.min(stage, 5) && 'active', step < stage && 'passed')} />)}
         </div>
       </div>
 
