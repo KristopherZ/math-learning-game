@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { CartesianScene } from './game/components/CartesianScene';
 import { CipherScene } from './game/components/CipherScene';
 import { ConceptNote } from './game/components/ConceptNote';
@@ -13,6 +15,7 @@ import {
 import { OperationScene } from './game/components/OperationScene';
 import { PhoneScene } from './game/components/PhoneScene';
 import { Prologue } from './game/components/Prologue';
+import { SetBriefing } from './game/components/SetBriefing';
 import { ScreenBlock } from './game/components/ScreenBlock';
 import { cx } from './game/cn';
 import { chapterProgress, useChapterProgress } from './game/hooks/useChapterProgress';
@@ -21,7 +24,14 @@ import { useGamePreferences } from './game/hooks/useGamePreferences';
 import { useProximityHighlight } from './game/hooks/useProximityHighlight';
 import { requestMobileFullscreen, useScreenAccess } from './game/hooks/useScreenAccess';
 
-export default function ChapterZeroOne({ onContinue }: { onContinue?: () => void }) {
+export default function ChapterZeroOne({
+  onContinue,
+  startAtBriefing = false,
+}: {
+  onContinue?: () => void;
+  startAtBriefing?: boolean;
+}) {
+  const [briefing, setBriefing] = useState(startAtBriefing);
   const screenAccess = useScreenAccess();
   const preferences = useGamePreferences();
   const audio = useGameAudio();
@@ -38,6 +48,11 @@ export default function ChapterZeroOne({ onContinue }: { onContinue?: () => void
     requestMobileFullscreen();
     audio.enableSound();
     audio.playEffect('confirm', true);
+    setBriefing(true);
+  }
+
+  function beginArchive() {
+    audio.playEffect('confirm');
     game.begin();
   }
 
@@ -64,7 +79,8 @@ export default function ChapterZeroOne({ onContinue }: { onContinue?: () => void
     >
       <RotatePrompt />
 
-      {!game.started && <Prologue onBegin={beginDemo} />}
+      {!game.started && !briefing && <Prologue onBegin={beginDemo} />}
+      {!game.started && briefing && <SetBriefing onBegin={beginArchive} />}
 
       {game.started && game.stage === 0 && (
         <PhoneScene

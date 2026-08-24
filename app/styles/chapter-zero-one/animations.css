@@ -2,6 +2,9 @@
 @keyframes briefing-line { from { opacity: 0; scale: 0 1; } }
 @keyframes briefing-orbit { from { opacity: 0; transform: translate(40px,-30px) rotate(-24deg) scale(.7); } }
 @keyframes briefing-agent { from { opacity: 0; transform: translateX(50px) rotate(7deg); } }
+@keyframes set-card-in { from { opacity: 0; transform: translateY(18px) rotate(2deg); } }
+@keyframes set-operator-in { from { opacity: 0; transform: translateX(-50%) scale(.5); } }
+@keyframes set-result-in { from { opacity: 0; transform: translateX(-50%) translateY(14px); } }
 @keyframes union-enter { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
 @keyframes intersection-enter { from { opacity: 0; clip-path: polygon(50% 50%,50% 50%,50% 50%,50% 50%); } to { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); } }
 @keyframes difference-enter { from { opacity: 0; clip-path: polygon(0 0,0 0,0 100%,0 100%); } to { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); } }

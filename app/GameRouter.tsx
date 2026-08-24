@@ -12,11 +12,23 @@ function chapterFromLocation(fallback: Chapter): Chapter {
   return fallback;
 }
 
-export default function GameRouter({ initialChapter = '0.1' }: { initialChapter?: Chapter }) {
+export default function GameRouter({
+  initialChapter = '0.1',
+  startAtChapterBriefing = false,
+}: {
+  initialChapter?: Chapter;
+  startAtChapterBriefing?: boolean;
+}) {
   const [chapter, setChapter] = useState<Chapter>(initialChapter);
+  const [chapterOneBriefing, setChapterOneBriefing] = useState(
+    initialChapter === '0.1' && startAtChapterBriefing,
+  );
 
   useEffect(() => {
-    const syncChapter = () => setChapter(chapterFromLocation(initialChapter));
+    const syncChapter = () => {
+      setChapter(chapterFromLocation(initialChapter));
+      setChapterOneBriefing(initialChapter === '0.1' && startAtChapterBriefing);
+    };
     syncChapter();
     window.addEventListener('popstate', syncChapter);
     window.addEventListener('hashchange', syncChapter);
@@ -24,16 +36,17 @@ export default function GameRouter({ initialChapter = '0.1' }: { initialChapter?
       window.removeEventListener('popstate', syncChapter);
       window.removeEventListener('hashchange', syncChapter);
     };
-  }, [initialChapter]);
+  }, [initialChapter, startAtChapterBriefing]);
 
-  function openChapter(next: Chapter) {
+  function openChapter(next: Chapter, options?: { chapterOneBriefing?: boolean }) {
     setChapter(next);
+    setChapterOneBriefing(next === '0.1' && Boolean(options?.chapterOneBriefing));
     window.history.pushState(null, '', next === '0.2' ? '/0.2' : '/0.1');
   }
 
   return chapter === '0.2' ? (
-    <ChapterZeroTwo onBack={() => openChapter('0.1')} />
+    <ChapterZeroTwo onBack={() => openChapter('0.1', { chapterOneBriefing: true })} />
   ) : (
-    <ChapterZeroOne onContinue={() => openChapter('0.2')} />
+    <ChapterZeroOne startAtBriefing={chapterOneBriefing} onContinue={() => openChapter('0.2')} />
   );
 }

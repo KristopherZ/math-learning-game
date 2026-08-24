@@ -110,6 +110,12 @@
   .prologue-copy h1 { margin: 10px 0 15px; font-size: clamp(28px,6.5vw,46px); }
   .prologue-copy p { max-width: 360px; margin-bottom: 7px; font-size: 10px; line-height: 1.38; }
   .prologue-copy button { margin-top: 9px; min-height: 38px; touch-action: manipulation; }
+  .set-briefing-copy { left: max(8%,env(safe-area-inset-left)); top: 13%; width: 52%; }
+  .set-briefing-copy h1 { margin: 10px 0 15px; font-size: clamp(28px,6.5vw,46px); }
+  .set-briefing-copy p { max-width: 360px; margin-bottom: 7px; font-size: 10px; line-height: 1.38; }
+  .set-briefing-copy button { margin-top: 9px; min-height: 38px; touch-action: manipulation; }
+  .set-briefing-panel { right: 7%; top: 15%; width: 38vw; height: 250px; scale: .72; transform-origin: top right; }
+  .set-briefing .minimal-agent { right: 11%; bottom: 10%; scale: 1.2; }
   .briefing-route { left: max(8%,env(safe-area-inset-left)); bottom: max(8%,env(safe-area-inset-bottom)); }
   .prologue-scene .minimal-agent { right: max(14%,env(safe-area-inset-right)); bottom: 15%; scale: 1.18; }
   .demo-mark { right: max(13px,env(safe-area-inset-right)); top: max(12px,env(safe-area-inset-top)); }
