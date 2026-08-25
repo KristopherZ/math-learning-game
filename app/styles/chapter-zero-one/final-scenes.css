@@ -52,7 +52,6 @@
 .copy-status > button:disabled { opacity: .3; }
 .copy-status.complete { animation: copy-status-complete 760ms cubic-bezier(.18,.8,.18,1.15) both; }
 .cartesian-scene.solved .copy-pair { animation: copies-launch 900ms cubic-bezier(.18,.8,.18,1.1) both; }
-.cartesian-scene.solved .minimal-agent.crossing { animation: e-escape 1050ms cubic-bezier(.3,.02,.18,1) 1450ms both; }
 .cartesian-scene .minimal-agent { left: 7%; bottom: 13%; }
 
 /* Scene 6 — the operations become one physical decoding chain. */
@@ -101,7 +100,6 @@
 .cipher-tools span { font-size: 8px; letter-spacing: .06em; }
 
 .cipher-scene.solved .cipher-gap { color: var(--sage); border-color: var(--sage); }
-.cipher-scene.solved .minimal-agent.crossing { animation: e-escape 1100ms cubic-bezier(.3,.02,.18,1) 1450ms both; }
 
 .final-code-line { display: flex; align-items: center; justify-content: center; gap: clamp(16px,3vw,42px); animation: final-code-arrive 820ms cubic-bezier(.18,.8,.18,1.15) both; }
 .final-code-line code { min-width: 0; color: #799a8d; }

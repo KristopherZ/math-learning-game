@@ -11,6 +11,7 @@ import './styles/chapter-zero-two/scenes.css';
 import './styles/chapter-zero-two/animations.css';
 import './styles/chapter-zero-two/responsive.css';
 import './styles/shared/actions.css';
+import './styles/shared/agent-motion.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

@@ -84,18 +84,6 @@
 .function-ending-lines i:nth-child(2) {
   animation: ending-orbit 4s ease-in-out infinite alternate;
 }
-.function-scene.solved .minimal-agent.crossing {
-  animation: function-agent-exit-right 1.45s cubic-bezier(0.3, 0.02, 0.18, 1) 320ms both;
-}
-.function-scene.solved .minimal-agent.crossing .e-leg-left {
-  animation: transition-leg-left 320ms ease-in-out infinite alternate;
-}
-.function-scene.solved .minimal-agent.crossing .e-leg-right {
-  animation: transition-leg-right 320ms ease-in-out infinite alternate;
-}
-.function-scene.solved .minimal-agent.crossing .e-briefcase {
-  animation: transition-case-swing 430ms ease-in-out infinite alternate;
-}
 
 @keyframes function-line-in {
   from {
@@ -190,29 +178,6 @@
     box-shadow: 0 0 0 6px rgb(217 130 120 / 12%);
   }
 }
-@keyframes function-agent-exit-right {
-  0% {
-    transform: translateX(0) translateY(0) rotate(-3deg);
-  }
-  12% {
-    transform: translateX(2vw) translateY(-7px) rotate(4deg);
-  }
-  34% {
-    transform: translateX(22vw) translateY(0) rotate(-3deg);
-  }
-  58% {
-    transform: translateX(48vw) translateY(-7px) rotate(4deg);
-  }
-  82% {
-    opacity: 1;
-    transform: translateX(76vw) translateY(0) rotate(-3deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(101vw) translateY(-6px) rotate(3deg);
-  }
-}
-
 .reduce-motion .function-briefing-lines i,
 .reduce-motion .briefing-machine,
 .reduce-motion .briefing-machine i,
@@ -227,15 +192,4 @@
 .reduce-motion .inverse-progress i,
 .reduce-motion .function-ending-lines i {
   animation: none !important;
-}
-
-.reduce-motion .function-scene.solved .minimal-agent.crossing {
-  animation: function-agent-exit-right-reduced 360ms ease both !important;
-}
-
-@keyframes function-agent-exit-right-reduced {
-  to {
-    opacity: 0;
-    transform: translateX(28vw);
-  }
 }

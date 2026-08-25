@@ -1,0 +1,75 @@
+/* Shared Euler exit: every solved scene uses the same readable walk-off. */
+@keyframes euler-exit-right {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-3deg);
+  }
+  15% {
+    transform: translateX(4vw) translateY(-7px) rotate(4deg);
+  }
+  36% {
+    transform: translateX(19vw) translateY(0) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(43vw) translateY(-7px) rotate(4deg);
+  }
+  82% {
+    opacity: 1;
+    transform: translateX(70vw) translateY(0) rotate(-3deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(94vw) translateY(-6px) rotate(3deg);
+  }
+}
+
+@keyframes euler-leg-left {
+  from {
+    transform: rotate(34deg);
+  }
+  to {
+    transform: rotate(-30deg);
+  }
+}
+@keyframes euler-leg-right {
+  from {
+    transform: rotate(-32deg);
+  }
+  to {
+    transform: rotate(32deg);
+  }
+}
+@keyframes euler-briefcase-swing {
+  from {
+    transform: rotate(6deg) translateY(1px);
+  }
+  to {
+    transform: rotate(-5deg) translateY(-1px);
+  }
+}
+
+.minimal-agent.crossing {
+  animation: euler-exit-right 1.1s cubic-bezier(0.3, 0.02, 0.18, 1) 1.2s both;
+}
+
+.minimal-agent.crossing .e-leg-left {
+  animation: euler-leg-left 360ms ease-in-out infinite alternate;
+}
+
+.minimal-agent.crossing .e-leg-right {
+  animation: euler-leg-right 360ms ease-in-out infinite alternate;
+}
+
+.minimal-agent.crossing .e-briefcase {
+  animation: euler-briefcase-swing 430ms ease-in-out infinite alternate;
+}
+
+.reduce-motion .minimal-agent.crossing {
+  animation: euler-exit-right-reduced 360ms ease both !important;
+}
+
+@keyframes euler-exit-right-reduced {
+  to {
+    opacity: 0;
+    transform: translateX(28vw);
+  }
+}
