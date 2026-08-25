@@ -32,12 +32,16 @@ export default function GameRouter({
   const [chapterOneBriefing, setChapterOneBriefing] = useState(
     initialChapter === '0.1' && startAtChapterBriefing,
   );
+  const [logicPrologue, setLogicPrologue] = useState(
+    initialChapter === '0.0' && startAtChapterBriefing,
+  );
   const [functionStageOverride, setFunctionStageOverride] = useState<number | null>(null);
 
   useEffect(() => {
     const syncChapter = () => {
       setChapter(chapterFromLocation(initialChapter));
       setChapterOneBriefing(initialChapter === '0.1' && startAtChapterBriefing);
+      setLogicPrologue(initialChapter === '0.0' && startAtChapterBriefing);
       setFunctionStageOverride(
         chapterFromLocation(initialChapter) === '0.2' ? functionStageFromLocation() : null,
       );
@@ -54,11 +58,15 @@ export default function GameRouter({
   function openChapter(next: Chapter, options?: { chapterOneBriefing?: boolean }) {
     setChapter(next);
     setChapterOneBriefing(next === '0.1' && Boolean(options?.chapterOneBriefing));
+    setLogicPrologue(false);
     window.history.pushState(null, '', next === '0.0' ? '/0.0' : next === '0.2' ? '/0.2' : '/0.1');
   }
 
   return chapter === '0.0' ? (
-    <ChapterZeroZero onContinue={() => openChapter('0.1', { chapterOneBriefing: true })} />
+    <ChapterZeroZero
+      startAtPrologue={logicPrologue}
+      onContinue={() => openChapter('0.1', { chapterOneBriefing: true })}
+    />
   ) : chapter === '0.2' ? (
     <ChapterZeroTwo
       key={`functions-${functionStageOverride ?? 'normal'}`}

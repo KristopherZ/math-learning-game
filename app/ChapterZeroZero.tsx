@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import {
   CinematicCut,
   QuietControls,
@@ -7,6 +9,7 @@ import {
   SoundToggle,
 } from './game/components/GameChrome';
 import { ScreenBlock } from './game/components/ScreenBlock';
+import { Prologue } from './game/components/Prologue';
 import { cx } from './game/cn';
 import { LogicBriefing } from './game/logic/LogicBriefing';
 import { LogicConceptNote } from './game/logic/LogicConceptNote';
@@ -19,7 +22,14 @@ import { useProximityHighlight } from './game/hooks/useProximityHighlight';
 import { requestMobileFullscreen, useScreenAccess } from './game/hooks/useScreenAccess';
 import { logicProgress } from './game/chapterZeroZero';
 
-export default function ChapterZeroZero({ onContinue }: { onContinue: () => void }) {
+export default function ChapterZeroZero({
+  onContinue,
+  startAtPrologue = false,
+}: {
+  onContinue: () => void;
+  startAtPrologue?: boolean;
+}) {
+  const [prologue, setPrologue] = useState(startAtPrologue);
   const screenAccess = useScreenAccess();
   const preferences = useLogicPreferences();
   const audio = useGameAudio();
@@ -37,6 +47,12 @@ export default function ChapterZeroZero({ onContinue }: { onContinue: () => void
     audio.enableSound();
     audio.playEffect('confirm', true);
     game.begin();
+  }
+
+  function beginPrologue() {
+    requestMobileFullscreen();
+    audio.playEffect('confirm', true);
+    setPrologue(false);
   }
 
   if (screenAccess !== 'supported') {
@@ -61,7 +77,8 @@ export default function ChapterZeroZero({ onContinue }: { onContinue: () => void
       }}
     >
       <RotatePrompt />
-      {!game.started && <LogicBriefing onBegin={beginLogic} />}
+      {!game.started && prologue && <Prologue onBegin={beginPrologue} />}
+      {!game.started && !prologue && <LogicBriefing onBegin={beginLogic} />}
       {game.started && game.stage < logicProgress.length && (
         <LogicScene
           stage={game.stage}
