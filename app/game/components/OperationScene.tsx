@@ -34,7 +34,10 @@ export function OperationScene({
   onCheck,
 }: OperationSceneProps) {
   const scene = doorScenes[stage - 1];
-  const candidates = unique([...scene.left, ...scene.right].map((item) => item.kind));
+  const availableKinds = unique([...scene.left, ...scene.right].map((item) => item.kind));
+  const candidates = unique([...(scene.choiceOrder || []), ...availableKinds]).filter((kind) =>
+    availableKinds.includes(kind),
+  );
 
   return (
     <section

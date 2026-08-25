@@ -21,6 +21,8 @@ export type DoorScene = {
   prompt: string;
   left: WorldObject[];
   right: WorldObject[];
+  /** A deliberate field order keeps the player's scan path separate from set order. */
+  choiceOrder?: ObjectKind[];
   expected: ObjectKind[];
   success: string;
   hint: string;
@@ -74,10 +76,10 @@ export const conceptNotes: Record<ConceptKey, ConceptNote> = {
 };
 
 export const archiveObjects: WorldObject[] = [
-  { id: 'key-a', kind: 'key', label: 'brass key' },
-  { id: 'photo', kind: 'photo', label: 'ID card' },
   { id: 'map', kind: 'map', label: 'route map' },
   { id: 'key-b', kind: 'key', label: 'spare key' },
+  { id: 'photo', kind: 'photo', label: 'ID card' },
+  { id: 'key-a', kind: 'key', label: 'brass key' },
 ];
 
 export const doorNeed: ObjectKind[] = ['key', 'photo'];
@@ -91,6 +93,7 @@ export const doorScenes: DoorScene[] = [
     prompt: 'In the document room, take everything named in document A or document B.',
     left: [object('a-key', 'key', 'key'), object('a-photo', 'photo', 'ID card')],
     right: [object('b-photo', 'photo', 'ID card'), object('b-map', 'map', 'map')],
+    choiceOrder: ['map', 'key', 'photo'],
     expected: ['key', 'photo', 'map'],
     success: 'The case contains everything the message requires.',
     hint: 'Take every kind named by at least one document.',
@@ -105,6 +108,7 @@ export const doorScenes: DoorScene[] = [
       object('a-seal', 'seal', 'seal'),
     ],
     right: [object('b-photo', 'photo', 'ID card'), object('b-ticket', 'ticket', 'ticket')],
+    choiceOrder: ['ticket', 'seal', 'key', 'photo'],
     expected: ['photo'],
     success: 'The spy accepts the shared item and passes back the route.',
     hint: 'The spy wants only what both exchange lists share.',
@@ -119,6 +123,7 @@ export const doorScenes: DoorScene[] = [
       object('a-tracker', 'tracker', 'tracker'),
     ],
     right: [object('b-tracker', 'tracker', 'tracker')],
+    choiceOrder: ['tracker', 'photo', 'key'],
     expected: ['key', 'photo'],
     success:
       'The camera turns toward the abandoned tracker. e slips through its blind side into the copy room.',
@@ -179,6 +184,10 @@ export const cipherSteps: CipherStep[] = [
     result: '{ (2,2) }',
   },
 ];
+
+// The tools are intentionally presented in a different order than the route.
+// Players must read each instruction instead of sweeping across the row.
+export const cipherToolOrder: ConceptKey[] = ['difference', 'cartesian', 'intersection', 'union'];
 
 export function unique<T>(values: T[]) {
   return [...new Set(values)];

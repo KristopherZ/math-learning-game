@@ -1,9 +1,7 @@
 import { conceptTex, MathTex, plainSetToTex } from '../../MathTex';
-import { cipherSteps, conceptNotes, type ConceptKey } from '../chapterZeroOne';
+import { cipherSteps, cipherToolOrder, conceptNotes, type ConceptKey } from '../chapterZeroOne';
 import { cx } from '../cn';
 import { Agent } from './Agent';
-
-const cipherConcepts: ConceptKey[] = ['union', 'intersection', 'difference', 'cartesian'];
 
 type CipherSceneProps = {
   stepIndex: number;
@@ -104,7 +102,7 @@ export function CipherScene({
       </div>
 
       <div className="cipher-tools" aria-label="set tools">
-        {cipherConcepts.map((concept) => (
+        {cipherToolOrder.map((concept) => (
           <button
             type="button"
             key={concept}
