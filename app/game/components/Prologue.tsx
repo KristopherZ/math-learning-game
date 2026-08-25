@@ -12,7 +12,7 @@ export function Prologue({ onBegin }: { onBegin: () => void }) {
       <div className="prologue-copy">
         <span className="prologue-kicker">interactive math game · demo</span>
         <h1>PROJECT: PROOF</h1>
-        <p>A coded transmission has surfaced in the archive.</p>
+        <p>A locked archive has started answering in symbols.</p>
         <p>
           Guide Euler <em>e</em> through the mission. Math is the tool; every choice changes the
           escape.
