@@ -59,7 +59,7 @@
 .exchange-item .object-mark { transform: scale(.72); }
 .spy-status { position: absolute; left: 50%; bottom: 7px; color: #747a76; font: 500 12px/1 var(--math-font); white-space: nowrap; transform: translateX(-50%); }
 .spy-contact.exchange-ready .exchange-item { animation: exchange-pass 900ms cubic-bezier(.18,.8,.18,1.05) 170ms both; }
-.spy-contact.exchange-ready .spy-hand { animation: spy-take 820ms cubic-bezier(.18,.8,.18,1.2) 330ms both; }
+.spy-contact.exchange-ready .spy-hand { animation: none; }
 .spy-contact.exchange-ready { animation: spy-acknowledge 1050ms cubic-bezier(.18,.8,.18,1.2) 620ms both; }
 
 .operation-architecture { display: none; }
