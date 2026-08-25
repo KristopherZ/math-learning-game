@@ -1,5 +1,10 @@
 import { MathTex } from '../../MathTex';
-import { logicScenes } from '../chapterZeroZero';
+import {
+  logicConceptNotes,
+  logicOperatorTex,
+  logicScenes,
+  type LogicConceptKey,
+} from '../chapterZeroZero';
 import { cx } from '../cn';
 import { Agent } from '../components/Agent';
 
@@ -7,12 +12,24 @@ type LogicSceneProps = {
   stage: number;
   solved: boolean;
   wrong: boolean;
+  selectedOperator: LogicConceptKey | null;
   message: string;
-  onChoose: (optionId: string) => void;
+  onChoose: (concept: LogicConceptKey) => void;
+  onCommit: () => void;
 };
 
-export function LogicScene({ stage, solved, wrong, message, onChoose }: LogicSceneProps) {
+export function LogicScene({
+  stage,
+  solved,
+  wrong,
+  selectedOperator,
+  message,
+  onChoose,
+  onCommit,
+}: LogicSceneProps) {
   const scene = logicScenes[Math.min(stage, logicScenes.length - 1)];
+  const selectedIsCorrect = selectedOperator === scene.answer;
+  const operatorLabel = selectedOperator ? logicConceptNotes[selectedOperator].symbol : '?';
 
   return (
     <section
@@ -20,6 +37,7 @@ export function LogicScene({ stage, solved, wrong, message, onChoose }: LogicSce
         'world-scene',
         'logic-scene',
         `logic-${scene.concept}`,
+        selectedOperator && `logic-selected-${selectedOperator}`,
         solved && 'solved',
         wrong && 'wrong',
       )}
@@ -30,7 +48,7 @@ export function LogicScene({ stage, solved, wrong, message, onChoose }: LogicSce
 
       <div className="logic-dialogue" aria-live="polite">
         <div className="logic-dialogue-line archive-line">
-          <small>archive</small>
+          <small>door status</small>
           <p>{scene.archiveLine}</p>
         </div>
         <div className="logic-dialogue-line e-line">
@@ -39,31 +57,84 @@ export function LogicScene({ stage, solved, wrong, message, onChoose }: LogicSce
         </div>
       </div>
 
-      <div className="logic-terminal" aria-label="current logical form">
-        <small>translate the dialog</small>
-        <MathTex tex={scene.expression} fallback={scene.expressionFallback} className="math-tex" />
+      <div className={cx('logic-world', selectedIsCorrect && 'reacted')} aria-hidden="true">
+        <div className="logic-world-label">exit</div>
+        <div className="logic-door-system">
+          <div className="logic-hatch">
+            <i />
+          </div>
+        </div>
+        <small>{selectedIsCorrect ? 'open' : 'sealed'}</small>
       </div>
 
-      <div className="logic-choices" aria-label="possible logical readings">
-        {scene.options.map((option) => (
-          <button
-            type="button"
-            key={option.id}
-            className={cx(solved && option.id === scene.answer && 'correct')}
-            disabled={solved}
-            onClick={() => onChoose(option.id)}
-          >
-            <MathTex tex={option.tex} fallback={option.fallback} className="math-tex" />
-            <span>{option.label}</span>
-          </button>
-        ))}
+      <div className={cx('logic-sentence-board', solved && 'committed')}>
+        <small className="logic-board-label">edit the sentence</small>
+        <div className="logic-sentence" aria-live="polite">
+          {scene.mode === 'before' || scene.mode === 'quantifier' ? (
+            <span className={cx('logic-operator-slot', selectedOperator && 'filled')}>
+              {selectedOperator ? (
+                <MathTex tex={logicOperatorTex[selectedOperator]} fallback={operatorLabel} />
+              ) : (
+                '?'
+              )}
+            </span>
+          ) : null}
+          {scene.mode === 'between' ? (
+            <>
+              <span className="logic-claim">{scene.leftClaim}</span>
+              <span className={cx('logic-operator-slot', selectedOperator && 'filled')}>
+                {selectedOperator ? (
+                  <MathTex tex={logicOperatorTex[selectedOperator]} fallback={operatorLabel} />
+                ) : (
+                  '?'
+                )}
+              </span>
+              <span className="logic-claim">{scene.rightClaim}</span>
+            </>
+          ) : (
+            <span className="logic-claim">{scene.rightClaim}</span>
+          )}
+        </div>
+        <p className={cx('logic-reaction', selectedOperator && 'visible')}>
+          {selectedOperator
+            ? selectedIsCorrect
+              ? scene.previewCorrect
+              : scene.previewWrong
+            : 'Choose a symbol to change the sentence.'}
+        </p>
+        <button
+          type="button"
+          className="game-action logic-commit"
+          onClick={onCommit}
+          disabled={solved}
+        >
+          {solved ? 'sentence sent' : 'send sentence'}
+        </button>
       </div>
 
-      <div className={cx('logic-door', solved && 'open')} aria-hidden="true">
-        <i />
-        <b>{solved ? 'open' : 'sealed'}</b>
+      <div className="logic-symbol-rail" aria-label="logic symbols">
+        <small>symbols</small>
+        <div>
+          {scene.available.map((concept) => (
+            <button
+              type="button"
+              key={concept}
+              className={cx(selectedOperator === concept && 'selected')}
+              onClick={() => onChoose(concept)}
+              disabled={solved}
+              aria-label={`insert ${concept}`}
+            >
+              <MathTex
+                tex={logicOperatorTex[concept]}
+                fallback={logicConceptNotes[concept].symbol}
+              />
+              <span>{concept}</span>
+            </button>
+          ))}
+        </div>
       </div>
-      <Agent crossing={solved} exitDirection={stage % 2 === 0 ? 'right' : 'left'} />
+
+      <Agent crossing={solved} exitDirection="right" />
       <p className="scene-message" aria-live="polite">
         {message}
       </p>

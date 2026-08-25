@@ -15,10 +15,10 @@ export function LogicBriefing({ onBegin }: { onBegin: () => void }) {
           <br />
           DIALOG
         </h1>
-        <p>The archive doors have stopped answering in plain language.</p>
+        <p>The archive doors now answer only in logic.</p>
         <p>
-          Read each claim, translate it into logic, and make the dialog agree long enough for Euler{' '}
-          <em>e</em> to find a way out.
+          Read each door status, change one sentence at a time, and make the dialog reveal an
+          unlocked route for Euler <em>e</em>.
         </p>
         <button className="game-action" type="button" onClick={onBegin}>
           enter dialogue
@@ -26,13 +26,21 @@ export function LogicBriefing({ onBegin }: { onBegin: () => void }) {
       </div>
       <div className="logic-briefing-panel" aria-hidden="true">
         <div>
-          <small>archive voice</small>
-          <MathTex tex={'p\\land q'} fallback="p ∧ q" className="math-tex" />
+          <small>door status</small>
+          <MathTex
+            tex={String.raw`\text{door is locked}`}
+            fallback="door is locked"
+            className="math-tex"
+          />
         </div>
         <span>?</span>
         <div>
-          <small>exit voice</small>
-          <MathTex tex={'\\forall d\\in D'} fallback="∀ d ∈ D" className="math-tex" />
+          <small>e&apos;s instruction</small>
+          <MathTex
+            tex={String.raw`\neg(\text{door is locked})`}
+            fallback="¬(door is locked)"
+            className="math-tex"
+          />
         </div>
       </div>
     </ChapterBriefing>

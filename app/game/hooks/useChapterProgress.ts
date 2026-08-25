@@ -15,13 +15,21 @@ type ProgressOptions = {
   reducedMotion: boolean;
   playEffect: (cue: AudioCue, force?: boolean) => void;
   showNote: (concept: ConceptKey | null) => void;
+  startAtStage?: number | null;
 };
 
 export const chapterProgress = [0, 1, 2, 3, 4, 5];
 
-export function useChapterProgress({ seen, reducedMotion, playEffect, showNote }: ProgressOptions) {
-  const [started, setStarted] = useState(false);
-  const [stage, setStage] = useState(0);
+export function useChapterProgress({
+  seen,
+  reducedMotion,
+  playEffect,
+  showNote,
+  startAtStage = null,
+}: ProgressOptions) {
+  const hasStartStage = startAtStage !== null && startAtStage !== undefined;
+  const [started, setStarted] = useState(hasStartStage);
+  const [stage, setStage] = useState(startAtStage ?? 0);
   const [selection, setSelection] = useState<string[]>([]);
   const [result, setResult] = useState<ObjectKind[]>([]);
   const [solved, setSolved] = useState(false);

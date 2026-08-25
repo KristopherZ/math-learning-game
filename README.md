@@ -35,3 +35,19 @@ That goal is intentionally larger than the current demo. The project will grow i
 ## Project status
 
 This is an experimental demo, not a finished curriculum or production game. Expect the story, mechanics, visual style, and roadmap to evolve. Human review remains essential for the mathematics; the code should be treated as an evolving prototype.
+
+## Developer entry URLs
+
+For quick testing, the current playable chapters can be opened directly:
+
+- `/0.0` — Logic
+- `/0.1` — Sets
+- `/0.2` — Functions & relationships
+
+Each chapter also accepts a scene shortcut; `N` is `0` through `6`, with `stage` accepted as an alias:
+
+- `/0.0?cheat=logic&scene=N`
+- `/0.1?cheat=sets&scene=N`
+- `/0.2?cheat=relay&scene=N`
+
+The `skip` cheat name is accepted for all three chapters. There is no 0.3 route in the current build.

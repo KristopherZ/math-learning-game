@@ -25,9 +25,11 @@ import { logicProgress } from './game/chapterZeroZero';
 export default function ChapterZeroZero({
   onContinue,
   startAtPrologue = false,
+  startAtStage = null,
 }: {
   onContinue: () => void;
   startAtPrologue?: boolean;
+  startAtStage?: number | null;
 }) {
   const [prologue, setPrologue] = useState(startAtPrologue);
   const screenAccess = useScreenAccess();
@@ -38,6 +40,7 @@ export default function ChapterZeroZero({
     reducedMotion: preferences.reducedMotion,
     playEffect: audio.playEffect,
     showNote: preferences.showNote,
+    startAtStage,
   });
 
   useProximityHighlight(game.stage, Boolean(preferences.note));
@@ -84,8 +87,10 @@ export default function ChapterZeroZero({
           stage={game.stage}
           solved={game.solved}
           wrong={game.wrong}
+          selectedOperator={game.selectedOperator}
           message={game.message}
-          onChoose={game.chooseOption}
+          onChoose={game.chooseOperator}
+          onCommit={game.commitSentence}
         />
       )}
       {game.started && game.stage >= logicProgress.length && (

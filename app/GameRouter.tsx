@@ -14,9 +14,9 @@ function chapterFromLocation(fallback: Chapter): Chapter {
   return fallback;
 }
 
-function functionStageFromLocation(): number | null {
+function stageFromLocation(cheats: string[]): number | null {
   const params = new URLSearchParams(window.location.search);
-  if (!['relay', 'skip'].includes(params.get('cheat') ?? '')) return null;
+  if (!cheats.includes(params.get('cheat') ?? '')) return null;
   const value = Number(params.get('scene') ?? params.get('stage'));
   return Number.isInteger(value) && value >= 0 && value <= 6 ? value : null;
 }
@@ -35,6 +35,8 @@ export default function GameRouter({
   const [logicPrologue, setLogicPrologue] = useState(
     initialChapter === '0.0' && startAtChapterBriefing,
   );
+  const [logicStageOverride, setLogicStageOverride] = useState<number | null>(null);
+  const [chapterOneStageOverride, setChapterOneStageOverride] = useState<number | null>(null);
   const [functionStageOverride, setFunctionStageOverride] = useState<number | null>(null);
 
   useEffect(() => {
@@ -42,8 +44,18 @@ export default function GameRouter({
       setChapter(chapterFromLocation(initialChapter));
       setChapterOneBriefing(initialChapter === '0.1' && startAtChapterBriefing);
       setLogicPrologue(initialChapter === '0.0' && startAtChapterBriefing);
+      setLogicStageOverride(
+        chapterFromLocation(initialChapter) === '0.0' ? stageFromLocation(['logic', 'skip']) : null,
+      );
+      setChapterOneStageOverride(
+        chapterFromLocation(initialChapter) === '0.1'
+          ? stageFromLocation(['sets', 'mission', 'skip'])
+          : null,
+      );
       setFunctionStageOverride(
-        chapterFromLocation(initialChapter) === '0.2' ? functionStageFromLocation() : null,
+        chapterFromLocation(initialChapter) === '0.2'
+          ? stageFromLocation(['relay', 'functions', 'skip'])
+          : null,
       );
     };
     syncChapter();
@@ -59,12 +71,17 @@ export default function GameRouter({
     setChapter(next);
     setChapterOneBriefing(next === '0.1' && Boolean(options?.chapterOneBriefing));
     setLogicPrologue(false);
+    setLogicStageOverride(null);
+    setChapterOneStageOverride(null);
+    setFunctionStageOverride(null);
     window.history.pushState(null, '', next === '0.0' ? '/0.0' : next === '0.2' ? '/0.2' : '/0.1');
   }
 
   return chapter === '0.0' ? (
     <ChapterZeroZero
+      key={`logic-${logicStageOverride ?? 'normal'}`}
       startAtPrologue={logicPrologue}
+      startAtStage={logicStageOverride}
       onContinue={() => openChapter('0.1', { chapterOneBriefing: true })}
     />
   ) : chapter === '0.2' ? (
@@ -74,6 +91,11 @@ export default function GameRouter({
       onBack={() => openChapter('0.1', { chapterOneBriefing: true })}
     />
   ) : (
-    <ChapterZeroOne startAtBriefing={chapterOneBriefing} onContinue={() => openChapter('0.2')} />
+    <ChapterZeroOne
+      key={`sets-${chapterOneStageOverride ?? 'normal'}`}
+      startAtBriefing={chapterOneBriefing}
+      startAtStage={chapterOneStageOverride}
+      onContinue={() => openChapter('0.2')}
+    />
   );
 }

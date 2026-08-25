@@ -1,0 +1,225 @@
+.chapter-ending {
+  text-align: center;
+}
+
+.chapter-ending-rings {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  transform: none;
+  pointer-events: none;
+}
+
+/* Override legacy chapter-specific .ending-rings geometry. */
+.chapter-ending .ending-rings {
+  inset: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  transform: none;
+}
+
+.chapter-ending-rings i {
+  position: absolute;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+
+.chapter-ending-rings i:nth-child(1) {
+  left: 50%;
+  top: 18%;
+  width: 460px;
+  height: 330px;
+  transform: translateX(-50%);
+}
+
+.chapter-ending-rings i:nth-child(2) {
+  left: 50%;
+  top: 29%;
+  width: 250px;
+  height: 160px;
+  border-color: var(--coral);
+  transform: translateX(-50%);
+  animation: ending-orbit 4s ease-in-out infinite alternate;
+}
+
+.chapter-ending-description:empty {
+  display: none;
+}
+
+.chapter-ending-mark {
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  color: var(--ink);
+  font: 500 clamp(20px, 3vw, 34px) / 1 var(--math-font);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.chapter-ending-status {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  margin: 0;
+  color: #747a76;
+  font:
+    500 11px / 1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  transform: translateX(-50%);
+}
+
+.chapter-ending-description {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 80%;
+  color: #747a76;
+  font-size: 14px;
+  transform: translateX(-50%);
+}
+
+.chapter-ending .minimal-agent {
+  left: 50%;
+  bottom: 22%;
+  transform: translateX(-50%);
+}
+
+.chapter-ending-actions {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+}
+
+/* Preserve the earlier chapter compositions while sharing the component. */
+.ending-scene {
+  display: grid;
+  place-items: center;
+}
+
+.ending-scene .chapter-ending .minimal-agent,
+.ending-scene .minimal-agent {
+  left: 50%;
+  bottom: 20%;
+  transform: translateX(-50%) scale(1.18);
+}
+
+.ending-scene .chapter-ending-actions {
+  bottom: 11%;
+}
+
+.function-ending {
+  display: grid;
+  place-items: center;
+}
+
+.function-ending .minimal-agent {
+  left: 50%;
+  bottom: 18%;
+  transform: translateX(-50%);
+  scale: 1.35;
+}
+
+.function-ending .chapter-ending-actions {
+  bottom: 8%;
+}
+
+/* One equation/status/text rhythm for every chapter ending. */
+.chapter-ending .chapter-ending-mark {
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  margin: 0;
+  color: var(--ink);
+  font: 500 clamp(20px, 3vw, 34px) / 1 var(--math-font);
+  transform: translateX(-50%);
+}
+
+.chapter-ending .chapter-ending-status {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  margin: 0;
+  color: #747a76;
+  font:
+    500 11px / 1 var(--font-geist-mono),
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  transform: translateX(-50%);
+}
+
+.chapter-ending .chapter-ending-description {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 80%;
+  margin: 0;
+  color: #747a76;
+  font:
+    14px / 1.4 var(--font-geist-sans),
+    sans-serif;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 600px) {
+  .chapter-ending-mark {
+    top: 25%;
+    width: 90%;
+  }
+
+  .chapter-ending-status {
+    top: 46%;
+  }
+
+  .chapter-ending-description {
+    top: 53%;
+    width: 80%;
+    font-size: 11px;
+  }
+
+  .chapter-ending .minimal-agent {
+    bottom: 23%;
+    scale: 0.76;
+  }
+
+  .chapter-ending-actions {
+    bottom: 10%;
+  }
+
+  .chapter-ending .chapter-ending-mark {
+    top: 25%;
+    width: 90%;
+  }
+
+  .chapter-ending .chapter-ending-status {
+    top: 40%;
+  }
+
+  .chapter-ending .chapter-ending-description {
+    top: 53%;
+    width: 80%;
+    font-size: 11px;
+  }
+
+  .function-ending .minimal-agent {
+    scale: 1;
+  }
+}
+
+.reduce-motion .chapter-ending-rings i {
+  animation: none !important;
+}

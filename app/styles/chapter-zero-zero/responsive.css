@@ -121,6 +121,44 @@
   }
 }
 
+/* Keep the three scene columns separate on a compact desktop/tablet window. */
+@media (min-width: 601px) and (max-width: 1100px) {
+  .logic-whisper {
+    width: 62vw;
+  }
+  .logic-dialogue {
+    left: 4%;
+    top: 21%;
+    width: 26vw;
+  }
+  .logic-sentence-board {
+    left: 56%;
+    width: 35vw;
+    top: 22%;
+  }
+  .logic-world {
+    right: 3%;
+    width: 20vw;
+    top: 23%;
+  }
+  .logic-door {
+    right: 2%;
+  }
+  .logic-symbol-rail {
+    left: 56%;
+    bottom: 17%;
+  }
+  .logic-symbol-rail button {
+    width: 66px;
+    min-height: 54px;
+  }
+  .logic-scene .minimal-agent {
+    left: 4%;
+    bottom: 10%;
+    scale: 0.78;
+  }
+}
+
 @media (max-height: 600px) and (orientation: landscape) and (max-width: 1000px) {
   .logic-whisper {
     top: max(3%, env(safe-area-inset-top));
@@ -188,5 +226,168 @@
     right: 11%;
     bottom: 10%;
     scale: 1.2;
+  }
+}
+
+/* Shared compact composition: prompt left, sentence card right, exit system lower-right. */
+@media (min-width: 601px) {
+  .logic-dialogue {
+    left: 7%;
+    top: 22%;
+    width: min(300px, 27vw);
+  }
+  .logic-sentence-board {
+    left: auto;
+    right: 12%;
+    top: 22%;
+    width: min(380px, 34vw);
+    transform: none;
+    animation-name: logic-board-in-right;
+  }
+  .logic-world {
+    left: auto;
+    right: 8%;
+    top: auto;
+    bottom: 9%;
+    width: 160px;
+    height: 130px;
+    transform: none;
+    animation-name: logic-world-in-right;
+  }
+  .logic-symbol-rail {
+    left: 50%;
+    bottom: 16%;
+  }
+  .logic-scene .minimal-agent {
+    left: 5%;
+    bottom: 10%;
+  }
+}
+
+.logic-dialogue-line.e-line {
+  margin-left: 0;
+}
+
+@media (max-width: 600px) {
+  .logic-dialogue {
+    left: 4%;
+    top: 20%;
+    width: 34%;
+  }
+  .logic-world {
+    right: 3%;
+    top: 21%;
+    width: 28%;
+    height: 160px;
+  }
+  .logic-sentence-board {
+    left: 53%;
+    top: 20%;
+    width: 42%;
+    min-height: 154px;
+    padding: 12px 10px;
+    gap: 9px;
+  }
+  .logic-sentence {
+    gap: 5px;
+    font-size: 14px;
+  }
+  .logic-claim {
+    font-size: 8px;
+  }
+  .logic-operator-slot {
+    min-width: 26px;
+    min-height: 26px;
+    font-size: 15px;
+  }
+  .logic-operator-slot .math-tex {
+    font-size: 15px;
+  }
+  .logic-reaction {
+    min-height: 27px;
+    font-size: 8px;
+  }
+  .logic-commit {
+    min-width: 94px;
+    padding: 5px 7px;
+    font-size: 8px;
+  }
+  .logic-symbol-rail {
+    bottom: 18%;
+  }
+  .logic-symbol-rail > div {
+    gap: 4px;
+  }
+  .logic-symbol-rail button {
+    width: 58px;
+    min-height: 47px;
+    padding: 4px 2px;
+  }
+  .logic-symbol-rail button .math-tex {
+    font-size: 15px;
+  }
+  .logic-symbol-rail button span {
+    font-size: 7px;
+  }
+  .logic-door {
+    right: 2%;
+    top: 36%;
+    width: 52px;
+    height: 84px;
+  }
+  .logic-door i {
+    width: 20px;
+    height: 20px;
+  }
+  .logic-scene .minimal-agent {
+    left: 3%;
+    bottom: 11%;
+    scale: 0.66;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) and (max-width: 1000px) {
+  .logic-dialogue {
+    left: 5%;
+    top: 20%;
+    width: 27%;
+  }
+  .logic-world {
+    right: 5%;
+    top: 20%;
+    width: 24%;
+    height: 150px;
+  }
+  .logic-sentence-board {
+    left: 51%;
+    top: 20%;
+    width: 32%;
+    min-height: 145px;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .logic-sentence {
+    font-size: 14px;
+  }
+  .logic-claim {
+    font-size: 8px;
+  }
+  .logic-reaction {
+    font-size: 8px;
+    min-height: 22px;
+  }
+  .logic-symbol-rail {
+    left: 51%;
+    bottom: 12%;
+  }
+  .logic-symbol-rail button {
+    width: 58px;
+    min-height: 43px;
+  }
+  .logic-door {
+    right: 2%;
+    top: 35%;
+    width: 50px;
+    height: 80px;
   }
 }

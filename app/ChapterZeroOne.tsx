@@ -27,9 +27,11 @@ import { requestMobileFullscreen, useScreenAccess } from './game/hooks/useScreen
 export default function ChapterZeroOne({
   onContinue,
   startAtBriefing = false,
+  startAtStage = null,
 }: {
   onContinue?: () => void;
   startAtBriefing?: boolean;
+  startAtStage?: number | null;
 }) {
   const [briefing, setBriefing] = useState(startAtBriefing);
   const screenAccess = useScreenAccess();
@@ -40,6 +42,7 @@ export default function ChapterZeroOne({
     reducedMotion: preferences.reducedMotion,
     playEffect: audio.playEffect,
     showNote: preferences.showNote,
+    startAtStage,
   });
 
   useProximityHighlight(game.stage, Boolean(preferences.note));

@@ -50,6 +50,101 @@
 .logic-scene.solved .logic-door {
   animation: logic-door-open 800ms cubic-bezier(0.18, 0.8, 0.18, 1.1) both;
 }
+
+.logic-sentence-board,
+.logic-symbol-rail,
+.logic-world {
+  animation: logic-board-in 720ms cubic-bezier(0.18, 0.8, 0.18, 1.1) both;
+}
+
+.logic-sentence-board {
+  animation-name: logic-board-in-centered;
+}
+.logic-symbol-rail {
+  animation-name: logic-rail-in;
+  animation-delay: 120ms;
+}
+.logic-world {
+  animation-delay: 180ms;
+}
+
+@keyframes logic-board-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+}
+
+@keyframes logic-board-in-centered {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes logic-rail-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes logic-board-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes logic-world-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.logic-world.reacted .logic-architecture {
+  animation: logic-network-pulse 900ms cubic-bezier(0.18, 0.8, 0.18, 1.1) both;
+}
+
+@keyframes logic-network-pulse {
+  35% {
+    border-color: var(--sage);
+    transform: translateX(5px);
+  }
+  70% {
+    transform: translateX(-2px);
+  }
+}
+
+.logic-sentence-board.committed .logic-operator-slot {
+  animation: logic-symbol-lock 700ms cubic-bezier(0.18, 0.8, 0.18, 1.1) both;
+}
+
+@keyframes logic-symbol-lock {
+  40% {
+    transform: scale(1.12) rotate(-3deg);
+  }
+  75% {
+    transform: scale(0.98) rotate(1deg);
+  }
+}
 @keyframes logic-door-open {
   45% {
     transform: translateX(4px) scale(1.03);
@@ -65,6 +160,14 @@
 .reduce-motion .logic-terminal,
 .reduce-motion .logic-door,
 .reduce-motion .logic-scene.solved .logic-door {
+  animation: none;
+}
+
+.reduce-motion .logic-sentence-board,
+.reduce-motion .logic-symbol-rail,
+.reduce-motion .logic-world,
+.reduce-motion .logic-world.reacted .logic-architecture,
+.reduce-motion .logic-sentence-board.committed .logic-operator-slot {
   animation: none;
 }
 

@@ -1,5 +1,4 @@
-import { MathTex } from '../../MathTex';
-import { Agent } from '../components/Agent';
+import { ChapterEnding } from '../components/ChapterEnding';
 
 export function LogicEnding({
   onReplay,
@@ -9,24 +8,16 @@ export function LogicEnding({
   onContinue: () => void;
 }) {
   return (
-    <section className="world-scene logic-ending" aria-label="logic chapter complete">
-      <div className="logic-ending-mark" aria-hidden="true">
-        <MathTex
-          tex={'\\land\\;\\lor\\;\\neg\\;\\Rightarrow\\;\\forall\\;\\exists'}
-          fallback="∧  ∨  ¬  ⇒  ∀  ∃"
-        />
-      </div>
-      <Agent crossing />
-      <p>dialogue decoded</p>
-      <span>Six ways to make a claim. One way through.</span>
-      <div className="ending-actions">
-        <button className="game-action" type="button" onClick={onReplay}>
-          ↻
-        </button>
-        <button className="game-action" type="button" onClick={onContinue}>
-          0.1 →
-        </button>
-      </div>
-    </section>
+    <ChapterEnding
+      className="logic-ending"
+      ariaLabel="logic chapter complete"
+      status="dialogue decoded"
+      description="Six operators. One clear way through."
+      tex={String.raw`\land\;\lor\;\neg\;\Rightarrow\;\forall\;\exists`}
+      fallback="∧  ∨  ¬  ⇒  ∀  ∃"
+      nextLabel="0.1 →"
+      onReplay={onReplay}
+      onNext={onContinue}
+    />
   );
 }

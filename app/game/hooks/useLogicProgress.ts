@@ -7,13 +7,22 @@ type ProgressOptions = {
   reducedMotion: boolean;
   playEffect: (cue: AudioCue, force?: boolean) => void;
   showNote: (concept: LogicConceptKey | null) => void;
+  startAtStage?: number | null;
 };
 
-export function useLogicProgress({ seen, reducedMotion, playEffect, showNote }: ProgressOptions) {
-  const [started, setStarted] = useState(false);
-  const [stage, setStage] = useState(0);
+export function useLogicProgress({
+  seen,
+  reducedMotion,
+  playEffect,
+  showNote,
+  startAtStage = null,
+}: ProgressOptions) {
+  const hasStartStage = startAtStage !== null && startAtStage !== undefined;
+  const [started, setStarted] = useState(hasStartStage);
+  const [stage, setStage] = useState(startAtStage ?? 0);
   const [solved, setSolved] = useState(false);
   const [wrong, setWrong] = useState(false);
+  const [selectedOperator, setSelectedOperator] = useState<LogicConceptKey | null>(null);
   const [message, setMessage] = useState('');
   const [cutting, setCutting] = useState(false);
 
@@ -33,6 +42,7 @@ export function useLogicProgress({ seen, reducedMotion, playEffect, showNote }: 
         setStage(nextStage);
         setSolved(false);
         setWrong(false);
+        setSelectedOperator(null);
         setMessage('');
         const concept = logicConceptOrder[nextStage];
         if (concept && !seen.has(concept)) showNote(concept);
@@ -42,13 +52,25 @@ export function useLogicProgress({ seen, reducedMotion, playEffect, showNote }: 
     window.setTimeout(() => setCutting(false), reducedMotion ? 30 : 3400);
   }
 
-  function chooseOption(optionId: string) {
+  function chooseOperator(concept: LogicConceptKey) {
+    if (solved || stage >= logicScenes.length) return;
+    setSelectedOperator(concept);
+    setWrong(false);
+    setMessage('');
+  }
+
+  function commitSentence() {
     if (solved || stage >= logicScenes.length) return;
     const scene = logicScenes[stage];
-    if (optionId !== scene.answer) {
+    if (!selectedOperator) {
+      playEffect('error');
+      setMessage('Choose a symbol and place it into the sentence first.');
+      return;
+    }
+    if (selectedOperator !== scene.answer) {
       playEffect('error');
       setWrong(true);
-      setMessage(scene.hint);
+      setMessage(scene.previewWrong);
       window.setTimeout(() => setWrong(false), reducedMotion ? 80 : 620);
       return;
     }
@@ -77,7 +99,9 @@ export function useLogicProgress({ seen, reducedMotion, playEffect, showNote }: 
     cutting,
     currentConcept,
     begin,
-    chooseOption,
+    selectedOperator,
+    chooseOperator,
+    commitSentence,
     replay,
   };
 }
