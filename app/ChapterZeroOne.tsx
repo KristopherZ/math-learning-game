@@ -46,13 +46,13 @@ export default function ChapterZeroOne({
 
   function beginDemo() {
     requestMobileFullscreen();
-    audio.enableSound();
     audio.playEffect('confirm', true);
     setBriefing(true);
   }
 
   function beginArchive() {
-    audio.playEffect('confirm');
+    audio.enableSound();
+    audio.playEffect('confirm', true);
     game.begin();
   }
 
