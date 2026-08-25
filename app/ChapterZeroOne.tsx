@@ -51,6 +51,9 @@ export default function ChapterZeroOne({
   }
 
   function beginArchive() {
+    // Ask again from the 0.1 entry gesture: mobile browsers may reject the
+    // earlier prologue request once the briefing has been rendered.
+    requestMobileFullscreen();
     audio.enableSound();
     audio.playEffect('confirm', true);
     game.begin();

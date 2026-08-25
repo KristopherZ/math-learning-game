@@ -1,13 +1,12 @@
-import { Agent } from '../components/Agent';
+import { ChapterBriefing } from '../components/ChapterBriefing';
 
 export function FunctionBriefing({ onBegin, onBack }: { onBegin: () => void; onBack: () => void }) {
   return (
-    <section className="world-scene function-briefing" aria-label="Chapter 0.2 functions briefing">
-      <div className="function-briefing-lines" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
+    <ChapterBriefing
+      className="function-briefing"
+      linesClassName="function-briefing-lines"
+      ariaLabel="Chapter 0.2 functions briefing"
+    >
       <div className="function-briefing-copy">
         <span>0.2 · functions &amp; relations · demo</span>
         <h1>
@@ -31,7 +30,6 @@ export function FunctionBriefing({ onBegin, onBack }: { onBegin: () => void; onB
         <span>input</span>
         <b>output</b>
       </div>
-      <Agent />
-    </section>
+    </ChapterBriefing>
   );
 }

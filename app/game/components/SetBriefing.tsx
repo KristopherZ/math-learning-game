@@ -1,14 +1,13 @@
 import { MathTex } from '../../MathTex';
-import { Agent } from './Agent';
+import { ChapterBriefing } from './ChapterBriefing';
 
 export function SetBriefing({ onBegin }: { onBegin: () => void }) {
   return (
-    <section className="world-scene set-briefing" aria-label="Chapter 0.1 sets briefing">
-      <div className="set-briefing-lines" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
+    <ChapterBriefing
+      className="set-briefing"
+      linesClassName="set-briefing-lines"
+      ariaLabel="Chapter 0.1 sets briefing"
+    >
       <div className="set-briefing-copy">
         <span>0.1 · sets · demo</span>
         <h1>
@@ -40,7 +39,6 @@ export function SetBriefing({ onBegin }: { onBegin: () => void }) {
           <MathTex tex={'\\{\\text{key},\\text{id},\\text{map}\\}'} fallback="{ key, id, map }" />
         </div>
       </div>
-      <Agent />
-    </section>
+    </ChapterBriefing>
   );
 }
