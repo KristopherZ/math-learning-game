@@ -1,6 +1,6 @@
 import { ChapterBriefing } from '../components/ChapterBriefing';
 
-export function FunctionBriefing({ onBegin, onBack }: { onBegin: () => void; onBack: () => void }) {
+export function FunctionBriefing({ onBegin }: { onBegin: () => void }) {
   return (
     <ChapterBriefing
       className="function-briefing"
@@ -20,9 +20,6 @@ export function FunctionBriefing({ onBegin, onBack }: { onBegin: () => void; onB
         </p>
         <button className="game-action" type="button" onClick={onBegin}>
           enter relay
-        </button>
-        <button className="briefing-back game-action" type="button" onClick={onBack}>
-          ← 0.1
         </button>
       </div>
       <div className="briefing-machine" aria-hidden="true">

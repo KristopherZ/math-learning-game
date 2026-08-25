@@ -72,7 +72,7 @@ export default function ChapterZeroTwo({
       }}
     >
       <RotatePrompt />
-      {!game.started && <FunctionBriefing onBegin={beginChapter} onBack={onBack} />}
+      {!game.started && <FunctionBriefing onBegin={beginChapter} />}
       {game.started && game.stage === 0 && (
         <MachineScene
           links={game.machineLinks}
