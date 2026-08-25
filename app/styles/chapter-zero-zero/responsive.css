@@ -1,0 +1,192 @@
+@media (max-width: 600px) {
+  .logic-whisper {
+    top: max(5%, calc(env(safe-area-inset-top) + 26px));
+    width: 74%;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .logic-dialogue {
+    left: 6%;
+    top: 19%;
+    width: 42%;
+    gap: 7px;
+  }
+  .logic-dialogue-line {
+    padding: 9px 10px;
+  }
+  .logic-dialogue-line.e-line {
+    margin-left: 12px;
+  }
+  .logic-dialogue-line p {
+    font-size: 9px;
+    line-height: 1.35;
+  }
+  .logic-dialogue-line small {
+    margin-bottom: 5px;
+    font-size: 7px;
+  }
+  .logic-terminal {
+    left: 72%;
+    top: 20%;
+    width: 36%;
+    min-height: 94px;
+    gap: 10px;
+  }
+  .logic-terminal .math-tex {
+    font-size: 17px;
+  }
+  .logic-terminal small {
+    font-size: 7px;
+  }
+  .logic-door {
+    right: 7%;
+    top: 42%;
+    width: 62px;
+    height: 100px;
+  }
+  .logic-door i {
+    width: 24px;
+    height: 24px;
+  }
+  .logic-choices {
+    left: 54%;
+    bottom: 20%;
+    width: 88%;
+    gap: 5px;
+  }
+  .logic-choices button {
+    width: 31%;
+    min-height: 60px;
+    padding: 7px 4px;
+    gap: 6px;
+  }
+  .logic-choices .math-tex {
+    font-size: 14px;
+  }
+  .logic-choices span {
+    font-size: 7px;
+  }
+  .logic-scene .minimal-agent {
+    left: 4%;
+    bottom: 14%;
+    scale: 0.68;
+  }
+  .logic-ending-mark {
+    top: 25%;
+    width: 90%;
+  }
+  .logic-ending > p {
+    top: 46%;
+  }
+  .logic-ending > span {
+    top: 53%;
+    font-size: 11px;
+  }
+  .logic-ending .minimal-agent {
+    bottom: 23%;
+    scale: 0.76;
+  }
+  .logic-briefing-copy {
+    left: max(8%, env(safe-area-inset-left));
+    top: 14%;
+    width: 53%;
+  }
+  .logic-briefing-copy h1 {
+    margin: 10px 0 15px;
+    font-size: clamp(28px, 6.5vw, 46px);
+  }
+  .logic-briefing-copy p {
+    max-width: 360px;
+    margin-bottom: 7px;
+    font-size: 10px;
+    line-height: 1.38;
+  }
+  .logic-briefing-copy button {
+    margin-top: 9px;
+    min-height: 38px;
+    touch-action: manipulation;
+  }
+  .logic-briefing-panel {
+    right: 7%;
+    top: 15%;
+    width: 38vw;
+    height: 250px;
+    scale: 0.72;
+    transform-origin: top right;
+  }
+  .logic-briefing .minimal-agent {
+    right: 11%;
+    bottom: 10%;
+    scale: 1.2;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) and (max-width: 1000px) {
+  .logic-whisper {
+    top: max(3%, env(safe-area-inset-top));
+    width: 44%;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .logic-dialogue {
+    left: max(6%, env(safe-area-inset-left));
+    top: 16%;
+    width: 32%;
+  }
+  .logic-terminal {
+    left: 54%;
+    top: 16%;
+    width: 25%;
+    min-height: 84px;
+  }
+  .logic-door {
+    right: 8%;
+    top: 25%;
+  }
+  .logic-choices {
+    left: 54%;
+    bottom: 13%;
+    width: 58%;
+  }
+  .logic-choices button {
+    width: 31%;
+    min-height: 58px;
+  }
+  .logic-scene .minimal-agent {
+    left: max(8%, env(safe-area-inset-left));
+    bottom: 14%;
+    scale: 0.58;
+  }
+  .logic-briefing-copy {
+    left: max(8%, env(safe-area-inset-left));
+    top: 13%;
+    width: 52%;
+  }
+  .logic-briefing-copy h1 {
+    margin: 10px 0 15px;
+    font-size: clamp(28px, 6.5vw, 46px);
+  }
+  .logic-briefing-copy p {
+    max-width: 360px;
+    margin-bottom: 7px;
+    font-size: 10px;
+    line-height: 1.38;
+  }
+  .logic-briefing-copy button {
+    margin-top: 9px;
+    min-height: 38px;
+  }
+  .logic-briefing-panel {
+    right: 7%;
+    top: 15%;
+    width: 38vw;
+    height: 250px;
+    scale: 0.72;
+    transform-origin: top right;
+  }
+  .logic-briefing .minimal-agent {
+    right: 11%;
+    bottom: 10%;
+    scale: 1.2;
+  }
+}

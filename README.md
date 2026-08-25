@@ -19,7 +19,7 @@ The foundation chapter starts with sets, logic, and operations. Later chapters c
 
 Current foundation outline:
 
-- **0.0 — Logic** (planned): propositions, predicates, quantifiers, implication, and proof-minded reasoning.
+- **0.0 — Logic** (playable): AND, OR, NOT, IMPLIES, FORALL, and EXISTS through dialog-based escape puzzles.
 - **0.1 — Sets** (playable): equality, union, intersection, difference, and Cartesian product.
 - **0.2 — Functions & relationships** (playable): representations, composition, domains, and injective/surjective/bijective behavior.
 - **0.3 — Special relationships** (planned): order, posets, and equivalence relations.

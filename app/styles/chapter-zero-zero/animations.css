@@ -1,0 +1,78 @@
+.logic-briefing .minimal-agent,
+.logic-scene .minimal-agent,
+.logic-ending .minimal-agent {
+  animation-duration: 900ms;
+  animation-fill-mode: both;
+}
+
+@keyframes logic-line-in {
+  from {
+    opacity: 0;
+    scale: 0 1;
+  }
+}
+@keyframes logic-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-2deg);
+  }
+}
+@keyframes logic-dialogue-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+@keyframes logic-terminal-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.88);
+  }
+}
+@keyframes logic-door-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+@keyframes logic-reject {
+  25% {
+    transform: translateX(calc(-50% - 10px));
+  }
+  52% {
+    transform: translateX(calc(-50% + 8px));
+  }
+  78% {
+    transform: translateX(calc(-50% - 3px));
+  }
+}
+
+.logic-scene.solved .logic-door {
+  animation: logic-door-open 800ms cubic-bezier(0.18, 0.8, 0.18, 1.1) both;
+}
+@keyframes logic-door-open {
+  45% {
+    transform: translateX(4px) scale(1.03);
+  }
+  72% {
+    transform: translateX(-2px) scale(0.99);
+  }
+}
+
+.reduce-motion .logic-briefing-lines i,
+.reduce-motion .logic-briefing-panel > div,
+.reduce-motion .logic-dialogue-line,
+.reduce-motion .logic-terminal,
+.reduce-motion .logic-door,
+.reduce-motion .logic-scene.solved .logic-door {
+  animation: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .logic-choices button:hover {
+    transform: none;
+  }
+  .logic-choices button:active {
+    transform: scale(0.97);
+  }
+}

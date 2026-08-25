@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ChapterZeroZero from './ChapterZeroZero';
 import ChapterZeroOne from './ChapterZeroOne';
 import ChapterZeroTwo from './ChapterZeroTwo';
 
-type Chapter = '0.1' | '0.2';
+type Chapter = '0.0' | '0.1' | '0.2';
 
 function chapterFromLocation(fallback: Chapter): Chapter {
+  if (window.location.pathname === '/0.0' || window.location.hash === '#logic') return '0.0';
   if (window.location.pathname === '/0.2' || window.location.hash === '#functions') return '0.2';
   if (window.location.pathname === '/0.1' || window.location.hash === '#mission') return '0.1';
   return fallback;
@@ -52,10 +54,12 @@ export default function GameRouter({
   function openChapter(next: Chapter, options?: { chapterOneBriefing?: boolean }) {
     setChapter(next);
     setChapterOneBriefing(next === '0.1' && Boolean(options?.chapterOneBriefing));
-    window.history.pushState(null, '', next === '0.2' ? '/0.2' : '/0.1');
+    window.history.pushState(null, '', next === '0.0' ? '/0.0' : next === '0.2' ? '/0.2' : '/0.1');
   }
 
-  return chapter === '0.2' ? (
+  return chapter === '0.0' ? (
+    <ChapterZeroZero onContinue={() => openChapter('0.1', { chapterOneBriefing: true })} />
+  ) : chapter === '0.2' ? (
     <ChapterZeroTwo
       key={`functions-${functionStageOverride ?? 'normal'}`}
       startAtStage={functionStageOverride}

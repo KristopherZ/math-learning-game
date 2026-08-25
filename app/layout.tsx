@@ -10,6 +10,9 @@ import './styles/chapter-zero-two/base.css';
 import './styles/chapter-zero-two/scenes.css';
 import './styles/chapter-zero-two/animations.css';
 import './styles/chapter-zero-two/responsive.css';
+import './styles/chapter-zero-zero/base.css';
+import './styles/chapter-zero-zero/animations.css';
+import './styles/chapter-zero-zero/responsive.css';
 import './styles/shared/actions.css';
 import './styles/shared/agent-motion.css';
 
