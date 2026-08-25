@@ -116,7 +116,12 @@ export function OperationScene({
         )}
       </div>
 
-      <Agent crossing={solved} caught={caught} blocked={blocked} />
+      <Agent
+        crossing={solved}
+        exitDirection={scene.concept === 'difference' ? 'left' : 'right'}
+        caught={caught}
+        blocked={blocked}
+      />
       {scene.concept === 'union' && <DocumentCase ready={solved} />}
       {scene.concept === 'intersection' && <SpyContact ready={solved} />}
       {scene.concept === 'difference' && (

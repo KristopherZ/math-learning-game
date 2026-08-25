@@ -4,14 +4,21 @@ type AgentProps = {
   crossing?: boolean;
   caught?: boolean;
   blocked?: boolean;
+  exitDirection?: 'left' | 'right';
 };
 
-export function Agent({ crossing = false, caught = false, blocked = false }: AgentProps) {
+export function Agent({
+  crossing = false,
+  caught = false,
+  blocked = false,
+  exitDirection = 'right',
+}: AgentProps) {
   return (
     <div
       className={cx(
         'minimal-agent',
         crossing && 'crossing',
+        crossing && `exit-${exitDirection}`,
         caught && 'caught',
         blocked && 'blocked',
       )}
