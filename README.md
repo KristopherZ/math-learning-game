@@ -17,6 +17,15 @@ The planned calculus path is:
 
 The foundation chapter starts with sets, logic, and operations. Later chapters can branch into related topics whenever a concept benefits from its own game mechanic or story route.
 
+Current foundation outline:
+
+- **0.0 — Logic** (planned): propositions, predicates, quantifiers, implication, and proof-minded reasoning.
+- **0.1 — Sets** (playable): equality, union, intersection, difference, and Cartesian product.
+- **0.2 — Functions & relationships** (playable): representations, composition, domains, and injective/surjective/bijective behavior.
+- **0.3 — Special relationships** (planned): order, posets, and equivalence relations.
+- **0.4 — Cardinality** (tentative): comparing the sizes of finite and infinite sets.
+- **0.5 — Fields** (tentative): field structures as a bridge toward algebra and calculus.
+
 ## Long-term ambition
 
 The ambitious endpoint is to reach differential forms and integration on manifolds, while keeping the same principle: make abstract structure something the player can explore, manipulate, and use.
